@@ -12,6 +12,7 @@ public class Boulder extends Entity implements Interactable{
 
 	public int playerIntersect(Player player) {
 		// TODO Auto-generated method stub
+		// should check dungeon map
 		return -1; //-1 special value to denote its from boulder
 	}
 
