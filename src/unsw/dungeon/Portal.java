@@ -24,7 +24,6 @@ public class Portal extends Entity implements Interactable {
 				}
 			}
 		}
-		
 		return 0;
 	}
 

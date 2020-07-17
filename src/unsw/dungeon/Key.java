@@ -18,5 +18,9 @@ public class Key extends Entity implements Interactable{
 	public boolean defeatedObject() {
 		return false;
 	}
+
+	public int getId() {
+		return id;
+	}
     
 }

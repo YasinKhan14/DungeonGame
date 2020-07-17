@@ -71,13 +71,13 @@ public class Player extends Entity implements Goal, Moveable{
             Interactable i = (Interactable) obj;
 
             switch(i.moveableIntersect(this)){
-                // wall or portal
+                // wall or portal  or door
                 case 1:
                     return false;
-                // interactables
+                // boulder
                 case 0:
                     break;
-                case -1:
+                case -1: //static items, deleted off map
                     dungeon.removeFromMap(obj);
                     break;
 
