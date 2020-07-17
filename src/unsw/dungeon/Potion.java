@@ -9,7 +9,7 @@ public class Potion extends Entity implements Interactable {
 		onMap = true;
     }
     
-	public int playerIntersect(Player player) {
+	public int moveableIntersect(Player player) {
 		onMap = false;
 		return 0;
 	}

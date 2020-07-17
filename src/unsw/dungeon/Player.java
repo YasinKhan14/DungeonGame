@@ -72,7 +72,7 @@ public class Player extends Entity implements Goal{
             // type casting into interactables
             Interactable i = (Interactable) obj;
 
-            switch(i.playerIntersect(this)){
+            switch(i.moveableIntersect(this)){
                 // wall
                 case 1:
                     return false;

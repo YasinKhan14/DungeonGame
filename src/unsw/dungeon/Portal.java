@@ -8,7 +8,7 @@ public class Portal extends Entity implements Interactable{
 		super(x, y);
 	}
 
-	public int playerIntersect(Player player) {
+	public int moveableIntersect(Player player) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

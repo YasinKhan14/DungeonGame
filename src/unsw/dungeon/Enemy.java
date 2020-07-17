@@ -9,7 +9,7 @@ public class Enemy extends Entity implements Interactable {
 		onMap = true;
     }
     
-	public int playerIntersect(Player player) {
+	public int moveableIntersect(Player player) {
 		//check if player as sword. by pulling player inventory
 		//if player has sword then -> onMap = false;
 		return 0;

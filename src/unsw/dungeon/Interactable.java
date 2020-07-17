@@ -2,7 +2,7 @@ package unsw.dungeon;
 
 public interface Interactable {
     
-    public int playerIntersect(Player player);
+    public int moveableIntersect(Player player);
     public boolean defeatedObject();
 
 }
