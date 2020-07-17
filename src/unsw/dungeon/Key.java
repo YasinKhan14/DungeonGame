@@ -10,13 +10,17 @@ public class Key extends Entity implements Interactable{
 		onMap = true;
     }
     
-	public int moveableIntersect(Player player) {
+	public int moveableIntersect(Moveable moveable) {
 		onMap = false;
 		return 0;
 	}
 
 	public boolean defeatedObject() {
 		return false;
+	}
+
+	public int getId() {
+		return id;
 	}
     
 }

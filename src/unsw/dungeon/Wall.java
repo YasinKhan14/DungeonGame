@@ -6,7 +6,7 @@ public class Wall extends Entity implements Interactable{
         super(x, y);
     }
 
-	public int moveableIntersect(Player player) {
+	public int moveableIntersect(Moveable moveable) {
 		// TODO Auto-generated method stub
 		return 1;
 	}

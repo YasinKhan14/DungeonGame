@@ -1,5 +1,7 @@
 package unsw.dungeon;
 
+import java.util.List;
+
 public class Door extends Entity implements Interactable{
 
     private int id;
@@ -9,11 +11,17 @@ public class Door extends Entity implements Interactable{
       super(x, y);
     }
 
-	public int moveableIntersect(Player player) {
-        //check keys player.getKeys() -> return list
-        // check if list contains id, i.e player has a key for matching door (loop through list)
-            //if conditions satisfied then isOpen = true
-		  return 0;
+	public int moveableIntersect(Moveable moveable) {
+		
+		if (moveable instanceof Player) {
+			List<Key> keys = ((Player)moveable).getKeys();
+			for (Key key : keys) {
+				if (key.getId() == id) {
+					return -1;
+				}
+			}
+		}
+		return 1;
 	}
 
 	public boolean defeatedObject() {

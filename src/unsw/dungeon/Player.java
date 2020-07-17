@@ -7,7 +7,7 @@ import java.util.*;
  * @author Robert Clifton-Everest
  *
  */
-public class Player extends Entity implements Goal{
+public class Player extends Entity implements Goal, Moveable{
 
     private Dungeon dungeon;
     private List<Key> keys;
@@ -73,13 +73,13 @@ public class Player extends Entity implements Goal{
             Interactable i = (Interactable) obj;
 
             switch(i.moveableIntersect(this)){
-                // wall
+                // wall or portal  or door
                 case 1:
                     return false;
-                // interactables
+                // boulder
                 case 0:
                     break;
-                case -1:
+                case -1: //static items, deleted off map
                     dungeon.removeFromMap(obj);
                     break;
 
@@ -113,9 +113,6 @@ public class Player extends Entity implements Goal{
     }
     @Override
     public boolean isCompleted(){
-        if (goal.isCompleted())
-            return true;
-        else
-            return false;
+        return goal.isCompleted();
     }
 }

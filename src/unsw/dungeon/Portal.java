@@ -1,21 +1,38 @@
 package unsw.dungeon;
 
-public class Portal extends Entity implements Interactable{
+import java.util.List;
 
-    private int id;
+public class Portal extends Entity implements Interactable {
+
+	private int id;
+	private Dungeon dungeon;
 
 	public Portal(int x, int y) {
 		super(x, y);
 	}
 
-	public int moveableIntersect(Player player) {
-		// TODO Auto-generated method stub
+	public int moveableIntersect(Moveable moveable) {
+
+		List<Entity> entityList = dungeon.getEntities();
+		for (Entity entity : entityList) {
+			if (entity instanceof Portal) {
+				Portal portal = (Portal) entity;
+				if (portal.getId() == id) {
+					moveable.updateMap(portal.getX(), portal.getY()); 
+					return 0;
+				}
+			}
+		}
 		return 0;
 	}
 
 	public boolean defeatedObject() {
 		//stubbed for now as no goals involving portals
 		return false;
+	}
+
+	public int getId() {
+		return id;
 	}
     
 }

@@ -14,7 +14,10 @@ public class Boulder extends Entity implements Interactable {
 		this.dungeon = dungeon;
 	}
 	@Override
-	public int moveableIntersect(Player player) {
+	public int moveableIntersect(Moveable moveable) {
+		if (!(moveable instanceof Player))
+			return 1;
+		Player player = (Player) moveable;
 		int dx, dy;
 		dx = getX() - player.getX();
 		dy = getY() - player.getY();
