@@ -19,14 +19,19 @@ public class Dungeon {
 
     private int width, height;
     private List<Entity> entities;
-    private Entity map[][];
+    private List<Entity> map[][];
     private Player player;
 
     public Dungeon(int width, int height) {
         this.width = width;
         this.height = height;
         this.entities = new ArrayList<>();
-        this.map = new Entity[height][width];
+        this.map = new ArrayList[height][width];
+        for (int i = 0; i < height; i ++){
+            for (int j = 0; j < width; j ++){
+                this.map[i][j] = new ArrayList<Entity>();
+            }
+        }
         this.player = null;
     }
 
@@ -42,7 +47,7 @@ public class Dungeon {
         return player;
     }
 
-    public Entity[][] getMap(){
+    public List<Entity>[][] getMap(){
         return map;
     }
 
@@ -52,6 +57,6 @@ public class Dungeon {
 
     public void addEntity(Entity entity) {
         entities.add(entity);
-        map[entity.getY()][entity.getX()] = entity;
+        map[entity.getY()][entity.getX()].add(entity);
     }
 }

@@ -13,7 +13,8 @@ public class Player extends Entity implements Goal{
     private List<Key> keys;
     private Goal goal;
     //enemy listener?
-
+    //weapon -> time active?
+    //potion -> time active?
     /**
      * Create a player positioned in square (x,y)
      * @param x
@@ -28,62 +29,62 @@ public class Player extends Entity implements Goal{
   
     public void moveUp() {
         if (getY() > 0 && canMove(getX(), getY() -1)) {
-            dungeon.getMap()[getY()][getX()] = null;
-            y().set(getY() - 1);
-            dungeon.getMap()[getY()][getX()] = this;
+            updateMap(getX(), getY() - 1);
         }
     }
 
     public void moveDown() {
         if (getY() < dungeon.getHeight() - 1 && canMove(getX(), getY() + 1)) {
-            dungeon.getMap()[getY()][getX()] = null;
-            y().set(getY() + 1);
-            dungeon.getMap()[getY()][getX()] = this;
+            updateMap(getX(), getY() + 1);
         }
     }
 
     public void moveLeft() {
         if (getX() > 0 && canMove(getX() - 1, getY())) {
-            dungeon.getMap()[getY()][getX()] = null;
-            x().set(getX() - 1);
-            dungeon.getMap()[getY()][getX()] = this;
+            updateMap(getX() - 1, getY());
         }
     }
 
     public void moveRight() {
         if (getX() < dungeon.getWidth() - 1 && canMove(getX() + 1, getY())) {
-            dungeon.getMap()[getY()][getX()] = null;
-            x().set(getX() + 1);
-            dungeon.getMap()[getY()][getX()] = this;
+            updateMap(getX() + 1, getY());
+        }
     }
-
+    /**
+     * Check if player is able to move to a coordinate on the map, if the player is 
+     * able to, deal with interaction before moving in. Otherwise return false
+     * @param x 
+     * @param y
+     * @return
+     */
     public boolean canMove(int x, int y){
-        Entity obj = dungeon.getMap()[x][y];
-        if (obj == null) {
-            return true;
-        }
-        // assuming wall is also interactable
-        if (!(obj instanceof Interactable)){
-            return true;
-        }
-        // type casting into interactables
-        Interactable i = (Interactable) obj;
+        List<Entity> objectList = dungeon.getMap()[x][y];
+        for (Entity obj : objectList){
+            if (obj == null) {
+                continue;
+            }
+            // assuming wall is also interactable
+            if (!(obj instanceof Interactable)){
+                continue;
+            }
+            // type casting into interactables
+            Interactable i = (Interactable) obj;
 
-        switch(i.playerIntersect(this)){
-            // wall
-            case 1:
-                return false;
-            // interactables
-            case 0:
-                dungeon.getMap()[y][x] = null;
-                return true;
+            switch(i.playerIntersect(this)){
+                // wall
+                case 1:
+                    return false;
+                // interactables
+                case 0:
+                    dungeon.getMap()[y][x] = null;
+                    break;
 
-                
+            }
+            continue;
         }
         if(isCompleted()){
             // trigger end game function
         }
-
         return true;
     }
     public void addKey(Key key){
@@ -92,6 +93,13 @@ public class Player extends Entity implements Goal{
 
     public List<Key> getKeys(){
         return keys;
+    }
+
+    public void updateMap(int x, int y){
+        dungeon.getMap()[getY()][getX()].remove(this);
+        x().set(x);
+        y().set(y);
+        dungeon.getMap()[getY()][getX()].add(this);
     }
     @Override
     public boolean isCompleted(){
