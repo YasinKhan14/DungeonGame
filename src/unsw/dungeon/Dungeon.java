@@ -19,7 +19,7 @@ public class Dungeon {
 
     private int width, height;
     private List<Entity> entities;
-    private List<Entity> map[][];
+    private List<Entity>[][] map;
     private Player player;
 
     public Dungeon(int width, int height) {
@@ -49,6 +49,10 @@ public class Dungeon {
 
     public List<Entity>[][] getMap(){
         return map;
+    }
+
+    public List<Entity> getEntities(){
+        return entities;
     }
 
     public void setPlayer(Player player) {

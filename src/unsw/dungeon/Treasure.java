@@ -9,7 +9,7 @@ public class Treasure extends Entity implements Interactable {
 		onMap = true;
 	}
 
-	public int playerIntersect(Player player) {
+	public int moveableIntersect(Moveable moveable) {
 		onMap = false;
 		return 0;
 	}

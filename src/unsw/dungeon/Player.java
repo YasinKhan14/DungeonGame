@@ -7,7 +7,7 @@ import java.util.*;
  * @author Robert Clifton-Everest
  *
  */
-public class Player extends Entity implements Goal{
+public class Player extends Entity implements Goal, Moveable{
 
     private Dungeon dungeon;
     private List<Key> keys;
@@ -70,8 +70,8 @@ public class Player extends Entity implements Goal{
             // type casting into interactables
             Interactable i = (Interactable) obj;
 
-            switch(i.playerIntersect(this)){
-                // wall
+            switch(i.moveableIntersect(this)){
+                // wall or portal
                 case 1:
                     return false;
                 // interactables
@@ -100,11 +100,9 @@ public class Player extends Entity implements Goal{
     public void updateMap(int x, int y){
         dungeon.updateMap(this, x, y);
     }
+
     @Override
     public boolean isCompleted(){
-        if (goal.isCompleted())
-            return true;
-        else
-            return false;
+        return goal.isCompleted();
     }
 }
