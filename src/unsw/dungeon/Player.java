@@ -76,7 +76,9 @@ public class Player extends Entity implements Goal{
                     return false;
                 // interactables
                 case 0:
-                    dungeon.getMap()[y][x] = null;
+                    break;
+                case -1:
+                    dungeon.removeFromMap(obj);
                     break;
 
             }
@@ -96,10 +98,7 @@ public class Player extends Entity implements Goal{
     }
 
     public void updateMap(int x, int y){
-        dungeon.getMap()[getY()][getX()].remove(this);
-        x().set(x);
-        y().set(y);
-        dungeon.getMap()[getY()][getX()].add(this);
+        dungeon.updateMap(this, x, y);
     }
     @Override
     public boolean isCompleted(){

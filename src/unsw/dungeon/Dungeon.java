@@ -59,4 +59,16 @@ public class Dungeon {
         entities.add(entity);
         map[entity.getY()][entity.getX()].add(entity);
     }
+
+    public void updateMap(Entity entity, int x, int y){
+        map[entity.getY()][entity.getX()].remove(entity);
+        entity.x().set(x);
+        entity.y().set(y);
+        map[entity.getY()][entity.getX()].add(entity);
+    }
+
+    public void removeFromMap(Entity entity){
+        map[entity.getY()][entity.getX()].remove(entity);
+    }
+
 }
