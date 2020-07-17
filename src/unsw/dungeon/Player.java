@@ -106,10 +106,7 @@ public class Player extends Entity implements Goal, Moveable{
         sword = 5;
     }
     public boolean hasSword(){
-        if (sword == 0){
-            return false;
-        }
-        return true;
+        return sword;
     }
     @Override
     public boolean isCompleted(){
