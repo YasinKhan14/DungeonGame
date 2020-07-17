@@ -12,6 +12,7 @@ public class Player extends Entity implements Goal{
     private Dungeon dungeon;
     private List<Key> keys;
     private Goal goal;
+    private int sword;
     //enemy listener?
     //weapon -> time active?
     //potion -> time active?
@@ -25,6 +26,7 @@ public class Player extends Entity implements Goal{
         this.dungeon = dungeon;
         this.goal = goal;
         this.keys = new ArrayList<Key>();
+        this.sword = 0;
     }
   
     public void moveUp() {
@@ -58,7 +60,7 @@ public class Player extends Entity implements Goal{
      * @return
      */
     public boolean canMove(int x, int y){
-        List<Entity> objectList = dungeon.getMap()[x][y];
+        List<Entity> objectList = dungeon.getMap()[y][x];
         for (Entity obj : objectList){
             if (obj == null) {
                 continue;
@@ -99,6 +101,15 @@ public class Player extends Entity implements Goal{
 
     public void updateMap(int x, int y){
         dungeon.updateMap(this, x, y);
+    }
+    public void equipSword(){
+        sword = 5;
+    }
+    public boolean hasSword(){
+        if (sword == 0){
+            return false;
+        }
+        return true;
     }
     @Override
     public boolean isCompleted(){
