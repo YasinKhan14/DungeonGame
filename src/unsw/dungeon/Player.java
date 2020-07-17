@@ -105,7 +105,7 @@ public class Player extends Entity implements Goal, Moveable{
     public void equipSword(){
         sword = 5;
     }
-    public boolean hasSword(){
+    public int hasSword(){
         return sword;
     }
     @Override
