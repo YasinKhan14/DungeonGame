@@ -1,8 +1,11 @@
 package unsw.dungeon;
 
+import javax.lang.model.util.ElementScanner6;
+
 public class Enemy extends Entity implements Interactable, Moveable {
 
 	private boolean onMap;
+	private Dungeon dungeon;
 
     public Enemy(int x, int y) {
 		super(x, y);
@@ -10,9 +13,10 @@ public class Enemy extends Entity implements Interactable, Moveable {
     }
     
 	public int moveableIntersect(Moveable moveable) {
-		//check if player as sword. by pulling player inventory
-		//if player has sword then -> onMap = false;
-		return 0;
+		if (((Player) moveable).hasSword() > 0 ) 
+			return - 1;
+		else
+			return -2;
 	}
 
 	public boolean defeatedObject() {
@@ -51,8 +55,7 @@ public class Enemy extends Entity implements Interactable, Moveable {
 
 	@Override
 	public void updateMap(int x, int y) {
-		// TODO Auto-generated method stub
-
+		dungeon.updateMap(this, x, y);
 	}
     
 }

@@ -13,7 +13,6 @@ public class Portal extends Entity implements Interactable {
 
 	public int moveableIntersect(Moveable moveable) {
 
-		// TODO Auto-generated method stub
 		List<Entity> entityList = dungeon.getEntities();
 		for (Entity entity : entityList) {
 			if (entity instanceof Portal) {

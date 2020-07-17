@@ -12,12 +12,9 @@ public class Door extends Entity implements Interactable{
     }
 
 	public int moveableIntersect(Moveable moveable) {
-        //check keys player.getKeys() -> return list
-        // check if list contains id, i.e player has a key for matching door (loop through list)
-			//if conditions satisfied then isOpen = true
+		
 		if (moveable instanceof Player) {
-			Player player = (Player)moveable;
-			List<Key> keys = player.getKeys();
+			List<Key> keys = ((Player)moveable).getKeys();
 			for (Key key : keys) {
 				if (key.getId() == id) {
 					return -1;
