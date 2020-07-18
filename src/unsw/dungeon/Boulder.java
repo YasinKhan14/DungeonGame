@@ -2,7 +2,7 @@ package unsw.dungeon;
 
 import java.util.List;
 
-public class Boulder extends Entity {
+public class Boulder extends Entity implements Moveable {
 
 	Dungeon dungeon;
 	/**
@@ -41,11 +41,12 @@ public class Boulder extends Entity {
 		return false; //1 special value to denote its from boulder
 	}
 
+	@Override
 	public boolean defeatedObject() {
 		//stubbed for now as no goals invovling boulders;
 		return false;
 	}
-	
+	@Override
 	public boolean canMove(int x, int y){
 		List<Entity> objectList = dungeon.getMap()[y][x];
 		for (Entity obj : objectList){
@@ -59,29 +60,31 @@ public class Boulder extends Entity {
 		return true;
 	}
 
+	@Override
 	public void moveUp() {
         if (getY() > 0) {
             updateMap(getX(), getY() - 1);
         }
     }
-
+	@Override
     public void moveDown() {
         if (getY() < dungeon.getHeight() - 1) {
             updateMap(getX(), getY() + 1);
         }
     }
-
+	@Override
     public void moveLeft() {
         if (getX() > 0) {
             updateMap(getX() - 1, getY());
         }
     }
-
+	@Override
     public void moveRight() {
         if (getX() < dungeon.getWidth() - 1) {
             updateMap(getX() + 1, getY());
         }
 	}
+	@Override
 	public void updateMap(int x, int y){
         dungeon.updateMap(this, x, y);
     }

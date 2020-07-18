@@ -7,7 +7,7 @@ import java.util.*;
  * @author Robert Clifton-Everest
  *
  */
-public class Player extends Entity implements Goal, Moveable{
+public class Player extends Entity implements Moveable{
 
     private Dungeon dungeon;
     private List<Key> keys;
@@ -28,30 +28,50 @@ public class Player extends Entity implements Goal, Moveable{
         this.keys = new ArrayList<Key>();
         this.sword = 0;
     }
-  
+    public void equipSword(){
+        sword = 5;
+    }
+    public int hasSword(){
+        return sword;
+    }
+    public boolean isCompleted(){
+        return goal.isCompleted();
+    }
+    public void playerRemove(Entity entity){
+        dungeon.removeFromMap(entity);
+    }
+    public void addKey(Key key){
+        this.keys.add(key);
+    }
+
+    public List<Key> getKeys(){
+        return keys;
+    }
+	@Override
     public void moveUp() {
         if (getY() > 0 && canMove(getX(), getY() -1)) {
             updateMap(getX(), getY() - 1);
         }
     }
-
+	@Override
     public void moveDown() {
         if (getY() < dungeon.getHeight() - 1 && canMove(getX(), getY() + 1)) {
             updateMap(getX(), getY() + 1);
         }
     }
-
+	@Override
     public void moveLeft() {
         if (getX() > 0 && canMove(getX() - 1, getY())) {
             updateMap(getX() - 1, getY());
         }
     }
-
+	@Override
     public void moveRight() {
         if (getX() < dungeon.getWidth() - 1 && canMove(getX() + 1, getY())) {
             updateMap(getX() + 1, getY());
         }
     }
+    
     /**
      * Check if player is able to move to a coordinate on the map, if the player is 
      * able to, deal with interaction before moving in. Otherwise return false
@@ -59,6 +79,7 @@ public class Player extends Entity implements Goal, Moveable{
      * @param y
      * @return
      */
+    @Override
     public boolean canMove(int x, int y){
         List<Entity> objectList = dungeon.getMap()[y][x];
         for (Entity obj : objectList){
@@ -79,31 +100,10 @@ public class Player extends Entity implements Goal, Moveable{
         }
         return true;
     }
-    public void addKey(Key key){
-        this.keys.add(key);
-    }
-
-    public List<Key> getKeys(){
-        return keys;
-    }
-
+	@Override
     public void updateMap(int x, int y){
         dungeon.updateMap(this, x, y);
     }
-    public void equipSword(){
-        sword = 5;
-    }
-    public int hasSword(){
-        return sword;
-    }
-    @Override
-    public boolean isCompleted(){
-        return goal.isCompleted();
-    }
-    public void playerRemove(Entity entity){
-        dungeon.removeFromMap(entity);
-    }
-
     @Override
     public boolean allowPass(Moveable moveable){
         return false;
