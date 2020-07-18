@@ -2,6 +2,8 @@ package unsw.dungeon;
 
 import java.util.*;
 
+import jdk.internal.vm.compiler.word.SignedWord;
+
 /**
  * The player entity
  * @author Robert Clifton-Everest
@@ -12,7 +14,7 @@ public class Player extends Entity implements Moveable{
     private Dungeon dungeon;
     private List<Key> keys;
     private Goal goal;
-    private int sword;
+    private Weapon weapon;
     //enemy listener?
     //weapon -> time active?
     //potion -> time active?
@@ -26,13 +28,16 @@ public class Player extends Entity implements Moveable{
         this.dungeon = dungeon;
         this.goal = goal;
         this.keys = new ArrayList<Key>();
-        this.sword = 0;
+        this.weapon = null;
     }
-    public void equipSword(){
-        sword = 5;
+    public void equipSword(Weapon weapon){
+        this.weapon = weapon;
     }
     public int hasSword(){
-        return sword;
+        if (weapon == null){
+            return 0;
+        }
+        return weapon.getCharges();
     }
     public boolean isCompleted(){
         return goal.isCompleted();
