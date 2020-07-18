@@ -1,6 +1,6 @@
 package unsw.dungeon;
 
-public class FloorSwitch extends Entity implements Interactable{
+public class FloorSwitch extends Entity{
 
 	private boolean triggered;
 
@@ -9,7 +9,7 @@ public class FloorSwitch extends Entity implements Interactable{
 		triggered = false;
     }
     
-	public int moveableIntersect(Moveable moveable) {
+	public int allowPass(Moveable moveable) {
 		// TODO Auto-generated method stub
 		triggered = true;
 		return 0;

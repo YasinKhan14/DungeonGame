@@ -2,7 +2,7 @@ package unsw.dungeon;
 
 import java.util.List;
 
-public class Portal extends Entity implements Interactable {
+public class Portal extends Entity {
 
 	private int id;
 	private Dungeon dungeon;
@@ -11,7 +11,7 @@ public class Portal extends Entity implements Interactable {
 		super(x, y);
 	}
 
-	public int moveableIntersect(Moveable moveable) {
+	public int allowPass(Moveable moveable) {
 
 		List<Entity> entityList = dungeon.getEntities();
 		for (Entity entity : entityList) {

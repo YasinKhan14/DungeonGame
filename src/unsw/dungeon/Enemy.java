@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.lang.model.util.ElementScanner6;
 
-public class Enemy extends Entity implements Interactable, Moveable {
+public class Enemy extends Entity implements Moveable {
 
 	private boolean onMap;
 	private Dungeon dungeon;
@@ -62,7 +62,7 @@ public class Enemy extends Entity implements Interactable, Moveable {
 		
 	}
     
-	public int moveableIntersect(Moveable moveable) {
+	public int allowPass(Moveable moveable) {
 		if (((Player) moveable).hasSword() > 0 ) 
 			return - 1;
 		else
@@ -110,7 +110,7 @@ public class Enemy extends Entity implements Interactable, Moveable {
             // type casting into interactables
             Interactable i = (Interactable) obj;
 
-            switch(i.moveableIntersect(this)){
+            switch(i.allowPass(this)){
                 // wall or portal or door (clsoed) or boulder (for enemy)
                 case 1:
                     return false;

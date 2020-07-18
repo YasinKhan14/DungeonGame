@@ -2,7 +2,7 @@ package unsw.dungeon;
 
 import java.util.List;
 
-public class Boulder extends Entity implements Interactable {
+public class Boulder extends Entity {
 
 	Dungeon dungeon;
 	/**
@@ -14,9 +14,9 @@ public class Boulder extends Entity implements Interactable {
 		this.dungeon = dungeon;
 	}
 	@Override
-	public int moveableIntersect(Moveable moveable) {
+	public boolean allowPass(Moveable moveable) {
 		if (!(moveable instanceof Player))
-			return 1;
+			return false;
 		Player player = (Player) moveable;
 		int dx, dy;
 		dx = getX() - player.getX();
@@ -24,21 +24,21 @@ public class Boulder extends Entity implements Interactable {
 		if (dx == 0){
 			if (dy == -1 && canMove(getX(), getY() - 1 )) {
 				moveUp();
-				return 0;
+				return true;
 			} else if (dy == 1 && canMove(getX(), getY() + 1)){
 				moveDown();
-				return 0;
+				return true;
 			}
 		} else if (dy == 0){
 			if (dx == -1 && canMove(getX() - 1, getY())){
 				moveLeft();
-				return 0;
+				return true;
 			}else if (dx == 1 && canMove(getX() + 1, getY())){
 				moveRight();
-				return 0;
+				return true;
 			}
 		}
-		return 1; //1 special value to denote its from boulder
+		return false; //1 special value to denote its from boulder
 	}
 
 	public boolean defeatedObject() {

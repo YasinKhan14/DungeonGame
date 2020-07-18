@@ -1,12 +1,12 @@
 package unsw.dungeon;
 
-public class Wall extends Entity implements Interactable{
+public class Wall extends Entity{
 
     public Wall(int x, int y) {
         super(x, y);
     }
 
-	public int moveableIntersect(Moveable moveable) {
+	public int allowPass(Moveable moveable) {
 		// TODO Auto-generated method stub
 		return 1;
 	}

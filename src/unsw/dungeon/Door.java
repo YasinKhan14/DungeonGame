@@ -2,7 +2,7 @@ package unsw.dungeon;
 
 import java.util.List;
 
-public class Door extends Entity implements Interactable{
+public class Door extends Entity{
 
     private int id;
     private boolean isOpen;
@@ -11,7 +11,7 @@ public class Door extends Entity implements Interactable{
       super(x, y);
     }
 
-	public int moveableIntersect(Moveable moveable) {
+	public int allowPass(Moveable moveable) {
 		
 		if (moveable instanceof Player) {
 			List<Key> keys = ((Player)moveable).getKeys();

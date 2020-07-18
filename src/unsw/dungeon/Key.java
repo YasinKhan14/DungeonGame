@@ -1,6 +1,6 @@
 package unsw.dungeon;
 
-public class Key extends Entity implements Interactable{
+public class Key extends Entity{
 
     private boolean onMap;
     private int id;
@@ -10,7 +10,7 @@ public class Key extends Entity implements Interactable{
 		onMap = true;
     }
     
-	public int moveableIntersect(Moveable moveable) {
+	public int allowPass(Moveable moveable) {
 		if (moveable instanceof Player) {
 			((Player) moveable).addKey(this);
 			onMap = false;

@@ -1,6 +1,6 @@
 package unsw.dungeon;
 
-public class Treasure extends Entity implements Interactable {
+public class Treasure extends Entity {
 
     private boolean onMap;
 
@@ -9,7 +9,7 @@ public class Treasure extends Entity implements Interactable {
 		onMap = true;
 	}
 
-	public int moveableIntersect(Moveable moveable) {
+	public int allowPass(Moveable moveable) {
 		if (moveable instanceof Player) {
 			onMap = false;
 			return -1;

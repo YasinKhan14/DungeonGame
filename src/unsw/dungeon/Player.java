@@ -66,25 +66,13 @@ public class Player extends Entity implements Goal, Moveable{
                 continue;
             }
             // assuming wall is also interactable
-            if (!(obj instanceof Interactable)){
-                continue;
-            }
+            
             // type casting into interactables
-            Interactable i = (Interactable) obj;
 
-            switch(i.moveableIntersect(this)){
-                // wall or portal  or door
-                case 1:
-                    return false;
-                // boulder (or floor switch? -> do nothing allow overlap?)
-                case 0:
-                    break;
-                case -1: //static items, deleted off map
-                    dungeon.removeFromMap(obj);
-                    break;
-
-            }
-            continue;
+            if(obj.allowPass(this))
+                continue;
+            else
+                return false;
         }
         if(isCompleted()){
             // trigger end game function
@@ -111,5 +99,18 @@ public class Player extends Entity implements Goal, Moveable{
     @Override
     public boolean isCompleted(){
         return goal.isCompleted();
+    }
+    public void playerRemove(Entity entity){
+        dungeon.removeFromMap(entity);
+    }
+
+    @Override
+    public boolean allowPass(Moveable moveable){
+        return false;
+    }
+
+    @Override
+    public boolean defeatedObject(){
+        return false;
     }
 }
