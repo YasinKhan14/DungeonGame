@@ -51,6 +51,13 @@ public class Player extends Entity implements Moveable{
     public List<Key> getKeys(){
         return keys;
     }
+
+    public void weaponDecrement(){
+        weapon.swing();
+        if (weapon.getCharges() == 0) {
+            weapon = null;
+        }
+    }
 	@Override
     public void moveUp() {
         if (getY() > 0 && canMove(getX(), getY() -1)) {

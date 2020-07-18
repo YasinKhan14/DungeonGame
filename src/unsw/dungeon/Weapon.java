@@ -33,6 +33,9 @@ public class Weapon extends Entity {
         this.charges = charges;
     }
     
+    public void swing(){
+        charges -= 1;
+    }
     
     
 }
