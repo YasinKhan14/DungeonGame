@@ -14,6 +14,7 @@ public class Player extends Entity implements Moveable{
     private List<Key> keys;
     private Goal goal;
     private Weapon weapon;
+    private List<PlayerListener> listeners;
     //enemy listener?
     //weapon -> time active?
     //potion -> time active?
@@ -28,6 +29,7 @@ public class Player extends Entity implements Moveable{
         this.goal = goal;
         this.keys = new ArrayList<Key>();
         this.weapon = null;
+        this.listeners = new ArrayList<PlayerListener>();
     }
     public void equipSword(Weapon weapon){
         this.weapon = weapon;
@@ -56,6 +58,14 @@ public class Player extends Entity implements Moveable{
         weapon.swing();
         if (weapon.getCharges() == 0) {
             weapon = null;
+        }
+    }
+    public void addListener(PlayerListener listener){
+        listeners.add(listener);
+    }
+    public void notifyPlayerGotPotion(){
+        for (PlayerListener listener : listeners){
+            listener.playerGotPotion();
         }
     }
 	@Override

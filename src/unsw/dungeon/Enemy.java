@@ -2,7 +2,7 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Enemy extends Entity implements Moveable {
+public class Enemy extends Entity implements Moveable, PlayerListener {
 
 	private boolean onMap;
 	private Dungeon dungeon;
@@ -76,5 +76,13 @@ public class Enemy extends Entity implements Moveable {
 	public void updateMap(int x, int y) {
 		dungeon.updateMap(this, x, y);
 	}
-    
+	
+	@Override
+	public void playerGotPotion(){
+		// TODO: change movement strategy to running away
+	}
+	@Override
+	public void playerLostPotion(){
+		// TODO: change movement strategy to chasing
+	}
 }
