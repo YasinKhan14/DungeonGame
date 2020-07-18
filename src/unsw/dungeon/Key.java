@@ -10,15 +10,12 @@ public class Key extends Entity{
 		onMap = true;
     }
     
-	public int allowPass(Moveable moveable) {
+	public boolean allowPass(Moveable moveable) {
 		if (moveable instanceof Player) {
 			((Player) moveable).addKey(this);
 			onMap = false;
-			return -1;
 		}
-		else {
-			return 0;
-		}
+		return true;
 	}
 
 	public boolean defeatedObject() {

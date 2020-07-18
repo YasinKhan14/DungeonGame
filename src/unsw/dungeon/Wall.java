@@ -6,9 +6,9 @@ public class Wall extends Entity{
         super(x, y);
     }
 
-	public int allowPass(Moveable moveable) {
+	public boolean allowPass(Moveable moveable) {
 		// TODO Auto-generated method stub
-		return 1;
+		return false;
 	}
 
 	public boolean defeatedObject() {

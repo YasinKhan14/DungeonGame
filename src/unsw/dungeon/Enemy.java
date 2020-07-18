@@ -43,7 +43,6 @@ public class Enemy extends Entity implements Moveable {
 		else 
 			moveDown();
 
-		
 
 	}
 
@@ -62,11 +61,14 @@ public class Enemy extends Entity implements Moveable {
 		
 	}
     
-	public int allowPass(Moveable moveable) {
-		if (((Player) moveable).hasSword() > 0 ) 
-			return - 1;
-		else
-			return -2;
+	public boolean allowPass(Moveable moveable) {
+		if (((Player) moveable).hasSword() > 0 ) {
+			((Player) moveable).playerRemove(this);
+		}
+		else {
+			((Player) moveable).defeated();
+		}
+		return true;
 	}
 
 	public boolean defeatedObject() {
@@ -98,23 +100,15 @@ public class Enemy extends Entity implements Moveable {
 
 	@Override
 	public boolean canMove(int x, int y) {
-		List<Entity> objectList = dungeon.getMap()[x][y];
+		List<Entity> objectList = dungeon.getMap()[y][x];
         for (Entity obj : objectList){
             if (obj == null) {
                 continue;
             }
-            // assuming wall is also interactable
-            if (!(obj instanceof Interactable)){
+            if(obj.allowPass(this))
                 continue;
-            }
-            // type casting into interactables
-            Interactable i = (Interactable) obj;
-
-            switch(i.allowPass(this)){
-                // wall or portal or door (clsoed) or boulder (for enemy)
-                case 1:
-                    return false;
-            }
+            else
+                return false;
         }
 		return true;
 	}

@@ -11,7 +11,7 @@ public class Portal extends Entity {
 		super(x, y);
 	}
 
-	public int allowPass(Moveable moveable) {
+	public boolean allowPass(Moveable moveable) {
 
 		List<Entity> entityList = dungeon.getEntities();
 		for (Entity entity : entityList) {
@@ -19,11 +19,11 @@ public class Portal extends Entity {
 				Portal portal = (Portal) entity;
 				if (portal.getId() == id) {
 					moveable.updateMap(portal.getX(), portal.getY()); 
-					return 0;
+					return true;
 				}
 			}
 		}
-		return 0;
+		return false;
 	}
 
 	public boolean defeatedObject() {

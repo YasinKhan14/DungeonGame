@@ -113,4 +113,9 @@ public class Player extends Entity implements Goal, Moveable{
     public boolean defeatedObject(){
         return false;
     }
+
+    public void defeated() {
+        //gameOver
+        return;
+    }
 }

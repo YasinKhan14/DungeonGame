@@ -11,17 +11,17 @@ public class Door extends Entity{
       super(x, y);
     }
 
-	public int allowPass(Moveable moveable) {
+	public boolean allowPass(Moveable moveable) {
 		
 		if (moveable instanceof Player) {
 			List<Key> keys = ((Player)moveable).getKeys();
 			for (Key key : keys) {
 				if (key.getId() == id) {
-					return -1;
+					return true;
 				}
 			}
 		}
-		return 1;
+		return false;
 	}
 
 	public boolean defeatedObject() {
