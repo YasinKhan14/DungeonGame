@@ -74,7 +74,7 @@ public class Player extends Entity implements Goal, Moveable{
                 // wall or portal  or door
                 case 1:
                     return false;
-                // boulder
+                // boulder (or floor switch? -> do nothing allow overlap?)
                 case 0:
                     break;
                 case -1: //static items, deleted off map
