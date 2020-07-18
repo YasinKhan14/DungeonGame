@@ -23,10 +23,10 @@ public class Player extends Entity implements Moveable{
      * @param x
      * @param y
      */
-    public Player(Dungeon dungeon, int x, int y, Goal goal) {
+    public Player(Dungeon dungeon, int x, int y) {
         super(x, y);
         this.dungeon = dungeon;
-        this.goal = goal;
+        this.goal = null;
         this.keys = new ArrayList<Key>();
         this.weapon = null;
         this.listeners = new ArrayList<PlayerListener>();
@@ -39,6 +39,9 @@ public class Player extends Entity implements Moveable{
             return 0;
         }
         return weapon.getCharges();
+    }
+    public void setGoal(Goal goal){
+        this.goal = goal;
     }
     public boolean isCompleted(){
         return goal.isCompleted();
