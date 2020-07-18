@@ -44,6 +44,8 @@ public class Player extends Entity implements Moveable{
         this.goal = goal;
     }
     public boolean isCompleted(){
+        if (goal == null)
+            return false;
         return goal.isCompleted();
     }
     public void playerRemove(Entity entity){

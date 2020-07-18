@@ -14,7 +14,9 @@ public class WallTest {
     public void interactTest(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 0, 0);
+        dungeon.setPlayer(player);
         Wall wall = new Wall(0, 1);
+        dungeon.addEntity(wall);
         player.moveDown();
         assertEquals(player.getX(), 0);
         assertEquals(player.getY(), 0);
