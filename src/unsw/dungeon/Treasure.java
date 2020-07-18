@@ -10,8 +10,13 @@ public class Treasure extends Entity implements Interactable {
 	}
 
 	public int moveableIntersect(Moveable moveable) {
-		onMap = false;
-		return 0;
+		if (moveable instanceof Player) {
+			onMap = false;
+			return -1;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	public boolean defeatedObject() {

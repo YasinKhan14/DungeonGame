@@ -11,6 +11,7 @@ public class FloorSwitch extends Entity implements Interactable{
     
 	public int moveableIntersect(Moveable moveable) {
 		// TODO Auto-generated method stub
+		triggered = true;
 		return 0;
 	}
 
