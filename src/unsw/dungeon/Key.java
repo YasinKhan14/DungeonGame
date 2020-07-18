@@ -18,7 +18,7 @@ public class Key extends Entity{
 		return true;
 	}
 
-	public boolean defeatedObject() {
+	public boolean isDestroyed() {
 		return false;
 	}
 

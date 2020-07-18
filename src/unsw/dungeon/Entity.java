@@ -41,5 +41,5 @@ import javafx.beans.property.SimpleIntegerProperty;
     }
 
     public abstract boolean allowPass(Moveable moveable);
-    public abstract boolean defeatedObject();
+    public abstract boolean isDestroyed();
 }

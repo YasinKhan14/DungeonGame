@@ -15,7 +15,7 @@ public class FloorSwitch extends Entity{
 		return true;
 	}
 
-	public boolean defeatedObject() {
+	public boolean isDestroyed() {
 		return triggered;
 	}
     

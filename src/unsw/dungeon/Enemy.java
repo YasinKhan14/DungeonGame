@@ -71,7 +71,7 @@ public class Enemy extends Entity implements Moveable {
 		return true;
 	}
 
-	public boolean defeatedObject() {
+	public boolean isDestroyed() {
 		return !onMap;
 	}
 

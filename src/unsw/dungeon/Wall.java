@@ -11,7 +11,7 @@ public class Wall extends Entity{
 		return false;
 	}
 
-	public boolean defeatedObject() {
+	public boolean isDestroyed() {
 		//again no goals invovle wall
 		return false;
 	}

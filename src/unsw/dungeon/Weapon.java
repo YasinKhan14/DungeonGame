@@ -21,7 +21,7 @@ public class Weapon extends Entity {
     }
 
     @Override
-    public boolean defeatedObject() {
+    public boolean isDestroyed() {
         return pickedUp;
     }
 

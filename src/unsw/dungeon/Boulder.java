@@ -42,7 +42,7 @@ public class Boulder extends Entity implements Moveable {
 	}
 
 	@Override
-	public boolean defeatedObject() {
+	public boolean isDestroyed() {
 		//stubbed for now as no goals invovling boulders;
 		return false;
 	}

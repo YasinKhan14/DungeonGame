@@ -14,7 +14,7 @@ public class BasicGoal implements Goal {
 
     public boolean isCompleted() {
         for (Entity entity : goalEntityList) {
-            if (!entity.defeatedObject())
+            if (!entity.isDestroyed())
                 return false;
         }
         return true;

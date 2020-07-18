@@ -17,7 +17,7 @@ public class Potion extends Entity {
 		return true;
 	}
 
-	public boolean defeatedObject() {
+	public boolean isDestroyed() {
 		//stubbed for now as no goals invovling potion
 		return false;
 	}

@@ -24,7 +24,7 @@ public class Door extends Entity{
 		return false;
 	}
 
-	public boolean defeatedObject() {
+	public boolean isDestroyed() {
 		return isOpen;
 	}
     

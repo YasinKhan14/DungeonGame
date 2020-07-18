@@ -2,7 +2,6 @@ package unsw.dungeon;
 
 import java.util.*;
 
-import jdk.internal.vm.compiler.word.SignedWord;
 
 /**
  * The player entity
@@ -115,7 +114,7 @@ public class Player extends Entity implements Moveable{
     }
 
     @Override
-    public boolean defeatedObject(){
+    public boolean isDestroyed(){
         return false;
     }
 
