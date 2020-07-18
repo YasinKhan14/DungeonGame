@@ -9,14 +9,12 @@ public class Potion extends Entity {
 		onMap = true;
     }
     
-	public int allowPass(Moveable moveable) {
+	public boolean allowPass(Moveable moveable) {
 		if (moveable instanceof Player) {
 			onMap = false;
-			return -1;
+			((Player) moveable).playerRemove(this);
 		}
-		else {
-			return 0;
-		}
+		return true;
 	}
 
 	public boolean defeatedObject() {
