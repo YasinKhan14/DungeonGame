@@ -15,7 +15,7 @@ public class KeyTest {
     public void keyPickup(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 0, 0);
-        Boulder key = new Key(1,0);
+        Key key = new Key(1,0,0);
         dungeon.setPlayer(player);
         dungeon.addEntity(key);
         player.moveRight();

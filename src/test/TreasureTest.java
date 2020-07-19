@@ -10,12 +10,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 import unsw.dungeon.*;
 
 public class TreasureTest {
-    
+
     @Test
     public void treasureRemoved(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 0, 0);
-        Boulder treasure = new Treasure(1,0);
+        Treasure treasure = new Treasure(1,0);
         dungeon.setPlayer(player);
         dungeon.addEntity(treasure);
         player.moveRight();

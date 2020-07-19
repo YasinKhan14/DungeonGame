@@ -22,13 +22,18 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	}
  
 	public boolean allowPass(Moveable moveable) {
-		if (((Player) moveable).hasSword() > 0 ) {
-			((Player) moveable).playerRemove(this);
+
+		if (moveable instanceof Player) {
+			Player player = (Player) moveable;
+			if (player.hasSword()) {
+				player.weaponDecrement();
+				player.playerRemove(this);
+			}
+			else {
+				player.defeated();
+			}
 		}
-		else {
-			((Player) moveable).defeated();
-		}
-		return true;
+		return false;
 	}
 
 	public boolean isDestroyed() {
@@ -77,6 +82,7 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	public void updateMap(int x, int y) {
 		dungeon.updateMap(this, x, y);
 	}
+	
 	public MoveStrategy getStrategy() {
 		return currentStrategy;
 	}

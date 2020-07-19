@@ -15,6 +15,7 @@ public class Player extends Entity implements Moveable{
     private Goal goal;
     private Weapon weapon;
     private List<PlayerListener> listeners;
+    private Boolean alive;
     //enemy listener?
     //weapon -> time active?
     //potion -> time active?
@@ -30,15 +31,16 @@ public class Player extends Entity implements Moveable{
         this.keys = new ArrayList<Key>();
         this.weapon = null;
         this.listeners = new ArrayList<PlayerListener>();
+        this.alive = true;
     }
     public void equipSword(Weapon weapon){
         this.weapon = weapon;
     }
-    public int hasSword(){
+    public boolean hasSword(){
         if (weapon == null){
-            return 0;
+            return false;
         }
-        return weapon.getCharges();
+        return true;
     }
     public void setGoal(Goal goal){
         this.goal = goal;
@@ -137,11 +139,10 @@ public class Player extends Entity implements Moveable{
 
     @Override
     public boolean isDestroyed(){
-        return false;
+        return alive;
     }
 
     public void defeated() {
-        //gameOver
-        return;
+        alive = false;
     }
 }
