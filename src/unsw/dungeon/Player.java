@@ -19,9 +19,6 @@ public class Player extends Entity implements Moveable{
     private Timer potionTimer;
     private TimerTask currentTask;
     private Boolean alive;
-    //enemy listener?
-    //weapon -> time active?
-    //potion -> time active?
     /**
      * Create a player positioned in square (x,y)
      * @param x
@@ -30,13 +27,14 @@ public class Player extends Entity implements Moveable{
     public Player(Dungeon dungeon, int x, int y) {
         super(x, y);
         this.dungeon = dungeon;
-        this.goal = null;
         this.keys = new ArrayList<Key>();
-        this.weapon = null;
         this.listeners = new ArrayList<PlayerListener>();
-        this.hasPotion = false;
         this.potionTimer = new Timer();
+        this.hasPotion = false;
         this.alive = true;
+        this.weapon = null;
+        this.goal = null;
+
     }
     public void equipSword(Weapon weapon){
         this.weapon = weapon;
@@ -75,28 +73,30 @@ public class Player extends Entity implements Moveable{
     public void addListener(PlayerListener listener){
         listeners.add(listener);
     }
-    public void notifyPlayerGotPotion(){
+    public void playerGotPotion(){
         if (hasPotion && currentTask != null){
             currentTask.cancel();
         }else{
-            for (PlayerListener listener : listeners){
-                listener.playerGotPotion();
-            }
+            notifyPlayerGotPotion();
         }
         currentTask = new TimerTask(){
             public void run(){
                 notifyPlayerLostPotion();
+                hasPotion = false;
             }
         };
         potionTimer.schedule(currentTask, 10000);
         hasPotion = true;
     }
-
+    public void notifyPlayerGotPotion(){
+        for (PlayerListener listener : listeners){
+            listener.playerGotPotion();
+        }
+    }
     public void notifyPlayerLostPotion(){
         for (PlayerListener listener : listeners){
             listener.playerLostPotion();
         }
-        hasPotion = false;
     }
 	@Override
     public void moveUp() {

@@ -32,6 +32,12 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	}
 	public void setPlayer(Player player){
 		this.player = player;
+		moveTask = new TimerTask(){
+			public void run(){
+				nextMove(player);
+			}
+		};
+		moveTimer.scheduleAtFixedRate(moveTask, 500, 500);
 	}
 	public boolean allowPass(Moveable moveable) {
 

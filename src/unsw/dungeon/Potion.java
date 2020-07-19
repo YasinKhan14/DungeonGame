@@ -13,6 +13,7 @@ public class Potion extends Entity {
 		if (moveable instanceof Player) {
 			onMap = false;
 			((Player) moveable).playerRemove(this);
+			((Player) moveable).playerGotPotion();
 		}
 		return true;
 	}
