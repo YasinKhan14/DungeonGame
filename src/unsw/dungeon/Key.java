@@ -20,7 +20,7 @@ public class Key extends Entity{
 	}
 
 	public boolean isDestroyed() {
-		return false;
+		return !onMap;
 	}
 
 	public int getId() {

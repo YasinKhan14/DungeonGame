@@ -53,7 +53,7 @@ public class Boulder extends Entity implements Moveable {
 			if (obj == null) {
 				continue;
 			}
-			if (obj instanceof Wall || obj instanceof Boulder){
+			if (!obj.allowPass(this)){
 				return false;
 			}
 		}

@@ -133,7 +133,9 @@ public class Player extends Entity implements Moveable{
     @Override
     public boolean canMove(int x, int y){
         List<Entity> objectList = dungeon.getMap()[y][x];
-        for (Entity obj : objectList){
+        List<Entity> copy = new ArrayList<Entity>();
+        copy.addAll(objectList);
+        for (Entity obj : copy){
             if (obj == null) {
                 continue;
             }
@@ -142,6 +144,7 @@ public class Player extends Entity implements Moveable{
             else
                 return false;
         }
+
         if(isCompleted()){
             // trigger end game function
         }

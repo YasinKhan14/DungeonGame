@@ -92,7 +92,7 @@ public class DoorTest {
         dungeon.addEntity(door);
         dungeon.addEntity(boulder);
         player.moveRight();
-        assertEquals(player.getX(), 1);
+        assertEquals(player.getX(), 0);
         assertEquals(player.getY(), 0);
         assertEquals(boulder.getX(), 1);
         assertEquals(boulder.getY(), 0);
@@ -104,10 +104,8 @@ public class DoorTest {
     @Test
     public void enemyDoor(){
         Dungeon dungeon = new Dungeon(10, 10);
-        Player player = new Player(dungeon, 0, 0);
         Enemy enemy = new Enemy(1, 0, new GreedyEuclidean(), dungeon);
         Door door = new Door(2,0,0);
-        dungeon.setPlayer(player);
         dungeon.addEntity(enemy);
         dungeon.addEntity(door);
         enemy.moveRight();

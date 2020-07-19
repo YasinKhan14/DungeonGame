@@ -46,7 +46,6 @@ public class WeaponTest {
         player.weaponDecrement();
         assertEquals(weapon.getCharges(), 1);
         player.weaponDecrement();
-        assertTrue(player.hasSword());
         assertEquals(weapon.getCharges(), 0);
         assertFalse(player.hasSword());
 

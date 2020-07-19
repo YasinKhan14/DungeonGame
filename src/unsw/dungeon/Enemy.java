@@ -23,6 +23,7 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 		this.currentStrategy = strategy;
 		this.moveTimer = new Timer();
 		this.moveTask = null;
+		this.dungeon = dungeon;
 		
 	}
 	
@@ -46,6 +47,7 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 			if (player.hasSword()) {
 				player.weaponDecrement();
 				player.playerRemove(this);
+				onMap = false;
 			}
 			else {
 				player.defeated();
@@ -60,29 +62,35 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 
 	@Override
 	public void moveUp() {
-		updateMap(getX(), getY() + 1);
+		if (canMove(getX(), getY() -1))
+			updateMap(getX(), getY() - 1);
 
 	}
 
 	@Override
 	public void moveDown() {
-		updateMap(getX(), getY() - 1);
+		if (canMove(getX(), getY() + 1))
+			updateMap(getX(), getY() + 1);
 	}
 
 	@Override
 	public void moveLeft() {
-		updateMap(getX() - 1, getY());
+		if (canMove(getX() - 1, getY()))
+			updateMap(getX() - 1, getY());
 
 	}
 
 	@Override
 	public void moveRight() {
-		updateMap(getX() + 1, getY());
+		if (canMove(getX() + 1, getY()))
+			updateMap(getX() + 1, getY());
 
 	}
 
 	@Override
 	public boolean canMove(int x, int y) {
+		if (x < 0 || x >= dungeon.getWidth() || y < 0 || y >= dungeon.getHeight())
+			return false;
 		List<Entity> objectList = dungeon.getMap()[y][x];
         for (Entity obj : objectList){
             if (obj == null) {
@@ -107,7 +115,7 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	
 	@Override
 	public void playerGotPotion(){
-		currentStrategy = new GreedyEuclidean();
+		currentStrategy = new EscapeStrategy();
 	}
 	@Override
 	public void playerLostPotion(){

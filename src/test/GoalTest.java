@@ -45,7 +45,7 @@ public class GoalTest {
         simpleGoal.attachGoalEntity(treasure2);
         simpleGoal.attachGoalEntity(treasure3);
         dungeon.setPlayer(player);
-
+        player.setGoal(simpleGoal);
         dungeon.addEntity(treasure1);
         dungeon.addEntity(treasure2);
         dungeon.addEntity(treasure3);
@@ -67,7 +67,7 @@ public class GoalTest {
         Treasure treasure1 = new Treasure(1, 0);
         Treasure treasure2 = new Treasure(2, 0);
         Treasure treasure3 = new Treasure(3, 0);
-        Weapon weapon = new Weapon(0, 4);
+        Weapon weapon = new Weapon(4, 0);
 
         BasicGoal collectTreasures = new BasicGoal("collectAllTreasures");
         BasicGoal destroyEnemies = new BasicGoal("destroyAllEnemies");
@@ -80,7 +80,7 @@ public class GoalTest {
         complexAnd.attachGoal(collectTreasures);
 
         dungeon.setPlayer(player);
-
+        player.setGoal(complexAnd);
         dungeon.addEntity(treasure1);
         dungeon.addEntity(treasure2);
         dungeon.addEntity(treasure3);
@@ -110,7 +110,7 @@ public class GoalTest {
         Treasure treasure1 = new Treasure(1, 0);
         Treasure treasure2 = new Treasure(2, 0);
         Treasure treasure3 = new Treasure(3, 0);
-        Weapon weapon = new Weapon(0, 4);
+        Weapon weapon = new Weapon(4, 0);
 
         BasicGoal collectTreasures = new BasicGoal("collectAllTreasures");
         BasicGoal destroyEnemies = new BasicGoal("destroyAllEnemies");
@@ -118,12 +118,12 @@ public class GoalTest {
         collectTreasures.attachGoalEntity(treasure2);
         collectTreasures.attachGoalEntity(treasure3);
         destroyEnemies.attachGoalEntity(enemy);
-        ComplexGoal complexAnd = new ComplexGoal("treasure&enemies", "or");
-        complexAnd.attachGoal(destroyEnemies);
-        complexAnd.attachGoal(collectTreasures);
+        ComplexGoal complexOr = new ComplexGoal("treasure&enemies", "or");
+        complexOr.attachGoal(destroyEnemies);
+        complexOr.attachGoal(collectTreasures);
 
         dungeon.setPlayer(player);
-
+        player.setGoal(complexOr);
         dungeon.addEntity(treasure1);
         dungeon.addEntity(treasure2);
         dungeon.addEntity(treasure3);

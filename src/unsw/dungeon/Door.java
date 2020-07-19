@@ -19,6 +19,7 @@ public class Door extends Entity{
 			List<Key> keys = ((Player)moveable).getKeys();
 			for (Key key : keys) {
 				if (key.getId() == id) {
+					isOpen = true;
 					return true;
 				}
 			}
