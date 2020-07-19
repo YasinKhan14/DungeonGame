@@ -22,4 +22,24 @@ public class WallTest {
         assertEquals(player.getY(), 0);
         assertFalse(wall.isDestroyed());
     }
+
+    @Test
+    public void MovementTest(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 5, 5);
+        dungeon.setPlayer(player);
+        player.moveDown();
+        assertEquals(5, player.getX());
+        assertEquals(6, player.getY());
+        player.moveUp();
+        assertEquals(5, player.getX());
+        assertEquals(5, player.getY());
+        player.moveLeft();
+        assertEquals(4, player.getX());
+        assertEquals(5, player.getY());
+        player.moveRight();
+        assertEquals(5, player.getX());
+        assertEquals(5, player.getY());
+
+    }
 }
