@@ -15,9 +15,10 @@ public class Player extends Entity implements Moveable{
     private Goal goal;
     private Weapon weapon;
     private List<PlayerListener> listeners;
-    //enemy listener?
-    //weapon -> time active?
-    //potion -> time active?
+    private boolean hasPotion;
+    private Timer potionTimer;
+    private TimerTask currentTask;
+    private Boolean alive;
     /**
      * Create a player positioned in square (x,y)
      * @param x
@@ -26,19 +27,23 @@ public class Player extends Entity implements Moveable{
     public Player(Dungeon dungeon, int x, int y) {
         super(x, y);
         this.dungeon = dungeon;
-        this.goal = null;
         this.keys = new ArrayList<Key>();
-        this.weapon = null;
         this.listeners = new ArrayList<PlayerListener>();
+        this.potionTimer = new Timer();
+        this.hasPotion = false;
+        this.alive = true;
+        this.weapon = null;
+        this.goal = null;
+
     }
     public void equipSword(Weapon weapon){
         this.weapon = weapon;
     }
-    public int hasSword(){
+    public boolean hasSword(){
         if (weapon == null){
-            return 0;
+            return false;
         }
-        return weapon.getCharges();
+        return true;
     }
     public void setGoal(Goal goal){
         this.goal = goal;
@@ -68,9 +73,29 @@ public class Player extends Entity implements Moveable{
     public void addListener(PlayerListener listener){
         listeners.add(listener);
     }
+    public void playerGotPotion(){
+        if (hasPotion && currentTask != null){
+            currentTask.cancel();
+        }else{
+            notifyPlayerGotPotion();
+        }
+        currentTask = new TimerTask(){
+            public void run(){
+                notifyPlayerLostPotion();
+                hasPotion = false;
+            }
+        };
+        potionTimer.schedule(currentTask, 10000);
+        hasPotion = true;
+    }
     public void notifyPlayerGotPotion(){
         for (PlayerListener listener : listeners){
             listener.playerGotPotion();
+        }
+    }
+    public void notifyPlayerLostPotion(){
+        for (PlayerListener listener : listeners){
+            listener.playerLostPotion();
         }
     }
 	@Override
@@ -112,10 +137,6 @@ public class Player extends Entity implements Moveable{
             if (obj == null) {
                 continue;
             }
-            // assuming wall is also interactable
-            
-            // type casting into interactables
-
             if(obj.allowPass(this))
                 continue;
             else
@@ -137,11 +158,10 @@ public class Player extends Entity implements Moveable{
 
     @Override
     public boolean isDestroyed(){
-        return false;
+        return alive;
     }
 
     public void defeated() {
-        //gameOver
-        return;
+        alive = false;
     }
 }

@@ -1,6 +1,9 @@
 package unsw.dungeon;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Enemy extends Entity implements Moveable, PlayerListener {
 
@@ -8,6 +11,9 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	private Dungeon dungeon;
 	private MoveStrategy defaultStrategy;
 	private MoveStrategy currentStrategy;
+	private Timer moveTimer;
+	private TimerTask moveTask;
+	private Player player;
 
 
     public Enemy(int x, int y, MoveStrategy strategy, Dungeon dungeon) {
@@ -15,20 +21,37 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 		onMap = true;
 		this.defaultStrategy = strategy;
 		this.currentStrategy = strategy;
+		this.moveTimer = new Timer();
+		this.moveTask = null;
+		
 	}
 	
 	public void nextMove(Player player) {
-		currentStrategy.nextMove(player, this);
+		if (player != null)
+			currentStrategy.nextMove(player, this);
 	}
- 
+	public void setPlayer(Player player){
+		this.player = player;
+		moveTask = new TimerTask(){
+			public void run(){
+				nextMove(player);
+			}
+		};
+		moveTimer.scheduleAtFixedRate(moveTask, 500, 500);
+	}
 	public boolean allowPass(Moveable moveable) {
-		if (((Player) moveable).hasSword() > 0 ) {
-			((Player) moveable).playerRemove(this);
+
+		if (moveable instanceof Player) {
+			Player player = (Player) moveable;
+			if (player.hasSword()) {
+				player.weaponDecrement();
+				player.playerRemove(this);
+			}
+			else {
+				player.defeated();
+			}
 		}
-		else {
-			((Player) moveable).defeated();
-		}
-		return true;
+		return false;
 	}
 
 	public boolean isDestroyed() {
@@ -77,6 +100,7 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	public void updateMap(int x, int y) {
 		dungeon.updateMap(this, x, y);
 	}
+	
 	public MoveStrategy getStrategy() {
 		return currentStrategy;
 	}
