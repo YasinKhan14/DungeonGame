@@ -13,14 +13,30 @@ public class WallTest {
     @Test
     public void interactTest(){
         Dungeon dungeon = new Dungeon(10, 10);
-        Player player = new Player(dungeon, 0, 0);
+        Player player = new Player(dungeon, 5, 5);
         dungeon.setPlayer(player);
-        Wall wall = new Wall(0, 1);
-        dungeon.addEntity(wall);
+        Wall wall1 = new Wall(5, 6);
+        Wall wall2 = new Wall(5, 4);
+        Wall wall3 = new Wall(6, 5);
+        Wall wall4 = new Wall(4, 5);
+
+        dungeon.addEntity(wall1);
+        dungeon.addEntity(wall2);
+        dungeon.addEntity(wall3);
+        dungeon.addEntity(wall4);
         player.moveDown();
-        assertEquals(player.getX(), 0);
-        assertEquals(player.getY(), 0);
-        assertFalse(wall.isDestroyed());
+        assertEquals(player.getX(), 5);
+        assertEquals(player.getY(), 5);
+        player.moveUp();
+        assertEquals(player.getX(), 5);
+        assertEquals(player.getY(), 5);
+        player.moveLeft();
+        assertEquals(player.getX(), 5);
+        assertEquals(player.getY(), 5);
+        player.moveRight();
+        assertEquals(player.getX(), 5);
+        assertEquals(player.getY(), 5);
+        assertFalse(wall1.isDestroyed());
     }
 
     @Test
@@ -40,6 +56,6 @@ public class WallTest {
         player.moveRight();
         assertEquals(5, player.getX());
         assertEquals(5, player.getY());
-
     }
+
 }
