@@ -15,6 +15,9 @@ public class Player extends Entity implements Moveable{
     private Goal goal;
     private Weapon weapon;
     private List<PlayerListener> listeners;
+    private boolean hasPotion;
+    private Timer potionTimer;
+    private TimerTask currentTask;
     //enemy listener?
     //weapon -> time active?
     //potion -> time active?
@@ -30,6 +33,8 @@ public class Player extends Entity implements Moveable{
         this.keys = new ArrayList<Key>();
         this.weapon = null;
         this.listeners = new ArrayList<PlayerListener>();
+        this.hasPotion = false;
+        this.potionTimer = new Timer();
     }
     public void equipSword(Weapon weapon){
         this.weapon = weapon;
@@ -69,9 +74,27 @@ public class Player extends Entity implements Moveable{
         listeners.add(listener);
     }
     public void notifyPlayerGotPotion(){
-        for (PlayerListener listener : listeners){
-            listener.playerGotPotion();
+        if (hasPotion && currentTask != null){
+            currentTask.cancel();
+        }else{
+            for (PlayerListener listener : listeners){
+                listener.playerGotPotion();
+            }
         }
+        currentTask = new TimerTask(){
+            public void run(){
+                notifyPlayerLostPotion();
+            }
+        };
+        potionTimer.schedule(currentTask, 10000);
+        hasPotion = true;
+    }
+
+    public void notifyPlayerLostPotion(){
+        for (PlayerListener listener : listeners){
+            listener.playerLostPotion();
+        }
+        hasPotion = false;
     }
 	@Override
     public void moveUp() {
@@ -112,10 +135,6 @@ public class Player extends Entity implements Moveable{
             if (obj == null) {
                 continue;
             }
-            // assuming wall is also interactable
-            
-            // type casting into interactables
-
             if(obj.allowPass(this))
                 continue;
             else
