@@ -85,7 +85,7 @@ public class Player extends Entity implements Moveable{
                 hasPotion = false;
             }
         };
-        potionTimer.schedule(currentTask, 10000);
+        potionTimer.schedule(currentTask, 5000);
         hasPotion = true;
     }
     public void notifyPlayerGotPotion(){
@@ -100,25 +100,25 @@ public class Player extends Entity implements Moveable{
     }
 	@Override
     public void moveUp() {
-        if (getY() > 0 && canMove(getX(), getY() -1)) {
+        if (canMove(getX(), getY() -1)) {
             updateMap(getX(), getY() - 1);
         }
     }
 	@Override
     public void moveDown() {
-        if (getY() < dungeon.getHeight() - 1 && canMove(getX(), getY() + 1)) {
+        if (canMove(getX(), getY() + 1)) {
             updateMap(getX(), getY() + 1);
         }
     }
 	@Override
     public void moveLeft() {
-        if (getX() > 0 && canMove(getX() - 1, getY())) {
+        if (canMove(getX() - 1, getY())) {
             updateMap(getX() - 1, getY());
         }
     }
 	@Override
     public void moveRight() {
-        if (getX() < dungeon.getWidth() - 1 && canMove(getX() + 1, getY())) {
+        if (canMove(getX() + 1, getY())) {
             updateMap(getX() + 1, getY());
         }
     }
@@ -132,6 +132,8 @@ public class Player extends Entity implements Moveable{
      */
     @Override
     public boolean canMove(int x, int y){
+        if (x < 0 || x >= dungeon.getWidth() || y < 0 || y >= dungeon.getHeight())
+			return false;
         List<Entity> objectList = dungeon.getMap()[y][x];
         List<Entity> copy = new ArrayList<Entity>();
         copy.addAll(objectList);
@@ -156,12 +158,16 @@ public class Player extends Entity implements Moveable{
     }
     @Override
     public boolean allowPass(Moveable moveable){
+        if (moveable instanceof Enemy){
+            defeated();
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean isDestroyed(){
-        return alive;
+        return !alive;
     }
 
     public void defeated() {

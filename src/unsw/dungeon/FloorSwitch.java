@@ -10,7 +10,6 @@ public class FloorSwitch extends Entity{
     }
     
 	public boolean allowPass(Moveable moveable) {
-		// TODO Auto-generated method stub
 		triggered = true;
 		return true;
 	}

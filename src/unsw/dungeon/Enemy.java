@@ -33,9 +33,13 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	}
 	public void setPlayer(Player player){
 		this.player = player;
+		player.addListener(this);
+	}
+	public void startMoving(){
 		moveTask = new TimerTask(){
 			public void run(){
 				nextMove(player);
+				//System.out.println("x = " + getX() + " y = " + getY());
 			}
 		};
 		moveTimer.scheduleAtFixedRate(moveTask, 500, 500);
@@ -46,6 +50,10 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 			Player player = (Player) moveable;
 			if (player.hasSword()) {
 				player.weaponDecrement();
+				player.playerRemove(this);
+				onMap = false;
+			}
+			else if (currentStrategy instanceof EscapeStrategy){
 				player.playerRemove(this);
 				onMap = false;
 			}
@@ -92,7 +100,9 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 		if (x < 0 || x >= dungeon.getWidth() || y < 0 || y >= dungeon.getHeight())
 			return false;
 		List<Entity> objectList = dungeon.getMap()[y][x];
-        for (Entity obj : objectList){
+		List<Entity> copy = new ArrayList<Entity>();
+        copy.addAll(objectList);
+        for (Entity obj : copy){
             if (obj == null) {
                 continue;
             }

@@ -57,6 +57,7 @@ public class Dungeon {
 
     public void setPlayer(Player player) {
         this.player = player;
+        this.addEntity(player);
     }
 
     public void addEntity(Entity entity) {

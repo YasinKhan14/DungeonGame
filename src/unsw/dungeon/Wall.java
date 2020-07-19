@@ -7,12 +7,10 @@ public class Wall extends Entity{
     }
 
 	public boolean allowPass(Moveable moveable) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean isDestroyed() {
-		//again no goals invovle wall
 		return false;
 	}
 

@@ -1,5 +1,6 @@
 package unsw.dungeon;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Boulder extends Entity implements Moveable {
@@ -51,6 +52,8 @@ public class Boulder extends Entity implements Moveable {
 		if (x < 0 || x >= dungeon.getWidth() || y < 0 || y >= dungeon.getHeight())
 			return false;
 		List<Entity> objectList = dungeon.getMap()[y][x];
+		List<Entity> copy = new ArrayList<Entity>();
+        copy.addAll(objectList);
 		for (Entity obj : objectList){
 			if (obj == null) {
 				continue;

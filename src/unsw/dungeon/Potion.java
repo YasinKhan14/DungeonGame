@@ -20,7 +20,7 @@ public class Potion extends Entity {
 
 	public boolean isDestroyed() {
 		//stubbed for now as no goals invovling potion
-		return false;
+		return !onMap;
 	}
 
 }
