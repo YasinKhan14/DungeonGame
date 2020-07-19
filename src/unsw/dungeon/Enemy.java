@@ -77,7 +77,7 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	public void updateMap(int x, int y) {
 		dungeon.updateMap(this, x, y);
 	}
-	public void getStrategy() {
+	public MoveStrategy getStrategy() {
 		return currentStrategy;
 	}
 	

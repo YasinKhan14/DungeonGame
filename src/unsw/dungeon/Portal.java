@@ -12,7 +12,7 @@ public class Portal extends Entity {
 		this.dungeon = dungeon;
 	}
 
-	public boolean allowPass(Moveable moveable,) {
+	public boolean allowPass(Moveable moveable) {
 
 		List<Entity> entityList = dungeon.getEntities();
 		for (Entity entity : entityList) {
