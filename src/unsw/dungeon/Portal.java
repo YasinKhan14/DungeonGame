@@ -7,9 +7,10 @@ public class Portal extends Entity {
 	private int id;
 	private Dungeon dungeon;
 
-	public Portal(int x, int y, Dungeon dungeon) {
+	public Portal(int x, int y, Dungeon dungeon, int id) {
 		super(x, y);
 		this.dungeon = dungeon;
+		this.id = id;
 	}
 
 	public boolean allowPass(Moveable moveable) {

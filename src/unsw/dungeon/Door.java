@@ -7,8 +7,10 @@ public class Door extends Entity{
     private int id;
     private boolean isOpen;
 
-    public Door(int x, int y) {
-      super(x, y);
+    public Door(int x, int y, int id) {
+	  super(x, y);
+	  isOpen = false;
+	  this.id = id;
     }
 
 	public boolean allowPass(Moveable moveable) {

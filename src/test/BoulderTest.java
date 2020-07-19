@@ -48,7 +48,7 @@ public class BoulderTest {
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 0, 0);
         Boulder boulder = new Boulder(1,0, dungeon);
-        Boulder wall = new Wall(2,0, dungeon);
+        Wall wall = new Wall(2,0);
         dungeon.setPlayer(player);
         dungeon.addEntity(boulder);
         dungeon.addEntity(wall);
@@ -63,7 +63,7 @@ public class BoulderTest {
 
 
     @Test
-    public void boulderWallNotAdjacent(){
+    public void doubleBoulderNotAdjacent(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 0, 0);
         Boulder boulder = new Boulder(0,1, dungeon);
