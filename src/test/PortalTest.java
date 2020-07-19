@@ -19,8 +19,31 @@ public class PortalTest {
         assertFalse(portal1.isDestroyed());
     
     }
+    @Test
     public void enemyTeleport(){
-        
+        Dungeon dungeon = new Dungeon(10, 10);
+        Enemy enemy = new Enemy(5, 5, new GreedyEuclidean(), dungeon);
+        Portal portal1 = new Portal(5, 6, dungeon, 1);
+        Portal portal2 = new Portal(3, 3, dungeon, 1);
+        dungeon.addEntity(enemy);
+        dungeon.addEntity(portal1);
+        dungeon.addEntity(portal2);
+        enemy.moveDown();
+        assertEquals(3, enemy.getX());
+        assertEquals(3, enemy.getY());
+    }
+    @Test
+    public void boulderTeleport(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Boulder boulder = new Boulder(5, 5, dungeon);
+        Portal portal1 = new Portal(5, 6, dungeon, 1);
+        Portal portal2 = new Portal(3, 3, dungeon, 1);
+        dungeon.addEntity(boulder);
+        dungeon.addEntity(portal1);
+        dungeon.addEntity(portal2);
+        boulder.moveDown();
+        assertEquals(3, boulder.getX());
+        assertEquals(3, boulder.getY());
     }
 
 }

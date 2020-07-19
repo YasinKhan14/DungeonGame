@@ -48,6 +48,8 @@ public class Boulder extends Entity implements Moveable {
 	}
 	@Override
 	public boolean canMove(int x, int y){
+		if (x < 0 || x >= dungeon.getWidth() || y < 0 || y >= dungeon.getHeight())
+			return false;
 		List<Entity> objectList = dungeon.getMap()[y][x];
 		for (Entity obj : objectList){
 			if (obj == null) {
@@ -62,25 +64,25 @@ public class Boulder extends Entity implements Moveable {
 
 	@Override
 	public void moveUp() {
-        if (getY() > 0) {
+        if (canMove(getX(), getY() - 1)) {
             updateMap(getX(), getY() - 1);
         }
     }
 	@Override
     public void moveDown() {
-        if (getY() < dungeon.getHeight() - 1) {
+        if (canMove(getX(), getY() + 1)) {
             updateMap(getX(), getY() + 1);
         }
     }
 	@Override
     public void moveLeft() {
-        if (getX() > 0) {
+        if (canMove(getX() - 1, getY())) {
             updateMap(getX() - 1, getY());
         }
     }
 	@Override
     public void moveRight() {
-        if (getX() < dungeon.getWidth() - 1) {
+        if (canMove(getX() + 1, getY())) {
             updateMap(getX() + 1, getY());
         }
 	}
