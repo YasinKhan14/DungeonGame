@@ -6,20 +6,21 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 
 	private boolean onMap;
 	private Dungeon dungeon;
-	private MoveStrategy strategy;
+	private MoveStrategy defaultStrategy;
+	private MoveStrategy currentStrategy;
 
 
-    public Enemy(int x, int y, MoveStrategy strategy) {
+    public Enemy(int x, int y, MoveStrategy strategy, Dungeon dungeon) {
 		super(x, y);
 		onMap = true;
-		this.strategy = strategy;
+		this.defaultStrategy = strategy;
+		this.currentStrategy = strategy;
 	}
 	
 	public void nextMove(Player player) {
-		strategy.nextMove(player, this);
+		currentStrategy.nextMove(player, this);
 	}
-
-    
+ 
 	public boolean allowPass(Moveable moveable) {
 		if (((Player) moveable).hasSword() > 0 ) {
 			((Player) moveable).playerRemove(this);
@@ -76,13 +77,16 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	public void updateMap(int x, int y) {
 		dungeon.updateMap(this, x, y);
 	}
+	public void getStrategy() {
+		return currentStrategy;
+	}
 	
 	@Override
 	public void playerGotPotion(){
-		// TODO: change movement strategy to running away
+		currentStrategy = new GreedyEuclidean();
 	}
 	@Override
 	public void playerLostPotion(){
-		// TODO: change movement strategy to chasing
+		currentStrategy = defaultStrategy;
 	}
 }

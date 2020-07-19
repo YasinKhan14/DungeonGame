@@ -38,7 +38,7 @@ public class Boulder extends Entity implements Moveable {
 				return true;
 			}
 		}
-		return false; //1 special value to denote its from boulder
+		return false; 
 	}
 
 	@Override

@@ -5,9 +5,10 @@ public class Key extends Entity{
     private boolean onMap;
     private int id;
 
-    public Key(int x, int y) {
+    public Key(int x, int y, int id) {
 		super(x, y);
 		onMap = true;
+		this.id = id;
     }
     
 	public boolean allowPass(Moveable moveable) {

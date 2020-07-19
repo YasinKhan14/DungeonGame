@@ -7,17 +7,18 @@ public class Portal extends Entity {
 	private int id;
 	private Dungeon dungeon;
 
-	public Portal(int x, int y) {
+	public Portal(int x, int y, Dungeon dungeon) {
 		super(x, y);
+		this.dungeon = dungeon;
 	}
 
-	public boolean allowPass(Moveable moveable) {
+	public boolean allowPass(Moveable moveable,) {
 
 		List<Entity> entityList = dungeon.getEntities();
 		for (Entity entity : entityList) {
 			if (entity instanceof Portal) {
 				Portal portal = (Portal) entity;
-				if (portal.getId() == id) {
+				if (this != portal && portal.getId() == id) {
 					moveable.updateMap(portal.getX(), portal.getY()); 
 					return true;
 				}
