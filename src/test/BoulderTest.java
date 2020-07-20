@@ -22,6 +22,48 @@ public class BoulderTest {
         assertEquals(boulder.getX(), 0);
         assertEquals(boulder.getY(), 0);
     }
+
+    @Test
+    public void borderRight(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 8, 0);
+        Boulder boulder = new Boulder(9,0, dungeon);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(boulder);
+        player.moveRight();
+        assertEquals(player.getX(), 8);
+        assertEquals(player.getY(), 0);
+        assertEquals(boulder.getX(), 9);
+        assertEquals(boulder.getY(), 0);
+    }
+
+    @Test
+    public void borderLeft(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 1, 0);
+        Boulder boulder = new Boulder(0,0, dungeon);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(boulder);
+        player.moveLeft();
+        assertEquals(player.getX(), 1);
+        assertEquals(player.getY(), 0);
+        assertEquals(boulder.getX(), 0);
+        assertEquals(boulder.getY(), 0);
+    }
+
+    @Test
+    public void borderDown(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 0, 8);
+        Boulder boulder = new Boulder(0,9, dungeon);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(boulder);
+        player.moveDown();
+        assertEquals(player.getX(), 0);
+        assertEquals(player.getY(), 8);
+        assertEquals(boulder.getX(), 0);
+        assertEquals(boulder.getY(), 9);
+    }
     
     @Test
     public void singeBoulderRight(){

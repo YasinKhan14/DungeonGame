@@ -33,7 +33,7 @@ public class EscapeStrategy implements MoveStrategy {
             enemy.moveDown();
     }
 
-    public boolean isMax(double comp, double x1, double x2, double x3) {
+    private boolean isMax(double comp, double x1, double x2, double x3) {
 		double costArray[] = {comp, x1, x2, x3};
 		if (comp == -1)
             return false;
@@ -46,7 +46,7 @@ public class EscapeStrategy implements MoveStrategy {
 		return true;
 	}
 
-	public double euclideanDistance (int x1, int y1, int x2, int y2) {
+	private double euclideanDistance (int x1, int y1, int x2, int y2) {
 		double euclideanDistance = Math.sqrt((x2 - x1)*(x2 - x1) + (y2 - y1) * (y2 - y1));
 		return euclideanDistance;
 		

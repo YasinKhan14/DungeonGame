@@ -23,6 +23,17 @@ public class WeaponTest {
     }
 
     @Test
+    public void enemySwordPickup(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Enemy enemy = new Enemy(0, 0, new GreedyEuclidean(), dungeon);
+        Weapon weapon = new Weapon(1,0);
+        dungeon.addEntity(enemy);
+        dungeon.addEntity(weapon);
+        enemy.moveRight();
+        assertFalse(weapon.isDestroyed());
+    }
+
+    @Test
     public void swordPickupTwice(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 0, 0);
