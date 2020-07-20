@@ -1,6 +1,7 @@
 package test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
@@ -19,5 +20,15 @@ public class TreasureTest {
         assertEquals(player.getX(), 1);
         assertEquals(player.getY(), 0);
         assertTrue(treasure.isDestroyed());
+    }
+
+    @Test
+    public void enemyTreasure(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Enemy enemy = new Enemy(0, 0, new GreedyEuclidean(), dungeon);
+        Treasure treasure = new Treasure(1,0);
+        dungeon.addEntity(treasure);
+        dungeon.addEntity(enemy);
+        assertFalse(treasure.isDestroyed());
     }
 }
