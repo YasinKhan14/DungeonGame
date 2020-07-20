@@ -29,7 +29,7 @@ public class KeyTest {
         Key key = new Key(1,0,0);
         dungeon.addEntity(key);
         dungeon.addEntity(enemy);
-        player.moveRight();
+        enemy.moveRight();
         assertFalse(key.isDestroyed());
     }
 }
