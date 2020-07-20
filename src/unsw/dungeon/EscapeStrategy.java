@@ -2,20 +2,19 @@ package unsw.dungeon;
 import java.lang.Math;
 
 
-
 public class EscapeStrategy implements MoveStrategy {
 
     public void nextMove(Player player, Enemy enemy) {
          
-        double leftCost = 0;
-        double rightCost = 0;
-        double upCost = 0;
-        double downCost = 0;
+        double leftCost = -1;
+        double rightCost = -1;
+        double upCost = -1;
+        double downCost = -1;
 
-        if (enemy.canMove(enemy.getX(), enemy.getY() + 1))
+        if (enemy.canMove(enemy.getX(), enemy.getY() + -1))
             upCost = euclideanDistance(enemy.getX(), enemy.getY() + 1, player.getX(), player.getY());
 
-        if(enemy.canMove(enemy.getX(), enemy.getY() - 1))
+        if(enemy.canMove(enemy.getX(), enemy.getY() + 1))
             downCost = euclideanDistance(enemy.getX(), enemy.getY() - 1, player.getX(), player.getY());
 
         if(enemy.canMove(enemy.getX() -1, enemy.getY()))
@@ -36,7 +35,11 @@ public class EscapeStrategy implements MoveStrategy {
 
     public boolean isMax(double comp, double x1, double x2, double x3) {
 		double costArray[] = {comp, x1, x2, x3};
+		if (comp == -1)
+            return false;
 		for (double d : costArray) {
+            if (d == -1)
+                continue;
 			if (comp < d)
 				return false;
 		}
