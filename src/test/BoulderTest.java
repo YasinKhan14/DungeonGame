@@ -83,7 +83,7 @@ public class BoulderTest {
     }
 
     @Test
-    public void boulderWall(){
+    public void boulderWallRight(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 0, 0);
         Boulder boulder = new Boulder(1,0, dungeon);
@@ -97,6 +97,61 @@ public class BoulderTest {
         assertEquals(boulder.getX(), 1);
         assertEquals(boulder.getY(), 0);
         assertEquals(wall.getX(), 2);
+        assertEquals(wall.getY(), 0);
+    }
+
+    @Test
+    public void boulderWallLeft(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 2, 0);
+        Boulder boulder = new Boulder(1,0, dungeon);
+        Wall wall = new Wall(0,0);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(boulder);
+        dungeon.addEntity(wall);
+        player.moveLeft();
+        assertEquals(player.getX(), 2);
+        assertEquals(player.getY(), 0);
+        assertEquals(boulder.getX(), 1);
+        assertEquals(boulder.getY(), 0);
+        assertEquals(wall.getX(), 0);
+        assertEquals(wall.getY(), 0);
+    }
+
+    @Test
+    public void boulderWallDown(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 0, 0);
+        Boulder boulder = new Boulder(0,1, dungeon);
+        Wall wall = new Wall(0,2);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(boulder);
+        dungeon.addEntity(wall);
+        player.moveDown();
+        assertEquals(player.getX(), 0);
+        assertEquals(player.getY(), 0);
+        assertEquals(boulder.getX(), 0);
+        assertEquals(boulder.getY(), 1);
+        assertEquals(wall.getX(), 0);
+        assertEquals(wall.getY(), 2);
+    }
+
+
+    @Test
+    public void boulderWallUp(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 0, 2);
+        Boulder boulder = new Boulder(0,1, dungeon);
+        Wall wall = new Wall(0,0);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(boulder);
+        dungeon.addEntity(wall);
+        player.moveUp();
+        assertEquals(player.getX(), 0);
+        assertEquals(player.getY(), 2);
+        assertEquals(boulder.getX(), 0);
+        assertEquals(boulder.getY(), 1);
+        assertEquals(wall.getX(), 0);
         assertEquals(wall.getY(), 0);
     }
 
