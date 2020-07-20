@@ -29,6 +29,7 @@ public class TreasureTest {
         Treasure treasure = new Treasure(1,0);
         dungeon.addEntity(treasure);
         dungeon.addEntity(enemy);
+        enemy.moveRight();
         assertFalse(treasure.isDestroyed());
     }
 }

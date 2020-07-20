@@ -7,6 +7,21 @@ import org.junit.jupiter.api.Test;
 import unsw.dungeon.*;
 
 public class BoulderTest {
+
+
+    @Test
+    public void borderUp(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 0, 1);
+        Boulder boulder = new Boulder(0,0, dungeon);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(boulder);
+        player.moveUp();
+        assertEquals(player.getX(), 0);
+        assertEquals(player.getY(), 1);
+        assertEquals(boulder.getX(), 0);
+        assertEquals(boulder.getY(), 0);
+    }
     
     @Test
     public void singeBoulderRight(){
