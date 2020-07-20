@@ -48,6 +48,7 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 		};
 		moveTimer.scheduleAtFixedRate(moveTask, 500, 500);
 	}
+	@Override
 	public boolean allowPass(Moveable moveable) {
 
 		if (moveable instanceof Player) {
@@ -70,6 +71,7 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	public void setOnMap(boolean boo){
 		onMap = boo;
 	}
+	@Override
 	public boolean isDestroyed() {
 		return !onMap;
 	}

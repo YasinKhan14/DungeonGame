@@ -12,6 +12,7 @@ public class BasicGoal implements Goal {
         this.name = name;
     }
 
+    @Override
     public boolean isCompleted() {
         for (Entity entity : goalEntityList) {
             if (!entity.isDestroyed())
