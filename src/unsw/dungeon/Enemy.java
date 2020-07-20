@@ -63,7 +63,9 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 		}
 		return false;
 	}
-
+	public void setOnMap(boolean boo){
+		onMap = boo;
+	}
 	public boolean isDestroyed() {
 		return !onMap;
 	}
