@@ -1,5 +1,4 @@
 package unsw.dungeon;
 public interface PlayerListener {
-    public void playerGotPotion();
-    public void playerLostPotion();
+    public void playerGotPotion(Boolean hasPotion);
 }

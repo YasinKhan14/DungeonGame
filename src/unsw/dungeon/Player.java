@@ -77,25 +77,20 @@ public class Player extends Entity implements Moveable{
         if (hasPotion && currentTask != null){
             currentTask.cancel();
         }else{
-            notifyPlayerGotPotion();
+            notifyPlayerGotPotion(true);
         }
         currentTask = new TimerTask(){
             public void run(){
-                notifyPlayerLostPotion();
+                notifyPlayerGotPotion(false);
                 hasPotion = false;
             }
         };
         potionTimer.schedule(currentTask, 5000);
         hasPotion = true;
     }
-    public void notifyPlayerGotPotion(){
+    public void notifyPlayerGotPotion(Boolean hasPotion){
         for (PlayerListener listener : listeners){
-            listener.playerGotPotion();
-        }
-    }
-    public void notifyPlayerLostPotion(){
-        for (PlayerListener listener : listeners){
-            listener.playerLostPotion();
+            listener.playerGotPotion(hasPotion);
         }
     }
 	@Override
@@ -164,10 +159,12 @@ public class Player extends Entity implements Moveable{
                 weapon.isDestroyed();
                 playerRemove(enemy);
                 enemy.setOnMap(false);
+                return true;
             }
             else if (enemy.getStrategy() instanceof EscapeStrategy){
                 playerRemove(enemy);
                 enemy.setOnMap(false);
+                return true;
             }
             else {
                 defeated();

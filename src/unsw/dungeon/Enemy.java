@@ -28,6 +28,10 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	}
 	
 	public void nextMove(Player player) {
+		if (!onMap || player.isDestroyed()){
+			moveTask.cancel();
+			return;
+		}
 		if (player != null)
 			currentStrategy.nextMove(player, this);
 	}
@@ -126,11 +130,11 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	}
 	
 	@Override
-	public void playerGotPotion(){
-		currentStrategy = new EscapeStrategy();
-	}
-	@Override
-	public void playerLostPotion(){
-		currentStrategy = defaultStrategy;
+	public void playerGotPotion(Boolean hasPotion){
+		if (hasPotion)
+			currentStrategy = new EscapeStrategy();
+		else
+			currentStrategy = defaultStrategy;
+
 	}
 }

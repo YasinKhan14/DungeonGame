@@ -11,11 +11,11 @@ public class EscapeStrategy implements MoveStrategy {
         double upCost = -1;
         double downCost = -1;
 
-        if (enemy.canMove(enemy.getX(), enemy.getY() + -1))
-            upCost = euclideanDistance(enemy.getX(), enemy.getY() + 1, player.getX(), player.getY());
+        if (enemy.canMove(enemy.getX(), enemy.getY() - 1))
+            upCost = euclideanDistance(enemy.getX(), enemy.getY() - 1, player.getX(), player.getY());
 
         if(enemy.canMove(enemy.getX(), enemy.getY() + 1))
-            downCost = euclideanDistance(enemy.getX(), enemy.getY() - 1, player.getX(), player.getY());
+            downCost = euclideanDistance(enemy.getX(), enemy.getY() + 1, player.getX(), player.getY());
 
         if(enemy.canMove(enemy.getX() -1, enemy.getY()))
             leftCost = euclideanDistance(enemy.getX() - 1, enemy.getY(), player.getX(), player.getY());

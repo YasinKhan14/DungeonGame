@@ -19,7 +19,7 @@ public class EnemyTest {
         assertFalse(enemy.getStrategy() instanceof EscapeStrategy);
         enemy.startMoving();
         try {
-            Thread.sleep(5000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -41,7 +41,7 @@ public class EnemyTest {
         }
         enemy.startMoving();
         try {
-            Thread.sleep(15000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -67,11 +67,32 @@ public class EnemyTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        player.moveUp();
-        player.moveUp();
         player.moveRight();
         player.moveRight();
         assertTrue(enemy.isDestroyed());
         assertFalse(player.isDestroyed());
     }
+    @Test
+    public void enemySuicidebySword(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 5, 5);
+        Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon);
+        Weapon sword = new Weapon(5, 6);
+        dungeon.addEntity(sword);
+        dungeon.setPlayer(player);
+        enemy.setPlayer(player);
+        dungeon.addEntity(enemy);
+        player.moveDown();
+        assertFalse(player.isDestroyed());
+        assertFalse(enemy.getStrategy() instanceof EscapeStrategy);
+        enemy.startMoving();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertTrue(enemy.isDestroyed());
+        assertFalse(player.isDestroyed());
+    }
+
 }
