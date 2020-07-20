@@ -22,6 +22,24 @@ public class WeaponTest {
         assertTrue(player.hasSword());
     }
 
+    @Test
+    public void swordPickupTwice(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 0, 0);
+        Weapon weapon = new Weapon(1,0);
+        Weapon weapon2 = new Weapon(2,0);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(weapon);
+        dungeon.addEntity(weapon2);
+        assertFalse(player.hasSword());
+        player.moveRight();
+        assertTrue(weapon.isDestroyed());
+        assertTrue(player.hasSword());
+        player.moveRight();
+        assertTrue(weapon2.isDestroyed());
+        
+    }
+
 
     @Test
     public void chargeTest(){
