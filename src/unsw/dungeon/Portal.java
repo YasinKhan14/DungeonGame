@@ -21,7 +21,7 @@ public class Portal extends Entity {
 				Portal portal = (Portal) entity;
 				if (this != portal && portal.getId() == id) {
 					moveable.updateMap(portal.getX(), portal.getY()); 
-					return false;
+					break;
 				}
 			}
 		}

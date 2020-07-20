@@ -1,6 +1,7 @@
 package test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,11 +26,11 @@ public class KeyTest {
     @Test
     public void notPlayerKeyPickup(){
         Dungeon dungeon = new Dungeon(10, 10);
-        Player enemy = new Enemy(0, 0, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(0, 0, new GreedyEuclidean(), dungeon);
         Key key = new Key(1,0,0);
         dungeon.addEntity(key);
         dungeon.addEntity(enemy);
-        player.moveRight();
+        enemy.moveRight();
         assertFalse(key.isDestroyed());
     }
 }
