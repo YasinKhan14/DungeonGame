@@ -21,4 +21,15 @@ public class KeyTest {
         assertTrue(player.getKeys().contains(key));
         assertTrue(key.isDestroyed());
     }
+
+    @Test
+    public void notPlayerKeyPickup(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player enemy = new Enemy(0, 0, new GreedyEuclidean(), dungeon);
+        Key key = new Key(1,0,0);
+        dungeon.addEntity(key);
+        dungeon.addEntity(enemy);
+        player.moveRight();
+        assertFalse(key.isDestroyed());
+    }
 }

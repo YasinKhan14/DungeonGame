@@ -9,7 +9,7 @@ import unsw.dungeon.*;
 public class BoulderTest {
     
     @Test
-    public void singeBoulder(){
+    public void singeBoulderRight(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 0, 0);
         Boulder boulder = new Boulder(1,0, dungeon);
@@ -19,6 +19,48 @@ public class BoulderTest {
         assertEquals(player.getX(), 1);
         assertEquals(player.getY(), 0);
         assertEquals(boulder.getX(), 2);
+        assertEquals(boulder.getY(), 0);
+    }
+
+    @Test
+    public void singeBoulderLeft(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 2, 0);
+        Boulder boulder = new Boulder(1,0, dungeon);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(boulder);
+        player.moveLeft();
+        assertEquals(player.getX(), 1);
+        assertEquals(player.getY(), 0);
+        assertEquals(boulder.getX(), 0);
+        assertEquals(boulder.getY(), 0);
+    }
+
+    @Test
+    public void singeBoulderDown(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 0, 0);
+        Boulder boulder = new Boulder(0,1, dungeon);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(boulder);
+        player.moveDown();
+        assertEquals(player.getX(), 0);
+        assertEquals(player.getY(), 1);
+        assertEquals(boulder.getX(), 0);
+        assertEquals(boulder.getY(), 2);
+    }
+
+    @Test
+    public void singeBoulderUp(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 0, 2);
+        Boulder boulder = new Boulder(0,1, dungeon);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(boulder);
+        player.moveUp();
+        assertEquals(player.getX(), 0);
+        assertEquals(player.getY(), 1);
+        assertEquals(boulder.getX(), 0);
         assertEquals(boulder.getY(), 0);
     }
 
