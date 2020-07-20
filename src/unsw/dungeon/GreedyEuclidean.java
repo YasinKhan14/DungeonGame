@@ -6,8 +6,6 @@ import java.lang.Math;
 public class GreedyEuclidean implements MoveStrategy {
 
     public void nextMove(Player player, Enemy enemy) {
-        if (player.isDestroyed())
-            return;
         double leftCost = -1;
         double rightCost = -1;
         double upCost = -1;

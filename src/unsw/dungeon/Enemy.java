@@ -109,9 +109,6 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 		List<Entity> copy = new ArrayList<Entity>();
         copy.addAll(objectList);
         for (Entity obj : copy){
-            if (obj == null) {
-                continue;
-            }
             if(obj.allowPass(this))
                 continue;
             else

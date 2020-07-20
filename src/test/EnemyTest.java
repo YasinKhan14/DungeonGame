@@ -1,5 +1,5 @@
 package test;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
@@ -13,11 +13,11 @@ public class EnemyTest {
         Player player = new Player(dungeon, 5, 5);
         Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon);
         dungeon.setPlayer(player);
-        enemy.setPlayer(player);
         dungeon.addEntity(enemy);
         assertFalse(player.isDestroyed());
         assertFalse(enemy.getStrategy() instanceof EscapeStrategy);
         enemy.startMoving();
+        enemy.setPlayer(player);
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -95,4 +95,36 @@ public class EnemyTest {
         assertFalse(player.isDestroyed());
     }
 
+    @Test
+    public void playerSuicide(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 5, 5);
+        Enemy enemy = new Enemy(5, 6, new GreedyEuclidean(), dungeon);
+        dungeon.setPlayer(player);
+        enemy.setPlayer(player);
+        dungeon.addEntity(enemy);
+        player.moveDown();
+        assertTrue(player.isDestroyed());
+
+
+    }
+
+    @Test
+    public void enemyMovements(){
+        Dungeon dungeon = new Dungeon(1, 1);
+        Enemy enemy = new Enemy(0, 0, new GreedyEuclidean(), dungeon);
+        enemy.moveDown();
+        assertEquals(0, enemy.getX());
+        assertEquals(0, enemy.getY());
+        enemy.moveLeft();
+        assertEquals(0, enemy.getX());
+        assertEquals(0, enemy.getY());
+        enemy.moveRight();
+        assertEquals(0, enemy.getX());
+        assertEquals(0, enemy.getY());
+        enemy.moveUp();
+        assertEquals(0, enemy.getX());
+        assertEquals(0, enemy.getY());
+    
+    }
 }

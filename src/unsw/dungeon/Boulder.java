@@ -55,9 +55,6 @@ public class Boulder extends Entity implements Moveable {
 		List<Entity> copy = new ArrayList<Entity>();
         copy.addAll(objectList);
 		for (Entity obj : objectList){
-			if (obj == null) {
-				continue;
-			}
 			if (!obj.allowPass(this)){
 				return false;
 			}

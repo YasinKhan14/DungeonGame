@@ -133,9 +133,6 @@ public class Player extends Entity implements Moveable{
         List<Entity> copy = new ArrayList<Entity>();
         copy.addAll(objectList);
         for (Entity obj : copy){
-            if (obj == null) {
-                continue;
-            }
             if(obj.allowPass(this))
                 continue;
             else
@@ -161,11 +158,12 @@ public class Player extends Entity implements Moveable{
                 enemy.setOnMap(false);
                 return true;
             }
-            else if (enemy.getStrategy() instanceof EscapeStrategy){
-                playerRemove(enemy);
-                enemy.setOnMap(false);
-                return true;
-            }
+            // // case that will almost never happen
+            // else if (enemy.getStrategy() instanceof EscapeStrategy){
+            //     playerRemove(enemy);
+            //     enemy.setOnMap(false);
+            //     return true;
+            // }
             else {
                 defeated();
                 return true;

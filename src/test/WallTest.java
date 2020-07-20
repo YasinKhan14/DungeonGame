@@ -55,5 +55,23 @@ public class WallTest {
         assertEquals(5, player.getX());
         assertEquals(5, player.getY());
     }
+    @Test
+    public void runningOut(){
+        Dungeon dungeon = new Dungeon(1, 1);
+        Player player = new Player(dungeon, 0, 0);
+        dungeon.setPlayer(player);
+        player.moveDown();
+        assertEquals(0, player.getX());
+        assertEquals(0, player.getY());
+        player.moveLeft();
+        assertEquals(0, player.getX());
+        assertEquals(0, player.getY());
+        player.moveRight();
+        assertEquals(0, player.getX());
+        assertEquals(0, player.getY());
+        player.moveUp();
+        assertEquals(0, player.getX());
+        assertEquals(0, player.getY());
+    }
 
 }
