@@ -63,44 +63,56 @@ public abstract class DungeonLoader {
             break;
         case "sword":
             Weapon sword = new Weapon(x, y);
+            onLoad(sword);
             entity = sword;
             break;
         case "invincibility":
             Potion potion = new Potion(x, y);
+            onLoad(potion);
             entity = potion;
             break;
         case "treasure":
             Treasure treasure = new Treasure(x, y);
+            onLoad(treasure);
             entity = treasure;
             break;
         case "enemy":
             Enemy enemy = new Enemy(x, y, new GreedyEuclidean(), dungeon);
+            onLoad(enemy);
             entity = enemy;
             break;
         case "switch":
-            FloorSwitch FloorSwitch = new FloorSwitch(x, y);
-            entity = FloorSwitch;
+            FloorSwitch floorSwitch = new FloorSwitch(x, y);
+            onLoad(floorSwitch);
+            entity = floorSwitch;
             break;
         case "boulder":
             Boulder boulder = new Boulder(x, y, dungeon);
+            onLoad(boulder);
             entity = boulder;
             break;
         case "key":
             id = json.getInt("id");
             Key key = new Key(x, y, id);
+            onLoad(key);
             entity = key;
             break;
         case "door":
             id = json.getInt("id");
             Door door = new Door(x, y, id);
+            onLoad(door);
             entity = door;
             break;
         case "portal":
             id = json.getInt("id");
             Portal portal = new Portal(x, y, dungeon, id);
+            onLoad(portal);
             entity = portal;
             break;
         case "exit":
+            // Exit exit = new Exit(x, y);
+            // onLoad(exit);
+            // entity = exit;
             break;
         }
         if (entity == null)
@@ -120,4 +132,11 @@ public abstract class DungeonLoader {
 
     public abstract void onLoad(Enemy enemy);
 
+    public abstract void onLoad(Key key);
+
+    public abstract void onLoad(Door door);
+
+    public abstract void onLoad(Portal portal);
+
+    // public abstract void onLoad(Exit exit);
 }
