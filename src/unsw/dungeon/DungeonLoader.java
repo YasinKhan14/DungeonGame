@@ -46,6 +46,7 @@ public abstract class DungeonLoader {
         String type = json.getString("type");
         int x = json.getInt("x");
         int y = json.getInt("y");
+        int id;
 
         Entity entity = null;
         switch (type) {
@@ -60,7 +61,47 @@ public abstract class DungeonLoader {
             onLoad(wall);
             entity = wall;
             break;
-        // TODO Handle other possible entities
+        case "sword":
+            Weapon sword = new Weapon(x, y);
+            entity = sword;
+            break;
+        case "invincibility":
+            Potion potion = new Potion(x, y);
+            entity = potion;
+            break;
+        case "treasure":
+            Treasure treasure = new Treasure(x, y);
+            entity = treasure;
+            break;
+        case "enemy":
+            Enemy enemy = new Enemy(x, y, new GreedyEuclidean(), dungeon);
+            entity = enemy;
+            break;
+        case "switch":
+            FloorSwitch FloorSwitch = new FloorSwitch(x, y);
+            entity = FloorSwitch;
+            break;
+        case "boulder":
+            Boulder boulder = new Boulder(x, y, dungeon);
+            entity = boulder;
+            break;
+        case "key":
+            id = json.getInt("id");
+            Key key = new Key(x, y, id);
+            entity = key;
+            break;
+        case "door":
+            id = json.getInt("id");
+            Door door = new Door(x, y, id);
+            entity = door;
+            break;
+        case "portal":
+            id = json.getInt("id");
+            Portal portal = new Portal(x, y, dungeon, id);
+            entity = portal;
+            break;
+        case "exit":
+            break;
         }
         if (entity == null)
             return;
@@ -71,6 +112,12 @@ public abstract class DungeonLoader {
 
     public abstract void onLoad(Wall wall);
 
-    // TODO Create additional abstract methods for the other entities
+    public abstract void onLoad(Weapon sword);
+
+    public abstract void onLoad(Potion potion);
+
+    public abstract void onLoad(Treasure treasure);
+
+    public abstract void onLoad(Enemy enemy);
 
 }
