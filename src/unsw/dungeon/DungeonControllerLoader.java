@@ -111,6 +111,20 @@ public class DungeonControllerLoader extends DungeonLoader {
         ImageView view = new ImageView(portalImage);
         addEntity(portal, view);
     }
+
+    @Override
+    public void onLoad(Boulder boulder) {
+        ImageView view = new ImageView(boulderImage);
+        addEntity(boulder, view);
+    }
+
+    @Override
+    public void onLoad(FloorSwitch floorSwitch) {
+        ImageView view = new ImageView(switchImage);
+        addEntity(floorSwitch, view);
+    }
+
+    
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);
         entities.add(view);
@@ -155,7 +169,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         return new DungeonController(load(), entities);
     }
 
-    
+
 
 
 }

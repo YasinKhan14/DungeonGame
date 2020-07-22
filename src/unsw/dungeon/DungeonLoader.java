@@ -121,6 +121,10 @@ public abstract class DungeonLoader {
     }
 
     public abstract void onLoad(Entity player);
+    
+    public abstract void onLoad(Boulder boulder);
+
+    public abstract void onLoad(FloorSwitch floorSwitch);
 
     public abstract void onLoad(Wall wall);
 
