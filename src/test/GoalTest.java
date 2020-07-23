@@ -17,6 +17,7 @@ public class GoalTest {
         Treasure treasure3 = new Treasure(3, 0);
 
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
 
         dungeon.addEntity(treasure1);
         dungeon.addEntity(treasure2);
@@ -43,6 +44,7 @@ public class GoalTest {
         simpleGoal.attachGoalEntity(treasure3);
         dungeon.setPlayer(player);
         player.setGoal(simpleGoal);
+        dungeon.addEntity(player);
         dungeon.addEntity(treasure1);
         dungeon.addEntity(treasure2);
         dungeon.addEntity(treasure3);
@@ -77,6 +79,7 @@ public class GoalTest {
         complexAnd.attachGoal(collectTreasures);
 
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         player.setGoal(complexAnd);
         dungeon.addEntity(treasure1);
         dungeon.addEntity(treasure2);
@@ -120,6 +123,7 @@ public class GoalTest {
         complexOr.attachGoal(collectTreasures);
 
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         player.setGoal(complexOr);
         dungeon.addEntity(treasure1);
         dungeon.addEntity(treasure2);

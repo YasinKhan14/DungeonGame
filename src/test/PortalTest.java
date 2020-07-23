@@ -9,6 +9,7 @@ public class PortalTest {
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 5, 5);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         Portal portal1 = new Portal(5, 6, dungeon, 1);
         Portal portal2 = new Portal(3, 3, dungeon, 1);
         dungeon.addEntity(portal1);

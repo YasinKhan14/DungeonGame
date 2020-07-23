@@ -13,6 +13,7 @@ public class EnemyTest {
         Player player = new Player(dungeon, 5, 5);
         Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(enemy);
         assertFalse(player.isDestroyed());
         assertFalse(enemy.getStrategy() instanceof EscapeStrategy);
@@ -33,6 +34,7 @@ public class EnemyTest {
         Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon);
         dungeon.setPlayer(player);
         enemy.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(enemy);
 
         for (int i = 9; i > 0; i --){
@@ -56,6 +58,7 @@ public class EnemyTest {
         Potion potion = new Potion(0, 1);
         dungeon.setPlayer(player);
         enemy.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(enemy);
         dungeon.addEntity(potion);
         assertFalse(player.isDestroyed());
@@ -80,6 +83,7 @@ public class EnemyTest {
         Weapon sword = new Weapon(5, 6);
         dungeon.addEntity(sword);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         enemy.setPlayer(player);
         dungeon.addEntity(enemy);
         player.moveDown();
@@ -101,6 +105,7 @@ public class EnemyTest {
         Player player = new Player(dungeon, 5, 5);
         Enemy enemy = new Enemy(5, 6, new GreedyEuclidean(), dungeon);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         enemy.setPlayer(player);
         dungeon.addEntity(enemy);
         player.moveDown();

@@ -16,6 +16,7 @@ public class DoorTest {
         Player player = new Player(dungeon, 0, 0);
         Door door = new Door(1,0,0);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(door);
         player.moveRight();
         assertEquals(player.getX(), 0);
@@ -33,6 +34,7 @@ public class DoorTest {
         Key key = new Key(1,0, 0);
         Door door = new Door(2,0, 0);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(key);
         dungeon.addEntity(door);
         player.moveRight();
@@ -49,6 +51,7 @@ public class DoorTest {
         Key key = new Key(1,0, 1);
         Door door = new Door(2,0,0);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(key);
         dungeon.addEntity(door);
         player.moveRight();
@@ -66,6 +69,7 @@ public class DoorTest {
         Key key = new Key(1,0,0);
         Door door = new Door(3,0,0);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(key);
         dungeon.addEntity(door);
         dungeon.addEntity(boulder);
@@ -87,6 +91,7 @@ public class DoorTest {
         Boulder boulder = new Boulder(1, 0, dungeon);
         Door door = new Door(2,0,0);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(door);
         dungeon.addEntity(boulder);
         player.moveRight();

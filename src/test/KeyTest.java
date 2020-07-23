@@ -15,6 +15,7 @@ public class KeyTest {
         Key key = new Key(1,0,0);
         dungeon.setPlayer(player);
         dungeon.addEntity(key);
+        dungeon.addEntity(player);
         player.moveRight();
         assertEquals(player.getX(), 1);
         assertEquals(player.getY(), 0);

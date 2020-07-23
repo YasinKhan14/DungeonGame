@@ -15,6 +15,7 @@ public class TreasureTest {
         Player player = new Player(dungeon, 0, 0);
         Treasure treasure = new Treasure(1,0);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(treasure);
         player.moveRight();
         assertEquals(player.getX(), 1);
