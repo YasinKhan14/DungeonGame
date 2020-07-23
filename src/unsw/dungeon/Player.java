@@ -155,7 +155,7 @@ public class Player extends Entity implements Moveable{
             if (hasSword()){
                 weapon.isDestroyed();
                 playerRemove(enemy);
-                enemy.setOnMap(false);
+                enemy.setOffMap();
                 return true;
             }
             // // case that will almost never happen

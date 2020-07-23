@@ -14,6 +14,7 @@ public class PotionTest {
         Potion potion = new Potion(5, 6);
         dungeon.setPlayer(player);
         enemy.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(enemy);
         dungeon.addEntity(potion);
         assertFalse(enemy.getStrategy() instanceof EscapeStrategy);
@@ -54,6 +55,7 @@ public class PotionTest {
         Potion potion2 = new Potion (5, 7);
         dungeon.setPlayer(player);
         enemy.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(enemy);
         dungeon.addEntity(potion);
         dungeon.addEntity(potion2);

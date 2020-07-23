@@ -7,7 +7,6 @@ import java.util.TimerTask;
 
 public class Enemy extends Entity implements Moveable, PlayerListener {
 
-	private boolean onMap;
 	private Dungeon dungeon;
 	private MoveStrategy defaultStrategy;
 	private MoveStrategy currentStrategy;
@@ -18,7 +17,6 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 
     public Enemy(int x, int y, MoveStrategy strategy, Dungeon dungeon) {
 		super(x, y);
-		onMap = true;
 		this.defaultStrategy = strategy;
 		this.currentStrategy = strategy;
 		this.moveTimer = new Timer();
@@ -28,7 +26,7 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	}
 	
 	public void nextMove(Player player) {
-		if (!onMap || player.isDestroyed()){
+		if (!(this.isOnMap()) || player.isDestroyed()){
 			moveTask.cancel();
 			return;
 		}
@@ -56,11 +54,11 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 			if (player.hasSword()) {
 				player.weaponDecrement();
 				player.playerRemove(this);
-				onMap = false;
+				this.setOffMap();
 			}
 			else if (currentStrategy instanceof EscapeStrategy){
 				player.playerRemove(this);
-				onMap = false;
+				this.setOffMap();
 			}
 			else {
 				player.defeated();
@@ -68,12 +66,10 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 		}
 		return false;
 	}
-	public void setOnMap(boolean boo){
-		onMap = boo;
-	}
+
 	@Override
 	public boolean isDestroyed() {
-		return !onMap;
+		return !(this.isOnMap());
 	}
 
 	@Override
@@ -136,4 +132,5 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 			currentStrategy = defaultStrategy;
 
 	}
+
 }

@@ -15,6 +15,7 @@ public class FloorSwitchTest {
         Player player = new Player(dungeon, 0, 0);
         FloorSwitch floorSwitch = new FloorSwitch(1,0);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(floorSwitch);
         assertEquals(floorSwitch.getX(), 1);
         assertEquals(floorSwitch.getY(), 0);
@@ -27,13 +28,14 @@ public class FloorSwitchTest {
         Player player = new Player(dungeon, 0, 0);
         FloorSwitch floorSwitch = new FloorSwitch(1,0);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(floorSwitch);
         player.moveRight();
         assertEquals(player.getX(), 1);
         assertEquals(player.getY(), 0);
         assertEquals(floorSwitch.getX(), 1);
         assertEquals(floorSwitch.getY(), 0);
-        assertTrue(floorSwitch.isDestroyed());
+        assertFalse(floorSwitch.isDestroyed());
     }
     
     @Test
@@ -43,6 +45,7 @@ public class FloorSwitchTest {
         FloorSwitch floorSwitch = new FloorSwitch(2,0);
         Boulder boulder = new Boulder(1, 0, dungeon);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(floorSwitch);
         dungeon.addEntity(boulder);
         player.moveRight();
@@ -51,6 +54,26 @@ public class FloorSwitchTest {
         assertEquals(floorSwitch.getX(), 2);
         assertEquals(floorSwitch.getY(), 0);
         assertTrue(floorSwitch.isDestroyed());
+    }
+
+    @Test
+    public void playerPushBoulderOnSwitchThenOff(){
+        Dungeon dungeon = new Dungeon(10, 10);
+        Player player = new Player(dungeon, 0, 0);
+        FloorSwitch floorSwitch = new FloorSwitch(2,0);
+        Boulder boulder = new Boulder(1, 0, dungeon);
+        dungeon.setPlayer(player);
+        dungeon.addEntity(player);
+        dungeon.addEntity(floorSwitch);
+        dungeon.addEntity(boulder);
+        player.moveRight();
+        assertEquals(boulder.getX(), 2);
+        assertEquals(boulder.getY(), 0);
+        assertEquals(floorSwitch.getX(), 2);
+        assertEquals(floorSwitch.getY(), 0);
+        assertTrue(floorSwitch.isDestroyed());
+        player.moveRight();
+        assertFalse(floorSwitch.isDestroyed());
     }
 
 }

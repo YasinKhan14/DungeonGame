@@ -15,6 +15,7 @@ public class WeaponTest {
         Player player = new Player(dungeon, 0, 0);
         Weapon weapon = new Weapon(1,0);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(weapon);
         assertFalse(player.hasSword());
         player.moveRight();
@@ -40,6 +41,7 @@ public class WeaponTest {
         Weapon weapon = new Weapon(1,0);
         Weapon weapon2 = new Weapon(2,0);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(weapon);
         dungeon.addEntity(weapon2);
         assertFalse(player.hasSword());
@@ -58,6 +60,7 @@ public class WeaponTest {
         Player player = new Player(dungeon, 0, 0);
         Weapon weapon = new Weapon(1,0);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(weapon);
         player.moveRight();
         assertTrue(player.hasSword());
@@ -85,6 +88,7 @@ public class WeaponTest {
         Enemy enemy = new Enemy(1, 1, new GreedyEuclidean(), dungeon);
         Weapon weapon = new Weapon(1,0);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         dungeon.addEntity(weapon);
         dungeon.addEntity(enemy);
         player.moveRight();

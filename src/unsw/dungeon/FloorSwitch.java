@@ -2,20 +2,30 @@ package unsw.dungeon;
 
 public class FloorSwitch extends Entity{
 
-	private boolean triggered;
+	private boolean onMap;
+	private Boulder boulder;
 
     public FloorSwitch(int x, int y) {
 		super(x, y);
-		triggered = false;
+		onMap = true;
+		boulder = null;
     }
     
 	public boolean allowPass(Moveable moveable) {
-		triggered = true;
+		if (moveable instanceof Boulder) {
+			boulder = (Boulder) moveable;
+		}
 		return true;
 	}
 
-	public boolean isDestroyed() {
-		return triggered;
+	public boolean isDestroyed() { //if switch is triggered (can't be destoryed)
+		if (boulder == null) {
+			return false;
+		}
+		else { //check if most recent boulder object has same coords
+			if (boulder.getX() == this.getX() && boulder.getY() == this.getY())
+				return true;
+			return false;
+		}
 	}
-    
 }
