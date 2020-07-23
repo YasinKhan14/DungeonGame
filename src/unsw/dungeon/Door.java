@@ -5,11 +5,9 @@ import java.util.List;
 public class Door extends Entity{
 
     private int id;
-    private boolean isOpen;
 
     public Door(int x, int y, int id) {
 	  super(x, y);
-	  isOpen = false;
 	  this.id = id;
     }
 
@@ -19,7 +17,7 @@ public class Door extends Entity{
 			List<Key> keys = ((Player)moveable).getKeys();
 			for (Key key : keys) {
 				if (key.getId() == id) {
-					isOpen = true;
+					this.setOffMap();
 					return true;
 				}
 			}
@@ -27,8 +25,5 @@ public class Door extends Entity{
 		return false;
 	}
 
-	public boolean isDestroyed() {
-		return isOpen;
-	}
     
 }

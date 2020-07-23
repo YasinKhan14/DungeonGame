@@ -21,7 +21,7 @@ public class Dungeon {
     private List<Entity> entities;
     private List<Entity>[][] map;
     private Player player;
-
+    private Goal goal;
     public Dungeon(int width, int height) {
         this.width = width;
         this.height = height;
@@ -73,6 +73,14 @@ public class Dungeon {
 
     public void removeFromMap(Entity entity){
         map[entity.getY()][entity.getX()].remove(entity);
+    }
+
+    public Goal getGoal() {
+        return goal;
+    }
+
+    public void setGoal(Goal goal) {
+        this.goal = goal;
     }
 
 }

@@ -6,6 +6,7 @@ public class Exit extends Entity{
         super(x, y);
     }
     
+    @Override
     public boolean allowPass(Moveable moveable) {
         if (moveable instanceof Player) {
             ((Player)moveable).defeated();
@@ -14,6 +15,7 @@ public class Exit extends Entity{
         return false;
     }
 
+    @Override
     public boolean isDestroyed() {
         return false;
     }

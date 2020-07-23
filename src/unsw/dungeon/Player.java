@@ -18,7 +18,6 @@ public class Player extends Entity implements Moveable{
     private boolean hasPotion;
     private Timer potionTimer;
     private TimerTask currentTask;
-    private Boolean alive;
     /**
      * Create a player positioned in square (x,y)
      * @param x
@@ -31,7 +30,6 @@ public class Player extends Entity implements Moveable{
         this.listeners = new ArrayList<PlayerListener>();
         this.potionTimer = new Timer();
         this.hasPotion = false;
-        this.alive = true;
         this.weapon = null;
         this.goal = null;
 
@@ -172,12 +170,7 @@ public class Player extends Entity implements Moveable{
         return false;
     }
 
-    @Override
-    public boolean isDestroyed(){
-        return !alive;
-    }
-
     public void defeated() {
-        alive = false;
+        this.setOffMap();
     }
 }

@@ -19,6 +19,7 @@ import org.json.JSONTokener;
 public abstract class DungeonLoader {
 
     private JSONObject json;
+    private Goal goal;
 
     public DungeonLoader(String filename) throws FileNotFoundException {
         json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + filename)));
@@ -35,13 +36,59 @@ public abstract class DungeonLoader {
         Dungeon dungeon = new Dungeon(width, height);
 
         JSONArray jsonEntities = json.getJSONArray("entities");
-
+        JSONObject jsonGoals = json.getJSONObject("goal-condition");
+        goal = loadGoal(jsonGoals);
+        dungeon.setGoal(goal);
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
         }
         return dungeon;
     }
 
+    private Goal loadGoal(JSONObject json){
+        String name = json.getString("goal");
+        Goal resultGoal = null;
+        Goal subGoal1;
+        Goal subGoal2;
+        JSONArray jsonArray;
+        switch (name){
+            case "AND":
+                ComplexGoal complexAND = new ComplexGoal("and");
+                jsonArray = json.getJSONArray("subgoals");
+                subGoal1 = loadGoal(jsonArray.getJSONObject(0));
+                subGoal2 = loadGoal(jsonArray.getJSONObject(1));
+                complexAND.attachGoal(subGoal1);
+                complexAND.attachGoal(subGoal2);
+                resultGoal = complexAND;
+                break;
+            case "OR":
+                ComplexGoal complexOR = new ComplexGoal("or");
+                jsonArray = json.getJSONArray("subgoals");
+                subGoal1 = loadGoal(jsonArray.getJSONObject(0));
+                subGoal2 = loadGoal(jsonArray.getJSONObject(1));
+                complexOR.attachGoal(subGoal1);
+                complexOR.attachGoal(subGoal2);
+                resultGoal = complexOR;
+                break;
+            case "enemies":
+                BasicGoal basicEnemies = new BasicGoal("enemies");
+                resultGoal = basicEnemies;
+                break;
+            case "boulders":
+                BasicGoal basicBoulders = new BasicGoal("boulders");
+                resultGoal = basicBoulders;
+                break;
+            case "treasure":
+                BasicGoal basicTreasure = new BasicGoal("treasure");
+                resultGoal = basicTreasure;
+                break;
+            case "exit":
+                BasicGoal basicExit = new BasicGoal("exit");
+                resultGoal = basicExit;
+                break;
+        }
+        return resultGoal;
+    }
     private void loadEntity(Dungeon dungeon, JSONObject json) {
         String type = json.getString("type");
         int x = json.getInt("x");
@@ -110,9 +157,9 @@ public abstract class DungeonLoader {
             entity = portal;
             break;
         case "exit":
-            // Exit exit = new Exit(x, y);
-            // onLoad(exit);
-            // entity = exit;
+            Exit exit = new Exit(x, y);
+            onLoad(exit);
+            entity = exit;
             break;
         }
         if (entity == null)
@@ -142,5 +189,5 @@ public abstract class DungeonLoader {
 
     public abstract void onLoad(Portal portal);
 
-    // public abstract void onLoad(Exit exit);
+    public abstract void onLoad(Exit exit);
 }
