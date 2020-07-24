@@ -19,6 +19,7 @@ public class MainScreen {
         this.stage = stage;
         title = "Game Screen";
         controller = new MainController();
+        controller.setStage(stage);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
 
@@ -33,11 +34,6 @@ public class MainScreen {
         stage.setScene(scene);
         stage.show();
     }
-
-    public void setDungeonScene(DungeonScene dungeonScene) {
-        controller.setDungeonScene(dungeonScene);
-    }
-    
 }
 
 

@@ -13,12 +13,13 @@ public class DungeonScene {
     private DungeonController controller;
     private Scene scene;
 
-    public DungeonScene(Stage stage) throws IOException {
+    public DungeonScene(Stage stage, String map) throws IOException {
 
         this.stage = stage;
         title = "Game Screen";
-
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("advanced.json");
+        if (map == null)
+            map = "maze.json";
+        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(map);
 
         controller = dungeonLoader.loadController();
 
