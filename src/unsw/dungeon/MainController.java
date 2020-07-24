@@ -15,19 +15,25 @@ public class MainController {
     @FXML
     private Button playButton;
 
+    private DungeonScene dungeonScene;
+
     @FXML
     void helpHandler(ActionEvent event) {
         
     }
 
     @FXML
-    void playHandler(ActionEvent event) {
-        DungeonApplication.start();
+    public void playHandler(ActionEvent event) {
+        dungeonScene.start();
     }
 
     @FXML
-    void selectHandler(ActionEvent event) {
+    public void selectHandler(ActionEvent event) {
 
+    }
+
+    public void setDungeonScene(DungeonScene dungeonScene) {
+        this.dungeonScene = dungeonScene;
     }
 
 }
