@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 
 public class MainController {
 
+
     @FXML
     private Button selectButton;
 
@@ -34,6 +35,11 @@ public class MainController {
 
     public void setDungeonScene(DungeonScene dungeonScene) {
         this.dungeonScene = dungeonScene;
+    }
+
+    @FXML
+    public void initialize() {
+
     }
 
 }

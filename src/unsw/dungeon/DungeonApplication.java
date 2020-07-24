@@ -6,7 +6,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 
-public class MainApplication extends Application {
+public class DungeonApplication extends Application {
 
     public void start(Stage primaryStage) throws IOException {
 

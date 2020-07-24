@@ -18,16 +18,14 @@ public class MainScreen {
 
         this.stage = stage;
         title = "Game Screen";
-
+        controller = new MainController();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
 
-        loader.setController(controller);
+        //loader.setController(controller);
         Parent root = loader.load();
-        Scene scene = new Scene(root);
-        root.requestFocus();
-        stage.setScene(scene);
-        stage.show();
+        scene = new Scene(root);
+        //root.requestFocus();
     }
 
     public void start() {
