@@ -22,7 +22,7 @@ public class MainScreen {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
 
-        //loader.setController(controller);
+        loader.setController(controller);
         Parent root = loader.load();
         scene = new Scene(root);
         //root.requestFocus();
