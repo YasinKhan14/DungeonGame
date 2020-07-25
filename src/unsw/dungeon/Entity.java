@@ -1,6 +1,8 @@
 package unsw.dungeon;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -13,7 +15,7 @@ import javafx.beans.property.SimpleIntegerProperty;
     // IntegerProperty is used so that changes to the entities position can be
     // externally observed.
     private IntegerProperty x, y;
-    private Boolean onMap;
+    private BooleanProperty onMap;
 
     /**
      * Create an entity positioned in square (x,y)
@@ -23,7 +25,7 @@ import javafx.beans.property.SimpleIntegerProperty;
     public Entity(int x, int y) {
         this.x = new SimpleIntegerProperty(x);
         this.y = new SimpleIntegerProperty(y);
-        onMap = true;
+        this.onMap = new SimpleBooleanProperty(true);
     }
 
     public IntegerProperty x() {
@@ -43,12 +45,18 @@ import javafx.beans.property.SimpleIntegerProperty;
     }
 
     public boolean isOnMap() {
-        return this.onMap;
+        return onMap.get();
+    }
+    public BooleanProperty onMap(){
+        return onMap;
     }
     public void setOffMap() {
-        this.onMap = false;
+        this.onMap.set(false);
     }
 
+    public boolean isDestroyed(){
+        return !onMap.get();
+    }
     public abstract boolean allowPass(Moveable moveable);
-    public abstract boolean isDestroyed();
+
 }

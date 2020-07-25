@@ -2,12 +2,10 @@ package unsw.dungeon;
 
 public class FloorSwitch extends Entity{
 
-	private boolean onMap;
 	private Boulder boulder;
 
     public FloorSwitch(int x, int y) {
 		super(x, y);
-		onMap = true;
 		boulder = null;
     }
     
@@ -18,6 +16,7 @@ public class FloorSwitch extends Entity{
 		return true;
 	}
 
+	@Override
 	public boolean isDestroyed() { //if switch is triggered (can't be destoryed)
 		if (boulder == null) {
 			return false;

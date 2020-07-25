@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -124,6 +126,12 @@ public class DungeonControllerLoader extends DungeonLoader {
         addEntity(floorSwitch, view);
     }
 
+    @Override
+    public void onLoad(Exit exit) {
+        ImageView view = new ImageView(exitImage);
+        addEntity(exit, view);
+    }
+
     
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);
@@ -156,6 +164,20 @@ public class DungeonControllerLoader extends DungeonLoader {
                 GridPane.setRowIndex(node, newValue.intValue());
             }
         });
+        entity.onMap().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldBool, Boolean newBool) {
+                if (node instanceof ImageView && newBool == false){
+                    ImageView image = (ImageView) node;
+                    if (entity instanceof Door){
+                        image.setImage(openDoorImage);
+                    }else{
+                        image.setImage(null);
+                    }
+                }
+            }
+        });
+        
     }
 
     /**

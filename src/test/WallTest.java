@@ -13,6 +13,7 @@ public class WallTest {
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 5, 5);
         dungeon.setPlayer(player);
+        dungeon.addEntity(player);
         Wall wall1 = new Wall(5, 6);
         Wall wall2 = new Wall(5, 4);
         Wall wall3 = new Wall(6, 5);

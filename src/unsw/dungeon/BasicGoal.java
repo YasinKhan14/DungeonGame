@@ -13,6 +13,10 @@ public class BasicGoal implements Goal {
     }
 
     @Override
+    public String getName(){
+        return name;
+    }
+    @Override
     public boolean isCompleted() {
         for (Entity entity : goalEntityList) {
             if (!entity.isDestroyed())
@@ -26,6 +30,9 @@ public class BasicGoal implements Goal {
         goalEntityList.add(goalEntity);
     }
     
+    public void setGoalEntity(ArrayList<? extends Entity> goalEntityList){
+        this.goalEntityList.addAll(goalEntityList);
+    }
     
     
 }

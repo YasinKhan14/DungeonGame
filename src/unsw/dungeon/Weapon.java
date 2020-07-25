@@ -2,12 +2,10 @@ package unsw.dungeon;
 
 public class Weapon extends Entity {
     
-    private boolean pickedUp;
     private int charges;
     public Weapon(int x, int y) {
         super(x, y);
         this.charges = 5;
-        this.pickedUp = false;
     }
     @Override
     public boolean allowPass(Moveable moveable) {
@@ -15,14 +13,9 @@ public class Weapon extends Entity {
             Player player = (Player) moveable;
             player.equipSword(this);
             player.playerRemove(this);
-            pickedUp = true;
+            setOffMap();
         }
         return true;
-    }
-
-    @Override
-    public boolean isDestroyed() {
-        return pickedUp;
     }
 
     public int getCharges() {

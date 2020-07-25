@@ -27,10 +27,17 @@ public class DungeonController {
 
     private Dungeon dungeon;
 
+    private List<Entity> entities;
+    private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    private ArrayList<Treasure> treasures = new ArrayList<Treasure>();
+    private ArrayList<Exit> exits = new ArrayList<Exit>();
+    private ArrayList<FloorSwitch> floorswitches = new ArrayList<FloorSwitch>();
+
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
         this.initialEntities = new ArrayList<>(initialEntities);
+        entities = dungeon.getEntities();
     }
 
     @FXML
@@ -44,11 +51,53 @@ public class DungeonController {
             }
         }
 
-        for (ImageView entity : initialEntities)
+        for (ImageView entity : initialEntities){
             squares.getChildren().add(entity);
+        }
 
+        for (Entity entity : entities){
+            if (entity instanceof Enemy){
+                enemies.add((Enemy) entity);
+            }else if (entity instanceof Treasure){
+                treasures.add((Treasure) entity);
+            }else if (entity instanceof Exit){
+                exits.add((Exit) entity);
+            }else if (entity instanceof FloorSwitch){
+                floorswitches.add((FloorSwitch) entity);
+            }
+        }
+        initGoal(dungeon.getGoal());
+        for (Enemy enemy : enemies){
+            enemy.setPlayer(player);
+            enemy.startMoving();
+        }
     }
-
+    private void initGoal(Goal goal){
+        if (goal instanceof ComplexGoal){
+            ComplexGoal complexGoal = (ComplexGoal) goal;
+            for (Goal goals: complexGoal.getGoals()){
+                initGoal(goals);
+            }
+            return;
+        }
+        BasicGoal basicGoal = (BasicGoal) goal;
+        String type = basicGoal.getName();
+        switch(type){
+            case "enemies":
+                basicGoal.setGoalEntity(enemies);
+                break;
+            case "boulders":
+                basicGoal.setGoalEntity(floorswitches);
+                break;
+            case "treasure":
+                basicGoal.setGoalEntity(treasures);
+                break;
+            case "exit":
+                basicGoal.setGoalEntity(exits);
+                break;
+        }
+        return;
+    }
     @FXML
     public void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {

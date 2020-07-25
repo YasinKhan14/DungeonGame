@@ -6,21 +6,16 @@ public class Potion extends Entity {
 
     public Potion(int x, int y) {
 		super(x, y);
-		onMap = true;
     }
     @Override
 	public boolean allowPass(Moveable moveable) {
 		if (moveable instanceof Player) {
-			onMap = false;
+			this.setOffMap();
 			((Player) moveable).playerRemove(this);
 			((Player) moveable).playerGotPotion();
 		}
 		return true;
 	}
-	@Override
-	public boolean isDestroyed() {
-		//stubbed for now as no goals invovling potion
-		return !onMap;
-	}
+
 
 }

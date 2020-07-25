@@ -41,7 +41,7 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 		moveTask = new TimerTask(){
 			public void run(){
 				nextMove(player);
-				System.out.println("x = " + getX() + " y = " + getY());
+				//System.out.println("x = " + getX() + " y = " + getY());
 			}
 		};
 		moveTimer.scheduleAtFixedRate(moveTask, 500, 500);
@@ -65,11 +65,6 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 			}
 		}
 		return false;
-	}
-
-	@Override
-	public boolean isDestroyed() {
-		return !(this.isOnMap());
 	}
 
 	@Override

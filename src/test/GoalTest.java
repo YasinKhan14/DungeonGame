@@ -74,7 +74,7 @@ public class GoalTest {
         collectTreasures.attachGoalEntity(treasure2);
         collectTreasures.attachGoalEntity(treasure3);
         destroyEnemies.attachGoalEntity(enemy);
-        ComplexGoal complexAnd = new ComplexGoal("treasure&enemies", "and");
+        ComplexGoal complexAnd = new ComplexGoal("and");
         complexAnd.attachGoal(destroyEnemies);
         complexAnd.attachGoal(collectTreasures);
 
@@ -118,7 +118,7 @@ public class GoalTest {
         collectTreasures.attachGoalEntity(treasure2);
         collectTreasures.attachGoalEntity(treasure3);
         destroyEnemies.attachGoalEntity(enemy);
-        ComplexGoal complexOr = new ComplexGoal("treasure&enemies", "or");
+        ComplexGoal complexOr = new ComplexGoal("or");
         complexOr.attachGoal(destroyEnemies);
         complexOr.attachGoal(collectTreasures);
 

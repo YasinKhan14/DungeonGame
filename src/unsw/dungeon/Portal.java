@@ -28,6 +28,7 @@ public class Portal extends Entity {
 		return false;
 	}
 
+	@Override
 	public boolean isDestroyed() {
 		//stubbed for now as no goals involving portals
 		return false;
