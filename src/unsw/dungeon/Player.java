@@ -179,6 +179,7 @@ public class Player extends Entity implements Moveable{
 
     public void defeated() {
         this.setOffMap();
+        playerRemove(this);
         defeated.set(true);
     }
 
