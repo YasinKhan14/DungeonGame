@@ -24,6 +24,7 @@ public class DungeonController {
     private List<ImageView> initialEntities;
 
     private Player player;
+    private Player player2;
 
     private Dungeon dungeon;
 
@@ -35,7 +36,11 @@ public class DungeonController {
 
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
         this.dungeon = dungeon;
-        this.player = dungeon.getPlayer();
+        this.player = dungeon.getPlayerList().get(0);
+        if (dungeon.getPlayerList().size() > 1)
+            this.player2 = dungeon.getPlayerList().get(1);
+        else
+            this.player2 = null;
         this.initialEntities = new ArrayList<>(initialEntities);
         entities = dungeon.getEntities();
     }
@@ -68,8 +73,8 @@ public class DungeonController {
         }
         initGoal(dungeon.getGoal());
         for (Enemy enemy : enemies){
-            enemy.setPlayer(player);
-            enemy.startMoving();
+            enemy.setPlayer(player, player2);
+            enemy.startMoving(player, player2);
         }
     }
     private void initGoal(Goal goal){
@@ -112,6 +117,22 @@ public class DungeonController {
             break;
         case RIGHT:
             player.moveRight();
+            break;
+        case W:
+            if (player2 != null)
+                player2.moveUp();
+            break;
+        case S:
+            if (player2 != null)
+                player2.moveDown();
+            break;
+        case A:
+            if (player2 != null)
+                player2.moveLeft();
+            break;
+        case D:
+            if (player2 != null)
+                player2.moveRight();
             break;
         default:
             break;

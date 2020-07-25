@@ -13,7 +13,7 @@ public class PotionTest {
         Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon);
         Potion potion = new Potion(5, 6);
         dungeon.setPlayer(player);
-        enemy.setPlayer(player);
+        enemy.setPlayer(player, null);
         dungeon.addEntity(player);
         dungeon.addEntity(enemy);
         dungeon.addEntity(potion);
@@ -54,7 +54,7 @@ public class PotionTest {
         Potion potion = new Potion(5, 6);
         Potion potion2 = new Potion (5, 7);
         dungeon.setPlayer(player);
-        enemy.setPlayer(player);
+        enemy.setPlayer(player, null);
         dungeon.addEntity(player);
         dungeon.addEntity(enemy);
         dungeon.addEntity(potion);

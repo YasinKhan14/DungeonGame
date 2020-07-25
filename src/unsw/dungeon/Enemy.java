@@ -12,7 +12,7 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	private MoveStrategy currentStrategy;
 	private Timer moveTimer;
 	private TimerTask moveTask;
-	private Player player;
+	private boolean bothPlayerhavePotion;
 
 
     public Enemy(int x, int y, MoveStrategy strategy, Dungeon dungeon) {
@@ -22,25 +22,39 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 		this.moveTimer = new Timer();
 		this.moveTask = null;
 		this.dungeon = dungeon;
+		this.bothPlayerhavePotion = false;
 		
 	}
 	
-	public void nextMove(Player player) {
-		if (!(this.isOnMap()) || player.isDestroyed()){
+	public void nextMove(Player player, Player player2) {
+		if (!(this.isOnMap())){
 			moveTask.cancel();
 			return;
 		}
-		if (player != null)
-			currentStrategy.nextMove(player, this);
+		else if (player.isDestroyed()) {
+			if (player2 != null) {
+				if (player2.isDestroyed()) {
+					moveTask.cancel();
+					return;
+				}
+			}
+			else {
+				moveTask.cancel();
+				return;
+			}
+		}
+		if (player != null || player2 != null)
+			currentStrategy.nextMove(player, player2, this);
 	}
-	public void setPlayer(Player player){
-		this.player = player;
+	public void setPlayer(Player player, Player player2){
+		if (player2 != null) 
+			player2.addListener(this);
 		player.addListener(this);
 	}
-	public void startMoving(){
+	public void startMoving(Player player, Player player2){
 		moveTask = new TimerTask(){
 			public void run(){
-				nextMove(player);
+				nextMove(player, player2);
 				//System.out.println("x = " + getX() + " y = " + getY());
 			}
 		};
@@ -121,10 +135,21 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	
 	@Override
 	public void playerGotPotion(Boolean hasPotion){
-		if (hasPotion)
+		if (currentStrategy instanceof EscapeStrategy) {
+			if (hasPotion) {
+				bothPlayerhavePotion = true;
+			}
+			else {
+				if (bothPlayerhavePotion)
+					bothPlayerhavePotion = false;
+				else
+					currentStrategy = defaultStrategy;
+			}		
+		}
+		else {
 			currentStrategy = new EscapeStrategy();
-		else
-			currentStrategy = defaultStrategy;
+		}
+
 
 	}
 

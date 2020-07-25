@@ -17,8 +17,8 @@ public class EnemyTest {
         dungeon.addEntity(enemy);
         assertFalse(player.isDestroyed());
         assertFalse(enemy.getStrategy() instanceof EscapeStrategy);
-        enemy.startMoving();
-        enemy.setPlayer(player);
+        enemy.startMoving(player, null);
+        enemy.setPlayer(player, null);
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -33,7 +33,7 @@ public class EnemyTest {
         Player player = new Player(dungeon, 0, 0);
         Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon);
         dungeon.setPlayer(player);
-        enemy.setPlayer(player);
+        enemy.setPlayer(player, null);
         dungeon.addEntity(player);
         dungeon.addEntity(enemy);
 
@@ -41,7 +41,7 @@ public class EnemyTest {
             Wall wall = new Wall(5, i);
             dungeon.addEntity(wall);
         }
-        enemy.startMoving();
+        enemy.startMoving(player, null);
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
@@ -57,13 +57,13 @@ public class EnemyTest {
         Enemy enemy = new Enemy(1, 0, new GreedyEuclidean(), dungeon);
         Potion potion = new Potion(0, 1);
         dungeon.setPlayer(player);
-        enemy.setPlayer(player);
+        enemy.setPlayer(player, null);
         dungeon.addEntity(player);
         dungeon.addEntity(enemy);
         dungeon.addEntity(potion);
         assertFalse(player.isDestroyed());
         assertFalse(enemy.getStrategy() instanceof EscapeStrategy);
-        enemy.startMoving();
+        enemy.startMoving(player, null);
         player.moveDown();
         try {
             Thread.sleep(3000);
@@ -84,12 +84,12 @@ public class EnemyTest {
         dungeon.addEntity(sword);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);
-        enemy.setPlayer(player);
+        enemy.setPlayer(player, null);
         dungeon.addEntity(enemy);
         player.moveDown();
         assertFalse(player.isDestroyed());
         assertFalse(enemy.getStrategy() instanceof EscapeStrategy);
-        enemy.startMoving();
+        enemy.startMoving(player, null);
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -106,7 +106,7 @@ public class EnemyTest {
         Enemy enemy = new Enemy(5, 6, new GreedyEuclidean(), dungeon);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);
-        enemy.setPlayer(player);
+        enemy.setPlayer(player, null);
         dungeon.addEntity(enemy);
         player.moveDown();
         assertTrue(player.isDestroyed());

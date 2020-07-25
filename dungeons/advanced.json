@@ -503,6 +503,11 @@
       "type": "wall"
     },
     {
+      "x": 2,
+      "y": 14,
+      "type": "player"
+    },
+    {
       "x": 17,
       "y": 14,
       "type": "wall"

@@ -75,6 +75,7 @@ public class Player extends Entity implements Moveable{
         if (hasPotion && currentTask != null){
             currentTask.cancel();
         }else{
+            hasPotion = true;
             notifyPlayerGotPotion(true);
         }
         currentTask = new TimerTask(){
@@ -91,6 +92,11 @@ public class Player extends Entity implements Moveable{
             listener.playerGotPotion(hasPotion);
         }
     }
+
+    public boolean playerHasPotion() {
+        return hasPotion;
+    }
+
 	@Override
     public void moveUp() {
         if (canMove(getX(), getY() -1)) {

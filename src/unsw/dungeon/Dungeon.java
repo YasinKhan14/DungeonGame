@@ -20,7 +20,7 @@ public class Dungeon {
     private int width, height;
     private List<Entity> entities;
     private List<Entity>[][] map;
-    private Player player;
+    private List<Player> playerList;
     private Goal goal;
     public Dungeon(int width, int height) {
         this.width = width;
@@ -32,7 +32,7 @@ public class Dungeon {
                 this.map[i][j] = new ArrayList<Entity>();
             }
         }
-        this.player = null;
+        this.playerList = new ArrayList<Player>();
     }
 
     public int getWidth() {
@@ -43,8 +43,8 @@ public class Dungeon {
         return height;
     }
 
-    public Player getPlayer() {
-        return player;
+    public List<Player> getPlayerList() {
+        return playerList;
     }
 
     public List<Entity>[][] getMap(){
@@ -56,7 +56,7 @@ public class Dungeon {
     }
 
     public void setPlayer(Player player) {
-        this.player = player;
+        playerList.add(player);
     }
 
     public void addEntity(Entity entity) {

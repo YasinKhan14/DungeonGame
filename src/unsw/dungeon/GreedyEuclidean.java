@@ -5,11 +5,20 @@ import java.lang.Math;
 
 public class GreedyEuclidean implements MoveStrategy {
 
-    public void nextMove(Player player, Enemy enemy) {
+    public void nextMove(Player player, Player player2, Enemy enemy) {
         double leftCost = -1;
         double rightCost = -1;
         double upCost = -1;
         double downCost = -1;
+
+        if (player2 != null) {
+            if (player.isDestroyed()) {
+                player = player2;
+            }
+            else if (!(player2.isDestroyed()) && (euclideanDistance(enemy.getX(), enemy.getY(), player2.getX(), player2.getY()) < euclideanDistance(enemy.getX(), enemy.getY(), player.getX(), player.getY()))) {
+                player = player2;
+            }      
+        }
 
         if (enemy.canMove(enemy.getX(), enemy.getY() + 1))
             downCost = euclideanDistance(enemy.getX(), enemy.getY() + 1, player.getX(), player.getY());
