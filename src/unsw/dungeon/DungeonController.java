@@ -89,12 +89,11 @@ public class DungeonController {
                 }
                 VBox defeatedRoot = new VBox(5);
                 defeatedRoot.getChildren().add(new Label("Defeated"));
-                defeatedRoot.setStyle("-fx-background-color: rgba(255, 255, 255, 0.8);");
+                defeatedRoot.setStyle("-fx-background-color: transparent;");
                 defeatedRoot.setAlignment(Pos.CENTER);
                 defeatedRoot.setPadding(new Insets(20));
                 Button back = new Button("Main menu");
                 defeatedRoot.getChildren().add(back);
-
                 Stage popupStage = new Stage(StageStyle.TRANSPARENT);
                 popupStage.initOwner(stage);
                 popupStage.initModality(Modality.APPLICATION_MODAL);

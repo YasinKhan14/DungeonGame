@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.application.Platform;
+
 public class Enemy extends Entity implements Moveable, PlayerListener {
 
 	private Dungeon dungeon;
@@ -39,17 +41,28 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	}
 	public void startMoving(int rate){
 		moveTask = new TimerTask(){
+			@Override
 			public void run(){
-				nextMove(player);
-				//System.out.println("x = " + getX() + " y = " + getY());
+				Platform.runLater(new Runnable(){
+					@Override
+					public void run(){
+						nextMove(player);
+					}
+				});
 			}
 		};
 		moveTimer.scheduleAtFixedRate(moveTask, rate, rate);
 	}
 	public void startMoving(){
 		moveTask = new TimerTask(){
+			@Override
 			public void run(){
-				nextMove(player);
+				Platform.runLater(new Runnable(){
+					@Override
+					public void run(){
+						nextMove(player);
+					}
+				});
 				//System.out.println("x = " + getX() + " y = " + getY());
 			}
 		};
