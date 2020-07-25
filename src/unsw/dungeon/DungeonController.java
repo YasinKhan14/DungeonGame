@@ -3,6 +3,8 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -78,6 +80,75 @@ public class DungeonController {
             }
         }
         initGoal(dungeon.getGoal());
+        player.setGoal(dungeon.getGoal());
+        player.getDefeated().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldBool, Boolean newBool) {
+                for (Enemy enemy : enemies) {
+                    enemy.stopMoving();
+                }
+                VBox defeatedRoot = new VBox(5);
+                defeatedRoot.getChildren().add(new Label("Defeated"));
+                defeatedRoot.setStyle("-fx-background-color: rgba(255, 255, 255, 0.8);");
+                defeatedRoot.setAlignment(Pos.CENTER);
+                defeatedRoot.setPadding(new Insets(20));
+                Button back = new Button("Main menu");
+                defeatedRoot.getChildren().add(back);
+
+                Stage popupStage = new Stage(StageStyle.TRANSPARENT);
+                popupStage.initOwner(stage);
+                popupStage.initModality(Modality.APPLICATION_MODAL);
+                popupStage.setScene(new Scene(defeatedRoot, Color.TRANSPARENT));
+                
+                back.setOnAction(e -> {
+                    MainScreen main;
+                    try {
+                        main = new MainScreen(stage);
+                        popupStage.hide();
+                        main.start();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                });
+
+                popupStage.show();
+            }
+        });
+
+        player.goalComplete().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldBool, Boolean newBool) {
+                for (Enemy enemy : enemies) {
+                    enemy.stopMoving();
+                }
+                VBox defeatedRoot = new VBox(5);
+                defeatedRoot.getChildren().add(new Label("Victory!"));
+                defeatedRoot.setStyle("-fx-background-color: rgba(255, 255, 255, 0.8);");
+                defeatedRoot.setAlignment(Pos.CENTER);
+                defeatedRoot.setPadding(new Insets(20));
+                Button back = new Button("Main menu");
+                defeatedRoot.getChildren().add(back);
+
+                Stage popupStage = new Stage(StageStyle.TRANSPARENT);
+                popupStage.initOwner(stage);
+                popupStage.initModality(Modality.APPLICATION_MODAL);
+                popupStage.setScene(new Scene(defeatedRoot, Color.TRANSPARENT));
+                
+                back.setOnAction(e -> {
+                    MainScreen main;
+                    try {
+                        main = new MainScreen(stage);
+                        popupStage.hide();
+                        main.start();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                });
+
+                popupStage.show();
+            }
+        });
+
         for (Enemy enemy : enemies) {
             enemy.setPlayer(player);
             enemy.startMoving();
@@ -163,7 +234,13 @@ public class DungeonController {
                         e1.printStackTrace();
                     }
                 });
-
+                Label label;
+                if (dungeon.getGoal().isCompleted()){
+                    label = new Label("WON");
+                } else{
+                    label = new Label("Not Won");
+                }
+                pauseRoot.getChildren().add(label);
                 popupStage.show();
         default:
             break;
