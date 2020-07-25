@@ -37,6 +37,15 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 		this.player = player;
 		player.addListener(this);
 	}
+	public void startMoving(int rate){
+		moveTask = new TimerTask(){
+			public void run(){
+				nextMove(player);
+				//System.out.println("x = " + getX() + " y = " + getY());
+			}
+		};
+		moveTimer.scheduleAtFixedRate(moveTask, rate, rate);
+	}
 	public void startMoving(){
 		moveTask = new TimerTask(){
 			public void run(){
@@ -45,6 +54,12 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 			}
 		};
 		moveTimer.scheduleAtFixedRate(moveTask, 500, 500);
+	}
+
+	public void stopMoving(){
+		if (moveTask == null)
+			return;
+		moveTask.cancel();
 	}
 	@Override
 	public boolean allowPass(Moveable moveable) {

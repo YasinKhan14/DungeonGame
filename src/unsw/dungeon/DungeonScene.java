@@ -22,7 +22,7 @@ public class DungeonScene {
         DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(map);
 
         controller = dungeonLoader.loadController();
-
+        controller.setStage(stage);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         loader.setController(controller);
         Parent root = loader.load();
