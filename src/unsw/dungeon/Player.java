@@ -2,6 +2,9 @@ package unsw.dungeon;
 
 import java.util.*;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 
 /**
  * The player entity
@@ -18,6 +21,8 @@ public class Player extends Entity implements Moveable{
     private boolean hasPotion;
     private Timer potionTimer;
     private TimerTask currentTask;
+    private BooleanProperty goalComplete;
+    private BooleanProperty defeated;
     /**
      * Create a player positioned in square (x,y)
      * @param x
@@ -32,6 +37,8 @@ public class Player extends Entity implements Moveable{
         this.hasPotion = false;
         this.weapon = null;
         this.goal = null;
+        goalComplete = new SimpleBooleanProperty(false);
+        defeated = new SimpleBooleanProperty(false);
 
     }
     public void equipSword(Weapon weapon){
@@ -144,7 +151,7 @@ public class Player extends Entity implements Moveable{
         }
 
         if(isCompleted()){
-            // trigger end game function
+            goalComplete.set(true);
         }
         return true;
     }
@@ -178,5 +185,15 @@ public class Player extends Entity implements Moveable{
 
     public void defeated() {
         this.setOffMap();
+        playerRemove(this);
+        defeated.set(true);
+    }
+
+    public BooleanProperty getDefeated(){
+        return defeated;
+    }
+
+    public BooleanProperty goalComplete(){
+        return goalComplete;
     }
 }

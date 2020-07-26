@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.application.Platform;
+
 public class Enemy extends Entity implements Moveable, PlayerListener {
 
 	private Dungeon dungeon;
@@ -51,14 +53,40 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 			player2.addListener(this);
 		player.addListener(this);
 	}
+	public void startMoving(int rate, Player player, Player player2){
+		moveTask = new TimerTask(){
+			@Override
+			public void run(){
+				Platform.runLater(new Runnable(){
+					@Override
+					public void run(){
+						nextMove(player, player2);
+					}
+				});
+			}
+		};
+		moveTimer.scheduleAtFixedRate(moveTask, rate, rate);
+	}
 	public void startMoving(Player player, Player player2){
 		moveTask = new TimerTask(){
+			@Override
 			public void run(){
-				nextMove(player, player2);
+				Platform.runLater(new Runnable(){
+					@Override
+					public void run(){
+						nextMove(player, player2);
+					}
+				});
 				//System.out.println("x = " + getX() + " y = " + getY());
 			}
 		};
 		moveTimer.scheduleAtFixedRate(moveTask, 500, 500);
+	}
+
+	public void stopMoving(){
+		if (moveTask == null)
+			return;
+		moveTask.cancel();
 	}
 	@Override
 	public boolean allowPass(Moveable moveable) {

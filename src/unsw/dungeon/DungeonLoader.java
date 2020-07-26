@@ -2,6 +2,8 @@ package unsw.dungeon;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,9 +22,11 @@ public abstract class DungeonLoader {
 
     private JSONObject json;
     private Goal goal;
+    private List<Enemy> enemies;
 
     public DungeonLoader(String filename) throws FileNotFoundException {
         json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + filename)));
+        enemies = new ArrayList<Enemy>();
     }
 
     /**
@@ -41,6 +45,9 @@ public abstract class DungeonLoader {
         dungeon.setGoal(goal);
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
+        }
+        for (Enemy enemy : enemies){
+            onLoad(enemy);
         }
         return dungeon;
     }
@@ -125,7 +132,7 @@ public abstract class DungeonLoader {
             break;
         case "enemy":
             Enemy enemy = new Enemy(x, y, new GreedyEuclidean(), dungeon);
-            onLoad(enemy);
+            enemies.add(enemy);
             entity = enemy;
             break;
         case "switch":

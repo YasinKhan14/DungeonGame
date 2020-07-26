@@ -9,7 +9,7 @@ public class Exit extends Entity{
     @Override
     public boolean allowPass(Moveable moveable) {
         if (moveable instanceof Player) {
-            ((Player)moveable).defeated();
+            //((Player)moveable).defeated();
             return true;
         }
         return false;
@@ -17,6 +17,7 @@ public class Exit extends Entity{
 
     @Override
     public boolean isDestroyed() {
+
         return false;
     }
     
