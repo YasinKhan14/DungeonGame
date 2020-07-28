@@ -16,13 +16,14 @@ public class DungeonScene {
     public DungeonScene(Stage stage, String map) throws IOException {
 
         this.stage = stage;
-        title = "Game Screen";
         if (map == null)
             map = "maze.json";
+        title = map.split("\\.")[0].substring(0, 1).toUpperCase() + map.split("\\.")[0].substring(1);
         DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(map);
 
         controller = dungeonLoader.loadController();
         controller.setStage(stage);
+        controller.setMap(map);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         loader.setController(controller);
         Parent root = loader.load();

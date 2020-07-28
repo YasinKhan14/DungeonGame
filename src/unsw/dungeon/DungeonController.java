@@ -37,7 +37,7 @@ public class DungeonController {
 
     private Player player;
     private Player player2;
-
+    private String map;
     private Dungeon dungeon;
 
     private Stage stage;
@@ -87,6 +87,17 @@ public class DungeonController {
         initGoal(dungeon.getGoal());
 
         player.setGoal(dungeon.getGoal());
+        initPlayer(player);
+        if (player2 != null){
+            player2.setGoal(dungeon.getGoal());
+            initPlayer(player2);
+        }
+        for (Enemy enemy : enemies) {
+            enemy.setPlayer(player, player2);
+            enemy.startMoving(player, player2);
+        }
+    }
+    private void initPlayer(Player player){
         player.getDefeated().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldBool, Boolean newBool) {
@@ -100,6 +111,8 @@ public class DungeonController {
                 defeatedRoot.setPadding(new Insets(20));
                 Button back = new Button("Main menu");
                 defeatedRoot.getChildren().add(back);
+                Button retry = new Button("Retry");
+                defeatedRoot.getChildren().add(retry);
                 Stage popupStage = new Stage(StageStyle.TRANSPARENT);
                 popupStage.initOwner(stage);
                 popupStage.initModality(Modality.APPLICATION_MODAL);
@@ -111,6 +124,16 @@ public class DungeonController {
                         main = new MainScreen(stage);
                         popupStage.hide();
                         main.start();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                });
+                retry.setOnAction(e -> {
+                    DungeonScene restartScene;
+                    try {
+                        restartScene = new DungeonScene(stage, map);
+                        popupStage.hide();
+                        restartScene.start();
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
@@ -133,7 +156,8 @@ public class DungeonController {
                 defeatedRoot.setPadding(new Insets(20));
                 Button back = new Button("Main menu");
                 defeatedRoot.getChildren().add(back);
-
+                Button retry = new Button("Restart");
+                defeatedRoot.getChildren().add(retry);
                 Stage popupStage = new Stage(StageStyle.TRANSPARENT);
                 popupStage.initOwner(stage);
                 popupStage.initModality(Modality.APPLICATION_MODAL);
@@ -149,17 +173,22 @@ public class DungeonController {
                         e1.printStackTrace();
                     }
                 });
+                retry.setOnAction(e -> {
+                    DungeonScene restartScene;
+                    try {
+                        restartScene = new DungeonScene(stage, map);
+                        popupStage.hide();
+                        restartScene.start();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                });
+
 
                 popupStage.show();
             }
         });
-
-        for (Enemy enemy : enemies) {
-            enemy.setPlayer(player, player2);
-            enemy.startMoving(player, player2);
-        }
     }
-
     private void initGoal(Goal goal) {
         if (goal instanceof ComplexGoal) {
             ComplexGoal complexGoal = (ComplexGoal) goal;
@@ -231,6 +260,8 @@ public class DungeonController {
 
                 Button resume = new Button("Resume");
                 pauseRoot.getChildren().add(resume);
+                Button retry = new Button("Retry");
+                pauseRoot.getChildren().add(retry);
                 Button back = new Button("Main menu");
                 pauseRoot.getChildren().add(back);
 
@@ -255,12 +286,18 @@ public class DungeonController {
                         e1.printStackTrace();
                     }
                 });
-                Label label;
-                if (dungeon.getGoal().isCompleted()){
-                    label = new Label("WON");
-                } else{
-                    label = new Label("Not Won");
-                }
+                retry.setOnAction(e -> {
+                    DungeonScene restartScene;
+                    try {
+                        restartScene = new DungeonScene(stage, map);
+                        popupStage.hide();
+                        restartScene.start();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                });
+
+                Label label = new Label(displayGoal(dungeon.getGoal()));
                 pauseRoot.getChildren().add(label);
                 popupStage.show();
             default:
@@ -271,6 +308,45 @@ public class DungeonController {
     public void setStage(Stage stage){
         this.stage = stage;
     }
-
+    public void setMap(String map){
+        this.map = map;
+    }
+    private String displayGoal(Goal goal){
+        String resultString = "";
+        String subString1;
+        String subString2;
+        if (goal instanceof ComplexGoal){
+            ComplexGoal xGoal = (ComplexGoal) goal;
+            switch(xGoal.getName()){
+                case "and":
+                    subString1 = displayGoal(xGoal.getGoals().get(0));
+                    subString2 = displayGoal(xGoal.getGoals().get(1));
+                    resultString = "(" + subString1 + " and " + subString2 + ")";
+                    break;
+                case "or":
+                    subString1 = displayGoal(xGoal.getGoals().get(0));
+                    subString2 = displayGoal(xGoal.getGoals().get(1));
+                    resultString = "(" + subString1 + " or " + subString2 + ")";
+                    break;
+            }
+        }else{
+            BasicGoal bGoal = (BasicGoal) goal;
+            switch(bGoal.getName()){
+                case "enemies":
+                    resultString = "Defeat all enemies";
+                    break;
+                case "treasure":
+                    resultString = "Get all treasure";
+                    break;
+                case "boulder":
+                    resultString = "Activate all switches";
+                    break;
+                case "exit":
+                    resultString = "Get to the exit";
+                    break;
+            }
+        }
+        return resultString;
+    }
 }
 
