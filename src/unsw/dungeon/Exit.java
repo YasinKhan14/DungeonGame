@@ -9,7 +9,7 @@ public class Exit extends Entity{
         super(x, y);
     }
 
-    public void setGoal(Goal Goal) {
+    public void setGoal(Goal goal) {
         this.goal = goal;
     }
 
