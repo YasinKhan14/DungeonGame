@@ -43,14 +43,14 @@ public class Exit extends Entity{
             if (rightGoal instanceof BasicGoal) {     //right child is a leaf
                 BasicGoal basicGoal = (BasicGoal) rightGoal;
                 if (basicGoal.containsGoal(this)) {
-                    return rightGoal.isCompleted();
+                    return leftGoal.isCompleted();
                 }
-                return checkExitConjunction(rightGoal); //recurse left subtree 
+                return checkExitConjunction(leftGoal); //recurse left subtree 
             }
             else if (leftGoal instanceof BasicGoal) { //left child is a leaf
                 BasicGoal basicGoal = (BasicGoal) leftGoal;
                 if (basicGoal.containsGoal(this)) {
-                    return leftGoal.isCompleted();
+                    return rightGoal.isCompleted();
                 }
                 return checkExitConjunction(rightGoal); //recurse right subtree
             }
