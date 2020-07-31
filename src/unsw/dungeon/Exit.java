@@ -23,7 +23,6 @@ public class Exit extends Entity{
     public boolean allowPass(Moveable moveable) {
         if (moveable instanceof Player) {
             //((Player)moveable).defeated();
-            passed = true;
             return true;
         }
         return false;
