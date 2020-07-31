@@ -211,6 +211,10 @@ public class DungeonController {
                 break;
             case "exit":
                 basicGoal.setGoalEntity(exits);
+                for (Exit exit : exits){
+                    exit.setGoal(basicGoal);
+                    exit.setPlayer(player);
+                }
                 break;
         }
         return;
