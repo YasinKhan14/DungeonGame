@@ -40,8 +40,9 @@ public class Exit extends Entity{
     public boolean checkExitConjunction(Goal goal) {
 
         if (goal instanceof ComplexGoal) {
-            Goal leftGoal = ((ComplexGoal) goal).getSubgoalPair(0);
-            Goal rightGoal = ((ComplexGoal) goal).getSubgoalPair(1);
+            ComplexGoal complexGoal = ((ComplexGoal) goal);
+            Goal leftGoal = complexGoal.getSubgoalPair(0);
+            Goal rightGoal = complexGoal.getSubgoalPair(1);
 
             if (rightGoal instanceof BasicGoal) {     //right child is a leaf
                 BasicGoal basicGoal = (BasicGoal) rightGoal;
@@ -57,7 +58,13 @@ public class Exit extends Entity{
                 }
                 return checkExitConjunction(rightGoal); //recurse right subtree
             }
-            return checkExitConjunction(leftGoal) && checkExitConjunction(rightGoal); //recurse for both left and right subtree
+            if (complexGoal.getName().equals("and")) {
+                return checkExitConjunction(leftGoal) && checkExitConjunction(rightGoal); //check for both left AND right subtree
+            }
+            else {
+                return checkExitConjunction(leftGoal) || checkExitConjunction(rightGoal); //recurse for left OR right subtree
+            }
+            
         }
         return ((BasicGoal) goal).containsGoal(this); //case for if goal is just exit alone.
         
