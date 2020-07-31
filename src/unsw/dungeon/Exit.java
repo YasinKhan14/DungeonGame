@@ -3,16 +3,27 @@ package unsw.dungeon;
 public class Exit extends Entity{
     
     private Goal goal;
+    private Player player;
 
-    public Exit(int x, int y, Goal goal) {
+    public Exit(int x, int y) {
         super(x, y);
         this.goal = goal;
     }
+
+    public void setGoal(Goal Goal) {
+        this.goal = goal;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
     
     @Override
     public boolean allowPass(Moveable moveable) {
         if (moveable instanceof Player) {
             //((Player)moveable).defeated();
+            passed = true;
             return true;
         }
         return false;
@@ -20,10 +31,13 @@ public class Exit extends Entity{
 
     @Override
     public boolean isDestroyed() {
+        if (player.getX() != this.getX() || player.getY() != this.getY())
+            return false;
         return checkExitConjunction(goal);
     }
 
     public boolean checkExitConjunction(Goal goal) {
+
         if (goal instanceof ComplexGoal) {
             Goal leftGoal = ((ComplexGoal) goal).getSubgoalPair(0);
             Goal rightGoal = ((ComplexGoal) goal).getSubgoalPair(1);
