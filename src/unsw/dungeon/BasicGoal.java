@@ -33,6 +33,10 @@ public class BasicGoal implements Goal {
     public void setGoalEntity(ArrayList<? extends Entity> goalEntityList){
         this.goalEntityList.addAll(goalEntityList);
     }
+
+    public boolean containsGoal(Entity entity) {
+        return goalEntityList.contains(entity);
+    }
     
     
 }

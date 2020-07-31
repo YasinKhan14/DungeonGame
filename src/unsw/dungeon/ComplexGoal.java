@@ -31,5 +31,10 @@ public class ComplexGoal implements Goal {
             return subgoalPair.get(0).isCompleted() || subgoalPair.get(1).isCompleted();
         }
     }
+
+
+    public Goal getSubgoalPair(int index) {
+        return subgoalPair.get(index);
+    }
     
 }
