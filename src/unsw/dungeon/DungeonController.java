@@ -300,7 +300,7 @@ public class DungeonController {
                         e1.printStackTrace();
                     }
                 });
-
+                pauseRoot.getChildren().add(new Label("Dungeon Goal:"));
                 Label label = new Label(displayGoal(dungeon.getGoal()));
                 pauseRoot.getChildren().add(label);
                 popupStage.show();
@@ -342,7 +342,7 @@ public class DungeonController {
                 case "treasure":
                     resultString = "Get all treasure";
                     break;
-                case "boulder":
+                case "boulders":
                     resultString = "Activate all switches";
                     break;
                 case "exit":

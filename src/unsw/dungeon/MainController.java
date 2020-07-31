@@ -46,6 +46,8 @@ public class MainController {
         fileChooser.getExtensionFilters().add(new ExtensionFilter("Dungeon JSON file", "*.json"));
         //fileChooser.setInitialDirectory(new File("../../dungeons"));
         File selectedFile = fileChooser.showOpenDialog(stage);
+        if (selectedFile == null)
+            return;
         map = selectedFile.getName();
         dungeonScene = new DungeonScene(stage, map);
         dungeonScene.start();
