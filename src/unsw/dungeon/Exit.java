@@ -56,7 +56,8 @@ public class Exit extends Entity{
             }
             return checkExitConjunction(leftGoal) && checkExitConjunction(rightGoal); //recurse for both left and right subtree
         }
-        return true; //case for if goal is just exit alone.
+        return ((BasicGoal) goal).containsGoal(this); 
+        //base case for if goal is just exit alone.
         
     }
     
