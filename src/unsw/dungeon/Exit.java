@@ -4,9 +4,11 @@ public class Exit extends Entity{
     
     private Goal goal;
     private Player player;
+    private Boolean memory;
 
     public Exit(int x, int y) {
         super(x, y);
+        this.memory = false;
     }
 
     public void setGoal(Goal goal) {
@@ -22,6 +24,7 @@ public class Exit extends Entity{
     public boolean allowPass(Moveable moveable) {
         if (moveable instanceof Player) {
             //((Player)moveable).defeated();
+            memory = checkExitConjunction(goal);
             return true;
         }
         return false;
@@ -29,9 +32,9 @@ public class Exit extends Entity{
 
     @Override
     public boolean isDestroyed() {
-        if (player.getX() != this.getX() || player.getY() != this.getY())
-            return false;
-        return checkExitConjunction(goal);
+        //if (player.getX() != this.getX() || player.getY() != this.getY())
+        //    return false;
+        return memory;//checkExitConjunction(goal);
     }
 
     public boolean checkExitConjunction(Goal goal) {
