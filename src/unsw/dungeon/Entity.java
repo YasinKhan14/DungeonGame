@@ -4,6 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.Node;
 
 /**
  * An entity in the dungeon.
@@ -16,6 +17,7 @@ import javafx.beans.property.SimpleIntegerProperty;
     // externally observed.
     private IntegerProperty x, y;
     private BooleanProperty onMap;
+    private Node sprite;
 
     /**
      * Create an entity positioned in square (x,y)
@@ -58,5 +60,13 @@ import javafx.beans.property.SimpleIntegerProperty;
         return !onMap.get();
     }
     public abstract boolean allowPass(Moveable moveable);
+
+	public Node getSprite() {
+		return sprite;
+	}
+
+	public void setSprite(Node sprite) {
+		this.sprite = sprite;
+	}
 
 }

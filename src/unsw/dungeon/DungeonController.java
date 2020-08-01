@@ -1,26 +1,31 @@
 package unsw.dungeon;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.*;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
-import javafx.stage.*;
-
-import java.io.File;
-import java.io.IOException;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 /**
  * A JavaFX controller for the dungeon.
@@ -83,6 +88,7 @@ public class DungeonController {
             } else if (entity instanceof FloorSwitch) {
                 floorswitches.add((FloorSwitch) entity);
             }
+            initImage(entity);
         }
         initGoal(dungeon.getGoal());
 
@@ -96,6 +102,56 @@ public class DungeonController {
             enemy.setPlayer(player, player2);
             enemy.startMoving(player, player2);
         }
+    }
+    private void initImage(Entity entity){
+        Node node = entity.getSprite();
+        entity.x().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                int dx = newValue.intValue() - oldValue.intValue();
+                if (Math.abs(dx) > 1 || entity instanceof Player){
+                    GridPane.setColumnIndex(node, newValue.intValue());
+                    return;
+                }
+                squares.layout();
+                double x = 32*dx;
+                node.setVisible(true);
+                TranslateTransition tt = new TranslateTransition();
+                tt.setDuration(Duration.millis(200));
+                tt.setToX(x);
+                tt.setNode(node);
+                tt.setOnFinished(e->{
+                    squares.getChildren().remove(node);
+                    node.setTranslateX(0);
+                    node.setTranslateY(0);
+                    squares.add(node, newValue.intValue(), entity.getY());
+                });
+                tt.play();
+            }
+        });
+        entity.y().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                int dy = newValue.intValue() - oldValue.intValue();
+                if (Math.abs(dy) > 1 || entity instanceof Player){
+                    GridPane.setRowIndex(node, newValue.intValue());
+                    return;
+                }
+                squares.layout();
+                double y = 32*dy;
+                TranslateTransition tt = new TranslateTransition();
+                tt.setDuration(Duration.millis(200));
+                tt.setToY(y);
+                tt.setNode(node);
+                tt.setOnFinished(e->{
+                    squares.getChildren().remove(node);
+                    node.setTranslateX(0);
+                    node.setTranslateY(0);
+                    squares.add(node, entity.getX(), newValue.intValue());
+                });
+                tt.play();
+            }
+        });
     }
     private void initPlayer(Player player){
         player.getDefeated().addListener(new ChangeListener<Boolean>() {
