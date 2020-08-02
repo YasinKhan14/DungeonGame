@@ -8,6 +8,7 @@ import java.util.List;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -360,6 +362,14 @@ public class DungeonController {
                         restartScene.start();
                     } catch (IOException e1) {
                         e1.printStackTrace();
+                    }
+                });
+                pauseRoot.setOnKeyPressed(new EventHandler<KeyEvent>(){
+                    @Override
+                    public void handle(KeyEvent event){
+                        if (event.getCode() == KeyCode.P){
+                            resume.fire();
+                        }
                     }
                 });
                 pauseRoot.getChildren().add(new Label("Dungeon Goal:"));
