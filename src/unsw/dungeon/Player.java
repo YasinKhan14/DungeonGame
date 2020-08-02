@@ -1,5 +1,7 @@
 package unsw.dungeon;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import javafx.beans.property.BooleanProperty;
@@ -23,6 +25,8 @@ public class Player extends Entity implements Moveable{
     private TimerTask currentTask;
     private BooleanProperty goalComplete;
     private BooleanProperty defeated;
+    private LocalDateTime potionTriggerTime;
+    private long remaining;
     /**
      * Create a player positioned in square (x,y)
      * @param x
@@ -37,6 +41,9 @@ public class Player extends Entity implements Moveable{
         this.hasPotion = false;
         this.weapon = null;
         this.goal = null;
+        this.potionTriggerTime = null;
+        this.currentTask = null;
+        this.remaining = -1;
         goalComplete = new SimpleBooleanProperty(false);
         defeated = new SimpleBooleanProperty(false);
 
@@ -92,8 +99,35 @@ public class Player extends Entity implements Moveable{
             }
         };
         potionTimer.schedule(currentTask, 5000);
+        potionTriggerTime = LocalDateTime.now();
         hasPotion = true;
     }
+
+
+    public void pausePotionTimer() {
+        if (potionTriggerTime == null || currentTask == null) {
+            remaining = -1;
+            return;
+        }
+        currentTask.cancel();
+        potionTimer.purge();
+        remaining = 5000 - Duration.between(potionTriggerTime, LocalDateTime.now()).toMillis();
+    }
+
+    public void resumePotionTimer() {
+        if (remaining < 0)
+            return;
+        currentTask = new TimerTask(){
+            public void run(){
+                notifyPlayerGotPotion(false);
+                hasPotion = false;
+            }
+        };
+        potionTimer.schedule(currentTask, remaining);
+
+    }
+
+
     public void notifyPlayerGotPotion(Boolean hasPotion){
         for (PlayerListener listener : listeners){
             listener.playerGotPotion(hasPotion);
@@ -196,4 +230,5 @@ public class Player extends Entity implements Moveable{
     public BooleanProperty goalComplete(){
         return goalComplete;
     }
+
 }

@@ -311,6 +311,9 @@ public class DungeonController {
                 for (Enemy enemy : enemies) {
                     enemy.stopMoving();
                 }
+                player.pausePotionTimer();
+                if (player2 != null)
+                    player2.pausePotionTimer();
                 squares.setEffect(new GaussianBlur());
                 VBox pauseRoot = new VBox(5);
                 pauseRoot.getChildren().add(new Label("Paused"));
@@ -335,6 +338,9 @@ public class DungeonController {
                     for (Enemy enemy : enemies) {
                         enemy.startMoving(player, player2);
                     }
+                    player.resumePotionTimer();
+                    if (player2 != null)
+                        player2.resumePotionTimer();
                 });
                 back.setOnAction(e -> {
                     MainScreen main;
