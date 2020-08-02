@@ -6,7 +6,6 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.beans.property.BooleanProperty;
 
 /**
  * A dungeon in the interactive dungeon player.

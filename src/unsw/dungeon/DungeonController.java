@@ -47,6 +47,8 @@ public class DungeonController {
     private String map;
     private Dungeon dungeon;
 
+    private boolean playerMoving1;
+    private boolean playerMoving2;
     private Stage stage;
     private List<Entity> entities;
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -63,6 +65,8 @@ public class DungeonController {
             this.player2 = null;
         this.initialEntities = new ArrayList<>(initialEntities);
         entities = dungeon.getEntities();
+        playerMoving1 = false;
+        playerMoving2 = false;
     }
 
     @FXML
@@ -111,47 +115,70 @@ public class DungeonController {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 int dx = newValue.intValue() - oldValue.intValue();
-                if (Math.abs(dx) > 1 || entity instanceof Player){
+                if (Math.abs(dx) > 1){
                     GridPane.setColumnIndex(node, newValue.intValue());
                     return;
                 }
+                
                 squares.layout();
                 double x = 32*dx;
                 node.setVisible(true);
                 TranslateTransition tt = new TranslateTransition();
-                tt.setDuration(Duration.millis(200));
+                tt.setDuration(Duration.millis(100));
                 tt.setToX(x);
                 tt.setNode(node);
                 tt.setOnFinished(e->{
+                    if (entity == (Entity) player){
+                        playerMoving1 = false;
+                    }else if (entity == (Entity) player2){
+                        playerMoving2 = false;
+                    }
                     squares.getChildren().remove(node);
                     node.setTranslateX(0);
                     node.setTranslateY(0);
                     squares.add(node, newValue.intValue(), entity.getY());
+                    
                 });
                 tt.play();
+                if (entity == (Entity) player){
+                    playerMoving1 = true;
+                } else if (entity == (Entity) player2){
+                    playerMoving2 = true;
+                }
             }
         });
         entity.y().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 int dy = newValue.intValue() - oldValue.intValue();
-                if (Math.abs(dy) > 1 || entity instanceof Player){
+                if (Math.abs(dy) > 1){
                     GridPane.setRowIndex(node, newValue.intValue());
                     return;
                 }
                 squares.layout();
                 double y = 32*dy;
                 TranslateTransition tt = new TranslateTransition();
-                tt.setDuration(Duration.millis(200));
+                tt.setDuration(Duration.millis(100));
                 tt.setToY(y);
                 tt.setNode(node);
                 tt.setOnFinished(e->{
+                    if (entity == (Entity) player){
+                        playerMoving1 = false;
+                    }else if (entity == (Entity) player2){
+                        playerMoving2 = false;
+                    }
                     squares.getChildren().remove(node);
                     node.setTranslateX(0);
                     node.setTranslateY(0);
                     squares.add(node, entity.getX(), newValue.intValue());
+                    
                 });
                 tt.play();
+                if (entity == (Entity) player){
+                    playerMoving1 = true;
+                } else if (entity == (Entity) player2){
+                    playerMoving2 = true;
+                }
             }
         });
     }
@@ -271,7 +298,6 @@ public class DungeonController {
                 basicGoal.setGoalEntity(exits);
                 for (Exit exit : exits){
                     exit.setGoal(basicGoal);
-                    exit.setPlayer(player);
                 }
                 break;
         }
@@ -282,31 +308,35 @@ public class DungeonController {
     public void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) { 
             case UP:
-                player.moveUp();
+                if (!playerMoving1)
+                    player.moveUp();
                 break;
             case DOWN:
-                player.moveDown();
+                if (!playerMoving1)
+                    player.moveDown();
                 break;
             case LEFT:
-                player.moveLeft();
+                if (!playerMoving1)
+                    player.moveLeft();
                 break;
             case RIGHT:
-                player.moveRight();
+                if (!playerMoving1)
+                    player.moveRight();
                 break;
             case W:
-                if (player2 != null)
+                if (player2 != null && !playerMoving2)
                     player2.moveUp();
                 break;
             case S:
-                if (player2 != null)
+                if (player2 != null && !playerMoving2)
                     player2.moveDown();
                 break;
             case A:
-                if (player2 != null)
+                if (player2 != null && !playerMoving2)
                     player2.moveLeft();
                 break;
             case D:
-                if (player2 != null)
+                if (player2 != null && !playerMoving2)
                     player2.moveRight();
                 break;
             case P:

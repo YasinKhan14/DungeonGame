@@ -2,7 +2,6 @@ package unsw.dungeon;
 
 public class Potion extends Entity {
 
-    private boolean onMap;
 
     public Potion(int x, int y) {
 		super(x, y);

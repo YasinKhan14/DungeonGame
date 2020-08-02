@@ -3,7 +3,6 @@ package unsw.dungeon;
 public class Exit extends Entity{
     
     private Goal goal;
-    private Player player;
     private Boolean memory;
 
     public Exit(int x, int y) {
@@ -13,10 +12,6 @@ public class Exit extends Entity{
 
     public void setGoal(Goal goal) {
         this.goal = goal;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 
     
