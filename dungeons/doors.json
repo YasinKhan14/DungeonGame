@@ -277,7 +277,7 @@
     {
       "x": 4,
       "y": 3,
-      "id": 1,
+      "id": 2,
       "type": "key"
     },
     {
@@ -294,7 +294,7 @@
     {
       "x": 13,
       "y": 3,
-      "id": 1,
+      "id": 2,
       "type": "door"
     },
     {
@@ -325,7 +325,7 @@
     {
       "x": 6,
       "y": 4,
-      "id": 1,
+      "id": 3,
       "type": "key"
     },
     {
@@ -616,7 +616,7 @@
     {
       "x": 25,
       "y": 11,
-      "id": 1,
+      "id": 3,
       "type": "door"
     },
     {
@@ -812,6 +812,30 @@
     }
   ],
   "goal-condition": {
-    "goal": "exit"
+    "goal" : "OR",
+    "subgoals" : [
+      {
+        "goal" : "AND",
+        "subgoals" : [
+          {
+            "goal" : "treasure"
+          },
+          {
+            "goal" : "exit"
+          }
+        ]
+      },
+      {
+        "goal" : "OR",
+        "subgoals" : [
+          {
+            "goal" : "boulders"
+          },
+          {
+            "goal" : "enemies"
+          }
+        ]
+      }
+    ]
   }
 }

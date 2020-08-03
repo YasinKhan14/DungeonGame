@@ -2,10 +2,7 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import javafx.application.Platform;
 
 
 public class GhostEnemy extends Enemy {
@@ -17,7 +14,7 @@ public class GhostEnemy extends Enemy {
     
     @Override
     public boolean canMove(int x, int y) {
-		if (x < 0 || x >= getDungeon().getHeight() || y < 0 || y >= getDungeon().getHeight())
+		if (x < 0 || x >= getDungeon().getWidth() || y < 0 || y >= getDungeon().getHeight())
 			return false;
 		List<Entity> objectList = getDungeon().getMap()[y][x];
 		List<Entity> copy = new ArrayList<Entity>();

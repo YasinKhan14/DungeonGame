@@ -78,7 +78,8 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	}
 	@Override
 	public boolean allowPass(Moveable moveable) {
-
+		if (isDestroyed())
+			return true;
 		if (moveable instanceof Player) {
 			Player player = (Player) moveable;
 			if (player.hasSword()) {

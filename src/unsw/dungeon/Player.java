@@ -235,6 +235,8 @@ public class Player extends Entity implements Moveable{
     public boolean allowPass(Moveable moveable){
         if (moveable instanceof Enemy){
             Enemy enemy = (Enemy) moveable;
+            if (enemy.isDestroyed())
+                return true;
             if (hasSword()){
                 weaponDecrement();
                 playerRemove(enemy);

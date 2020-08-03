@@ -38,6 +38,9 @@ public class Astar implements MoveStrategy {
                 List<Entity> entityList = map[i][j];
                 for (Entity entity : entityList) {
                     if (entity instanceof Wall || entity instanceof Boulder || entity instanceof Door) {
+                        if (entity instanceof Door && ((Door)entity).isDestroyed()){
+                            continue;
+                        }
                         isReachable = false;
                         break;
                     }
