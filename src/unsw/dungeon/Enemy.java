@@ -98,7 +98,7 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 				player.playerRemove(this);
 				this.setOffMap();
 			}
-			else if (currentStrategy instanceof EscapeStrategy){
+			else if (player.playerHasPotion()){
 				player.playerRemove(this);
 				this.setOffMap();
 			}

@@ -203,12 +203,11 @@ public class Player extends Entity implements Moveable{
                 enemy.setOffMap();
                 return true;
             }
-            // // case that will almost never happen
-            // else if (enemy.getStrategy() instanceof EscapeStrategy){
-            //     playerRemove(enemy);
-            //     enemy.setOnMap(false);
-            //     return true;
-            // }
+            else if (hasPotion){
+                playerRemove(enemy);
+                enemy.setOffMap();;
+                return true;
+            }
             else {
                 defeated();
                 return true;
