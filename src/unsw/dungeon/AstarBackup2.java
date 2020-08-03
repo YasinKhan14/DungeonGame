@@ -1,4 +1,4 @@
-package unsw.dungeon;
+/*package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -40,7 +40,7 @@ public class Astar implements MoveStrategy {
         }
 
         for (Node node : nodeList) {
-            node.setH(manHattenDistance(player.getX(), player.getY(), node.getX(), node.getY()));
+            node.setH(euclideanDistance(player.getX(), player.getY(), node.getX(), node.getY()));
         }
 
         Node startPoint = new Node(enemy.getX(), enemy.getY());
@@ -48,49 +48,69 @@ public class Astar implements MoveStrategy {
 
         startPoint.setG(0);
         startPoint.setF(0);
-        startPoint.setPrev(null);
         openList.add(startPoint);
 
         while (!openList.isEmpty()) {
             openList.sort(Comparator.comparing(Node::getF));
 
             Node curr = openList.remove(0);
-            if (curr.getPrev() != null) {
-                //System.out.println("x:" + curr.getX() + " y:" + curr.getY() + "prev(" + curr.getPrev().getX() + " ," + curr.getPrev().getY() + ")");
-            }
-
-            if (curr.getX() == endPoint.getX() && curr.getY() == endPoint.getY()) {
-                Node traceNode = curr;
-                System.out.println("found path:");
-                int kn = 0;
-                while (traceNode != null && kn < 5) {
-                    System.out.println("x:" + traceNode.getX() + " y:" + traceNode.getY());
-                    Node temp = traceNode.getPrev();
-                    traceNode = temp;
-                    kn++;
-                }
-                System.out.println("done!");
-                return;
-            }
 
             List<Node> neighboursList = getNeighbours(curr, nodeList);
 
             for (Node node : neighboursList) { 
-                int g = curr.getG() + 1;
-                if (!openList.contains(node) || g < node.getG()) {
+                if (node.getX() == endPoint.getX() && node.getY() == endPoint.getY()) {
+                    
+                    for (Node node2 : closedList) {
+                        System.out.println("x:" + node2.getX() + " y:" + node2.getY());
+                    }
+                    return;
+                }
+                node.setG(curr.getG() + 1);
+                node.setF(node.getG() + node.getH());
+
+                if (containsLower(openList, node))
+                    continue;
+                if (containsLower(closedList, node)) {
+                    continue;
+                }
+                else {
+                    int x = node.getX();
+                    int y = node.getY();
+                    int g = node.getG();
+                    double h = node.getH();
+                    double f = node.getF();
+                    
+                    Node cloneNode = new Node(x, y);
                     node.setG(g);
-                    node.setF(g + node.getH());
-                    openList.add(node);
-                    node.setPrev(curr);
-                } 
-            } 
+                    node.setH(h);
+                    node.setF(f);
+                    openList.add(cloneNode);
+                }
+                
+                    
+            }
+            int x = curr.getX();
+            int y = curr.getY();
+            int g = curr.getG();
+            double h = curr.getH();
+            double f = curr.getF();
+            
+            Node cloneNode = new Node(x, y);
+            curr.setG(g);
+            curr.setH(h);
+            curr.setF(f);
+            closedList.add(cloneNode);
+            
+            
         }
+        
+
     }
 
 
-	private int manHattenDistance (int x1, int y1, int x2, int y2) {
-        int manHatten = Math.abs(x2 - x1) + Math.abs(y2 - y1);
-		return manHatten;
+	private double euclideanDistance (int x1, int y1, int x2, int y2) {
+        double euclideanDistance = Math.abs(x2 - x1) + Math.abs(y2 - y1);
+		return euclideanDistance;
 		
     }
     
@@ -130,4 +150,4 @@ public class Astar implements MoveStrategy {
         return false;
     }
 
-}
+}*/

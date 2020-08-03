@@ -135,6 +135,11 @@ public abstract class DungeonLoader {
             enemies.add(enemy);
             entity = enemy;
             break;
+        case "ghostEnemy":
+            GhostEnemy genemy = new GhostEnemy(x, y, new Astar(dungeon), dungeon);
+            enemies.add(genemy);
+            entity = genemy;
+            break;
         case "switch":
             FloorSwitch floorSwitch = new FloorSwitch(x, y);
             onLoad(floorSwitch);
@@ -189,6 +194,8 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Treasure treasure);
 
     public abstract void onLoad(Enemy enemy);
+
+    public abstract void onLoad(GhostEnemy genemy);
 
     public abstract void onLoad(Key key);
 

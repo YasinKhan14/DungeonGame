@@ -4,15 +4,17 @@ public class Node {
 
     private int x;
     private int y;
-    private double h;
-    //private int level;
+    private int g;
+    private int h;
+    private int f;
+    private Node prev;
 
     public Node(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public void setH(double h) {
+    public void setH(int h) {
         this.h = h;
     }
 
@@ -24,17 +26,32 @@ public class Node {
         return y;
     }
 
-    public double getH() {
+    public int getH() {
         return h;
     }
 
-    /*public int getLevel() {
-        return level;
+    public void setF(int f) {
+        this.f = f;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
-    }*/
+    public int getF() {
+        return f;
+    }
 
+    public void setG(int g) {
+        this.g = g;
+    }
+
+    public int getG() {
+        return g;
+    }
+
+    public void setPrev(Node node) {
+        this.prev = node;
+    }
+
+    public Node getPrev() {
+        return prev;
+    }
 
 }

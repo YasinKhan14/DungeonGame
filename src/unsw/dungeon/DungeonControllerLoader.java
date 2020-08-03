@@ -31,6 +31,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image potionImage;
     private Image treasureImage;
     private Image enemyImage;
+    private Image genemyImage;
     private Image switchImage;
     private Image boulderImage;
     private Image keyImage;
@@ -48,6 +49,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         potionImage = new Image((new File("images/brilliant_blue_new.png")).toURI().toString());
         treasureImage = new Image((new File("images/gold_pile.png")).toURI().toString());
         enemyImage = new Image((new File("images/deep_elf_master_archer.png")).toURI().toString());
+        genemyImage = new Image((new File("images/deep_elf_master_archer.png")).toURI().toString());
         switchImage = new Image((new File("images/pressure_plate.png")).toURI().toString());
         boulderImage = new Image((new File("images/boulder.png")).toURI().toString());
         keyImage = new Image((new File("images/key.png")).toURI().toString());
@@ -92,6 +94,12 @@ public class DungeonControllerLoader extends DungeonLoader {
     public void onLoad(Enemy enemy) {
         ImageView view = new ImageView(enemyImage);
         addEntity(enemy, view);
+    }
+
+    @Override
+    public void onLoad(GhostEnemy genemy) {
+        ImageView view = new ImageView(genemyImage);
+        addEntity(genemy, view);
     }
 
     @Override
