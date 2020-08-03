@@ -81,12 +81,12 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 
 		if (moveable instanceof Player) {
 			Player player = (Player) moveable;
-			if (player.hasSword()) {
-				player.weaponDecrement();
+			if (player.playerHasPotion()){
 				player.playerRemove(this);
 				this.setOffMap();
 			}
-			else if (player.playerHasPotion()){
+			else if (player.hasSword()) {
+				player.weaponDecrement();
 				player.playerRemove(this);
 				this.setOffMap();
 			}
