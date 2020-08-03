@@ -103,41 +103,7 @@ public class DungeonController {
             }
             initImage(entity);
         }
-        Text t = new Text("Player 1");
-        t.setFont(new Font(18));
-        HBox playerWeapon = new HBox();
-        HBox playerPotion = new HBox();
-        player.getSwordCount().addListener(new ChangeListener<Number>(){
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue){
-                if (newValue.intValue() == 5){
-                    int diff = 5 - playerWeapon.getChildren().size();
-                    for (int i = 0; i < diff; i ++){
-                        playerWeapon.getChildren().add(new ImageView(new Image((new File("images/greatsword_1_new.png")).toURI().toString())));
-                    }
-                    return;
-                }else{
-                    playerWeapon.getChildren().remove(playerWeapon.getChildren().size() - 1);
-                    return;
-                }
-            }
-        });
-        player.getPotionTick().addListener(new ChangeListener<Number>(){
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue){
-               if (newValue.intValue() == 5){
-                   int diff = 5 - playerPotion.getChildren().size();
-                   for (int i = 0; i < diff; i ++){
-                       playerPotion.getChildren().add(new ImageView(new Image((new File("images/brilliant_blue_new.png")).toURI().toString())));
-                   }
-               }else{
-                   playerPotion.getChildren().remove(playerPotion.getChildren().size() - 1);
-               }
-            }
-        });
-        vbox1.getChildren().add(t);
-        vbox1.getChildren().add(playerWeapon);
-        vbox1.getChildren().add(playerPotion);
+        
         initGoal(dungeon.getGoal());
 
         player.setGoal(dungeon.getGoal());
@@ -315,6 +281,50 @@ public class DungeonController {
                 popupStage.show();
             }
         });
+        VBox vbox = null;
+        Text t = null;
+        if (player == this.player){
+            vbox = vbox1;
+            t = new Text("Player 1 - arrow keys");
+        }else{
+            vbox = vbox2;
+            t = new Text("Player 2 - wasd keys");
+        }
+        
+        t.setFont(new Font(18));
+        HBox playerWeapon = new HBox();
+        HBox playerPotion = new HBox();
+        player.getSwordCount().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue){
+                if (newValue.intValue() == 5){
+                    int diff = 5 - playerWeapon.getChildren().size();
+                    for (int i = 0; i < diff; i ++){
+                        playerWeapon.getChildren().add(new ImageView(new Image((new File("images/greatsword_1_new.png")).toURI().toString())));
+                    }
+                    return;
+                }else{
+                    playerWeapon.getChildren().remove(playerWeapon.getChildren().size() - 1);
+                    return;
+                }
+            }
+        });
+        player.getPotionTick().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue){
+               if (newValue.intValue() == 5){
+                   int diff = 5 - playerPotion.getChildren().size();
+                   for (int i = 0; i < diff; i ++){
+                       playerPotion.getChildren().add(new ImageView(new Image((new File("images/brilliant_blue_new.png")).toURI().toString())));
+                   }
+               }else{
+                   playerPotion.getChildren().remove(playerPotion.getChildren().size() - 1);
+               }
+            }
+        });
+        vbox.getChildren().add(t);
+        vbox.getChildren().add(playerWeapon);
+        vbox.getChildren().add(playerPotion);
     }
     private void initGoal(Goal goal) {
         if (goal instanceof ComplexGoal) {
