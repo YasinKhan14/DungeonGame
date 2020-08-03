@@ -56,7 +56,7 @@ public abstract class DungeonLoader {
         for (Enemy henemy : henemies){
             onLoad(henemy, false);
         }
-        for (Enemy genemy : genemies){
+        for (GhostEnemy genemy : genemies){
             onLoad(genemy);
         }
         return dungeon;
@@ -154,6 +154,7 @@ public abstract class DungeonLoader {
             Enemy henemy = new Enemy(x, y, new Astar(dungeon), dungeon, 250);
             henemies.add(henemy);
             entity = henemy;
+            break;
         case "switch":
             FloorSwitch floorSwitch = new FloorSwitch(x, y);
             onLoad(floorSwitch);
