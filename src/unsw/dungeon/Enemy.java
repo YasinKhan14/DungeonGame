@@ -15,14 +15,16 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 	private Timer moveTimer;
 	private TimerTask moveTask;
 	private boolean bothPlayerhavePotion;
+	private long tickRate;
 
 
-    public Enemy(int x, int y, MoveStrategy strategy, Dungeon dungeon) {
+    public Enemy(int x, int y, MoveStrategy strategy, Dungeon dungeon, long tickRate) {
 		super(x, y);
 		this.defaultStrategy = strategy;
 		this.currentStrategy = strategy;
 		this.moveTimer = new Timer();
 		this.moveTask = null;
+		this.tickRate = tickRate;
 		this.dungeon = dungeon;
 		this.bothPlayerhavePotion = false;
 		
@@ -53,20 +55,7 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 			player2.addListener(this);
 		player.addListener(this);
 	}
-	public void startMoving(int rate, Player player, Player player2){
-		moveTask = new TimerTask(){
-			@Override
-			public void run(){
-				Platform.runLater(new Runnable(){
-					@Override
-					public void run(){
-						nextMove(player, player2);
-					}
-				});
-			}
-		};
-		moveTimer.scheduleAtFixedRate(moveTask, rate, rate);
-	}
+
 	public void startMoving(Player player, Player player2){
 		moveTask = new TimerTask(){
 			@Override
@@ -77,10 +66,9 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 						nextMove(player, player2);
 					}
 				});
-				//System.out.println("x = " + getX() + " y = " + getY());
 			}
 		};
-		moveTimer.scheduleAtFixedRate(moveTask, 500, 500);
+		moveTimer.scheduleAtFixedRate(moveTask, tickRate, tickRate);
 	}
 
 	public void stopMoving(){
@@ -180,5 +168,9 @@ public class Enemy extends Entity implements Moveable, PlayerListener {
 
 
 	}
+
+	public Dungeon getDungeon() {
+        return dungeon;
+    }
 
 }

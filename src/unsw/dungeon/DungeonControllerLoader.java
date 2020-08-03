@@ -32,6 +32,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image treasureImage;
     private Image enemyImage;
     private Image genemyImage;
+    private Image henemyImage;
     private Image switchImage;
     private Image boulderImage;
     private Image keyImage;
@@ -49,7 +50,8 @@ public class DungeonControllerLoader extends DungeonLoader {
         potionImage = new Image((new File("images/brilliant_blue_new.png")).toURI().toString());
         treasureImage = new Image((new File("images/gold_pile.png")).toURI().toString());
         enemyImage = new Image((new File("images/deep_elf_master_archer.png")).toURI().toString());
-        genemyImage = new Image((new File("images/deep_elf_master_archer.png")).toURI().toString());
+        genemyImage = new Image((new File("images/gnome.png")).toURI().toString());
+        henemyImage = new Image((new File("images/hound.png")).toURI().toString());
         switchImage = new Image((new File("images/pressure_plate.png")).toURI().toString());
         boulderImage = new Image((new File("images/boulder.png")).toURI().toString());
         keyImage = new Image((new File("images/key.png")).toURI().toString());
@@ -91,9 +93,16 @@ public class DungeonControllerLoader extends DungeonLoader {
     }
 
     @Override
-    public void onLoad(Enemy enemy) {
-        ImageView view = new ImageView(enemyImage);
-        addEntity(enemy, view);
+    public void onLoad(Enemy enemy, boolean isStandard) {
+        if (isStandard) {
+            ImageView view = new ImageView(enemyImage);
+            addEntity(enemy, view);
+        }
+        else {
+            ImageView view = new ImageView(henemyImage);
+            addEntity(enemy, view);
+        }
+        
     }
 
     @Override

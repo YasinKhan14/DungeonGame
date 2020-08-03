@@ -23,10 +23,14 @@ public abstract class DungeonLoader {
     private JSONObject json;
     private Goal goal;
     private List<Enemy> enemies;
+    private List<Enemy> henemies;
+    private List<GhostEnemy> genemies;
 
     public DungeonLoader(String filename) throws FileNotFoundException {
         json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + filename)));
         enemies = new ArrayList<Enemy>();
+        henemies = new ArrayList<Enemy>();
+        genemies = new ArrayList<GhostEnemy>();
     }
 
     /**
@@ -47,7 +51,13 @@ public abstract class DungeonLoader {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
         }
         for (Enemy enemy : enemies){
-            onLoad(enemy);
+            onLoad(enemy, true);
+        }
+        for (Enemy henemy : henemies){
+            onLoad(henemy, false);
+        }
+        for (Enemy genemy : genemies){
+            onLoad(genemy);
         }
         return dungeon;
     }
@@ -131,15 +141,19 @@ public abstract class DungeonLoader {
             entity = treasure;
             break;
         case "enemy":
-            Enemy enemy = new Enemy(x, y, new Astar(dungeon), dungeon);
+            Enemy enemy = new Enemy(x, y, new Astar(dungeon), dungeon, 500);
             enemies.add(enemy);
             entity = enemy;
             break;
         case "ghostEnemy":
-            GhostEnemy genemy = new GhostEnemy(x, y, new Astar(dungeon), dungeon);
-            enemies.add(genemy);
+            GhostEnemy genemy = new GhostEnemy(x, y, new GreedyEuclidean(), dungeon, 500);
+            genemies.add(genemy);
             entity = genemy;
             break;
+        case "houndEnemy":
+            Enemy henemy = new Enemy(x, y, new Astar(dungeon), dungeon, 250);
+            henemies.add(henemy);
+            entity = henemy;
         case "switch":
             FloorSwitch floorSwitch = new FloorSwitch(x, y);
             onLoad(floorSwitch);
@@ -193,7 +207,7 @@ public abstract class DungeonLoader {
 
     public abstract void onLoad(Treasure treasure);
 
-    public abstract void onLoad(Enemy enemy);
+    public abstract void onLoad(Enemy enemy, boolean isStandard);
 
     public abstract void onLoad(GhostEnemy genemy);
 
