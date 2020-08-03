@@ -19,6 +19,15 @@ public class Astar implements MoveStrategy {
     @Override
     public void nextMove(Player player, Player player2, Enemy enemy) {
 
+        if (player2 != null) {
+            if (player.isDestroyed()) {
+                player = player2;
+            }
+            else if (!(player2.isDestroyed()) && (manHattenDistance(enemy.getX(), enemy.getY(), player2.getX(), player2.getY()) < manHattenDistance(enemy.getX(), enemy.getY(), player.getX(), player.getY()))) {
+                player = player2;
+            }      
+        }
+
         List<Node> nodeList = new ArrayList<Node>();
         List<Node> openList = new ArrayList<Node>();
         List<Node> closedList = new ArrayList<Node>();
@@ -55,21 +64,23 @@ public class Astar implements MoveStrategy {
             openList.sort(Comparator.comparing(Node::getF));
 
             Node curr = openList.remove(0);
-            if (curr.getPrev() != null) {
-                //System.out.println("x:" + curr.getX() + " y:" + curr.getY() + "prev(" + curr.getPrev().getX() + " ," + curr.getPrev().getY() + ")");
-            }
 
             if (curr.getX() == endPoint.getX() && curr.getY() == endPoint.getY()) {
-                Node traceNode = curr;
-                System.out.println("found path:");
-                int kn = 0;
-                while (traceNode != null && kn < 5) {
-                    System.out.println("x:" + traceNode.getX() + " y:" + traceNode.getY());
-                    Node temp = traceNode.getPrev();
-                    traceNode = temp;
-                    kn++;
+                while (curr.getPrev().getPrev() != null) {
+                    curr = curr.getPrev();
                 }
-                System.out.println("done!");
+                if (curr.getX() == startPoint.getX()) {
+                    if (curr.getY() == startPoint.getY() + 1)
+                        enemy.moveDown();
+                    else
+                        enemy.moveUp();
+                }
+                else {
+                    if (curr.getX() == startPoint.getX() + 1)
+                        enemy.moveRight();
+                    else
+                        enemy.moveLeft();
+                }
                 return;
             }
 
@@ -77,7 +88,7 @@ public class Astar implements MoveStrategy {
 
             for (Node node : neighboursList) { 
                 int g = curr.getG() + 1;
-                if (!openList.contains(node) || g < node.getG()) {
+                if (node.getG() == -1 || g < node.getG()) {
                     node.setG(g);
                     node.setF(g + node.getH());
                     openList.add(node);

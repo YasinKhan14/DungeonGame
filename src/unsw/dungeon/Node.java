@@ -12,6 +12,7 @@ public class Node {
     public Node(int x, int y) {
         this.x = x;
         this.y = y;
+        this.g = -1;
     }
 
     public void setH(int h) {
@@ -53,5 +54,8 @@ public class Node {
     public Node getPrev() {
         return prev;
     }
+
+
+    
 
 }
