@@ -12,12 +12,15 @@ public class Door extends Entity{
     }
 
 	public boolean allowPass(Moveable moveable) {
-		
+		if (isDestroyed()){
+			return true;
+		}
 		if (moveable instanceof Player) {
 			List<Key> keys = ((Player)moveable).getKeys();
 			for (Key key : keys) {
 				if (key.getId() == id) {
 					this.setOffMap();
+					key.use();
 					return true;
 				}
 			}

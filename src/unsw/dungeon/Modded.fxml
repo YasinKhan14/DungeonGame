@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="455.0" minWidth="651.0" onKeyPressed="#handleKeyPress" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane dividerPositions="0.3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="651.0" onKeyPressed="#handleKeyPress" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
    <items>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL">
+      <SplitPane dividerPositions="0.5" maxWidth="200.0" orientation="VERTICAL" prefWidth="200.0" SplitPane.resizableWithParent="false">
          <items>
-            <Pane minHeight="200.0" minWidth="200.0">
-               <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0" />
-               </children>
-            </Pane>
-            <Pane>
-               <children>
-                  <VBox prefHeight="222.0" prefWidth="100.0" />
-               </children>
-            </Pane>
+            <VBox fx:id="vbox1" minHeight="200.0" minWidth="200.0" />
+            <VBox fx:id="vbox2" maxWidth="200.0" prefWidth="200.0" />
          </items>
       </SplitPane>
-      <GridPane fx:id="squares">
-        <columnConstraints>
-            <ColumnConstraints />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints />
-        </rowConstraints>
-        <children>
+      <StackPane prefHeight="441.0" prefWidth="441.0" style="-fx-background-color: black;">
+         <GridPane fx:id="squares" alignment="CENTER" StackPane.alignment="CENTER">
+            <columnConstraints>
+                  <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+                  <RowConstraints />
+            </rowConstraints>
+            <children>
 
-        </children>
-        </GridPane>
+            </children>
+            <padding>
+               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+         </GridPane>
+      </StackPane>
 
    </items>
 </SplitPane>

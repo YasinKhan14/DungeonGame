@@ -4,8 +4,11 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 
 /**
@@ -27,6 +30,30 @@ public class Player extends Entity implements Moveable{
     private BooleanProperty defeated;
     private LocalDateTime potionTriggerTime;
     private long remaining;
+    private IntegerProperty swordCount;
+    private IntegerProperty potionTick;
+    private IntegerProperty treasureCount;
+    private IntegerProperty keyCount;
+    private class PotionTask extends TimerTask{
+        @Override
+        public void run(){
+            Platform.runLater(new Runnable(){
+                @Override
+                public void run(){
+                    potionTick.set(potionTick.get() - 1);
+                    if (potionTick.get() == 0){
+                        notifyPlayerGotPotion(false);
+                        hasPotion = false;
+                    } else {
+                        currentTask.cancel();
+                        potionTimer.purge();
+                        potionTimer.schedule(new PotionTask(), 1000);
+                    }
+                }
+            });
+        };
+        
+    };
     /**
      * Create a player positioned in square (x,y)
      * @param x
@@ -46,16 +73,40 @@ public class Player extends Entity implements Moveable{
         this.remaining = -1;
         goalComplete = new SimpleBooleanProperty(false);
         defeated = new SimpleBooleanProperty(false);
+        swordCount = new SimpleIntegerProperty(0);
+        potionTick = new SimpleIntegerProperty(0);
+        treasureCount = new SimpleIntegerProperty(0);
+        keyCount = new SimpleIntegerProperty(0);
 
+    }
+    public IntegerProperty getKeyCount(){
+        return keyCount;
+    }
+    public void pickTreasure(){
+        treasureCount.set(treasureCount.get() + 100);
+    }
+    public IntegerProperty getScore(){
+        return treasureCount;
     }
     public void equipSword(Weapon weapon){
         this.weapon = weapon;
+        swordCount.set(5);
     }
     public boolean hasSword(){
         if (weapon == null){
             return false;
         }
         return true;
+    }
+    public void weaponDecrement(){
+        weapon.swing();
+        swordCount.set(swordCount.get() - 1);
+        if (weapon.getCharges() == 0) {
+            weapon = null;
+        }
+    }
+    public IntegerProperty getSwordCount(){
+        return swordCount;
     }
     public void setGoal(Goal goal){
         this.goal = goal;
@@ -70,17 +121,11 @@ public class Player extends Entity implements Moveable{
     }
     public void addKey(Key key){
         this.keys.add(key);
+        keyCount.set(keyCount.get() + 1);
     }
 
     public List<Key> getKeys(){
         return keys;
-    }
-
-    public void weaponDecrement(){
-        weapon.swing();
-        if (weapon.getCharges() == 0) {
-            weapon = null;
-        }
     }
     public void addListener(PlayerListener listener){
         listeners.add(listener);
@@ -92,13 +137,9 @@ public class Player extends Entity implements Moveable{
             hasPotion = true;
             notifyPlayerGotPotion(true);
         }
-        currentTask = new TimerTask(){
-            public void run(){
-                notifyPlayerGotPotion(false);
-                hasPotion = false;
-            }
-        };
-        potionTimer.schedule(currentTask, 5000);
+        potionTick.set(5);
+        currentTask = new PotionTask();
+        potionTimer.schedule(currentTask, 1000);
         potionTriggerTime = LocalDateTime.now();
         hasPotion = true;
     }
@@ -111,18 +152,13 @@ public class Player extends Entity implements Moveable{
         }
         currentTask.cancel();
         potionTimer.purge();
-        remaining = 5000 - Duration.between(potionTriggerTime, LocalDateTime.now()).toMillis();
+        remaining = 1000 - Duration.between(potionTriggerTime, LocalDateTime.now()).toMillis();
     }
 
     public void resumePotionTimer() {
         if (remaining < 0)
             return;
-        currentTask = new TimerTask(){
-            public void run(){
-                notifyPlayerGotPotion(false);
-                hasPotion = false;
-            }
-        };
+        currentTask = new PotionTask();
         potionTimer.schedule(currentTask, remaining);
 
     }
@@ -137,7 +173,9 @@ public class Player extends Entity implements Moveable{
     public boolean playerHasPotion() {
         return hasPotion;
     }
-
+    public IntegerProperty getPotionTick(){
+        return potionTick;
+    }
 	@Override
     public void moveUp() {
         if (canMove(getX(), getY() -1)) {
@@ -198,7 +236,7 @@ public class Player extends Entity implements Moveable{
         if (moveable instanceof Enemy){
             Enemy enemy = (Enemy) moveable;
             if (hasSword()){
-                weapon.isDestroyed();
+                weaponDecrement();
                 playerRemove(enemy);
                 enemy.setOffMap();
                 return true;

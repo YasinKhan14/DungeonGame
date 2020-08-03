@@ -22,8 +22,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -39,6 +42,10 @@ public class DungeonController {
 
     @FXML
     private GridPane squares;
+    @FXML
+    private VBox vbox1;
+    @FXML
+    private VBox vbox2;
 
     private List<ImageView> initialEntities;
 
@@ -96,6 +103,7 @@ public class DungeonController {
             }
             initImage(entity);
         }
+        
         initGoal(dungeon.getGoal());
 
         player.setGoal(dungeon.getGoal());
@@ -273,6 +281,87 @@ public class DungeonController {
                 popupStage.show();
             }
         });
+        VBox vbox = null;
+        Text t = null;
+        if (player == this.player){
+            vbox = vbox1;
+            t = new Text("Player 1 - arrow keys");
+        }else{
+            vbox = vbox2;
+            t = new Text("Player 2 - wasd keys");
+        }
+        
+        t.setFont(new Font(18));
+        Text playerScore = new Text("Score:");
+        HBox playerWeapon = new HBox();
+        playerWeapon.setMinSize(32*5, 32);
+        HBox playerPotion = new HBox();
+        playerPotion.setMinSize(32*5, 32);
+        player.getSwordCount().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue){
+                if (newValue.intValue() == 5){
+                    int diff = 5 - playerWeapon.getChildren().size();
+                    for (int i = 0; i < diff; i ++){
+                        playerWeapon.getChildren().add(new ImageView(new Image((new File("images/greatsword_1_new.png")).toURI().toString())));
+                    }
+                    return;
+                }else{
+                    playerWeapon.getChildren().remove(playerWeapon.getChildren().size() - 1);
+                    return;
+                }
+            }
+        });
+        player.getPotionTick().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue){
+               if (newValue.intValue() == 5){
+                   int diff = 5 - playerPotion.getChildren().size();
+                   for (int i = 0; i < diff; i ++){
+                       playerPotion.getChildren().add(new ImageView(new Image((new File("images/brilliant_blue_new.png")).toURI().toString())));
+                   }
+               }else{
+                   playerPotion.getChildren().remove(playerPotion.getChildren().size() - 1);
+               }
+            }
+        });
+        player.getScore().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue){
+                playerScore.setText("Score: " + String.valueOf(newValue));
+            }
+        });
+        VBox keysBox = new VBox();
+        player.getKeyCount().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue){
+                HBox keyBox = new HBox();
+                keyBox.setAlignment(Pos.CENTER);
+                ImageView keySprite = new ImageView(new Image((new File("images/key.png")).toURI().toString()));
+                keyBox.getChildren().add(keySprite);
+
+                Key key = player.getKeys().get(player.getKeyCount().get() - 1);
+                Text keyString = new Text("ID: " + String.valueOf(key.getId()));
+                keyBox.getChildren().add(keyString);
+                Text keyUsed = new Text("Unused");
+                keyUsed.setFont(new Font(12));
+                keyBox.getChildren().add(keyUsed);
+                key.getUsage().addListener(new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldBool, Boolean newBool) {
+                        keyUsed.setText("USED");
+                        keyUsed.setStyle("-fx-font-weight: bold");
+                        keySprite.setOpacity(0.7);
+                    }
+                });
+                keysBox.getChildren().add(keyBox);
+            }
+        });
+        vbox.getChildren().add(t);
+        vbox.getChildren().add(playerScore);
+        vbox.getChildren().add(playerWeapon);
+        vbox.getChildren().add(playerPotion);
+        vbox.getChildren().add(keysBox);
     }
     private void initGoal(Goal goal) {
         if (goal instanceof ComplexGoal) {
