@@ -20,6 +20,7 @@ public class Door extends Entity{
 			for (Key key : keys) {
 				if (key.getId() == id) {
 					this.setOffMap();
+					key.use();
 					return true;
 				}
 			}

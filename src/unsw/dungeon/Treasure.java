@@ -11,6 +11,7 @@ public class Treasure extends Entity {
 		if (moveable instanceof Player) {
 			this.setOffMap();
 			((Player) moveable).playerRemove(this);
+			((Player) moveable).pickTreasure();
 		}
 		return true;
 	}

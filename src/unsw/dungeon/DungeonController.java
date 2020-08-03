@@ -292,8 +292,11 @@ public class DungeonController {
         }
         
         t.setFont(new Font(18));
+        Text playerScore = new Text("Score:");
         HBox playerWeapon = new HBox();
+        playerWeapon.setMinSize(32*5, 32);
         HBox playerPotion = new HBox();
+        playerPotion.setMinSize(32*5, 32);
         player.getSwordCount().addListener(new ChangeListener<Number>(){
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue){
@@ -322,9 +325,43 @@ public class DungeonController {
                }
             }
         });
+        player.getScore().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue){
+                playerScore.setText("Score: " + String.valueOf(newValue));
+            }
+        });
+        VBox keysBox = new VBox();
+        player.getKeyCount().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue){
+                HBox keyBox = new HBox();
+                keyBox.setAlignment(Pos.CENTER);
+                ImageView keySprite = new ImageView(new Image((new File("images/key.png")).toURI().toString()));
+                keyBox.getChildren().add(keySprite);
+
+                Key key = player.getKeys().get(player.getKeyCount().get() - 1);
+                Text keyString = new Text("ID: " + String.valueOf(key.getId()));
+                keyBox.getChildren().add(keyString);
+                Text keyUsed = new Text("Unused");
+                keyUsed.setFont(new Font(12));
+                keyBox.getChildren().add(keyUsed);
+                key.getUsage().addListener(new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldBool, Boolean newBool) {
+                        keyUsed.setText("USED");
+                        keyUsed.setStyle("-fx-font-weight: bold");
+                        keySprite.setOpacity(0.7);
+                    }
+                });
+                keysBox.getChildren().add(keyBox);
+            }
+        });
         vbox.getChildren().add(t);
+        vbox.getChildren().add(playerScore);
         vbox.getChildren().add(playerWeapon);
         vbox.getChildren().add(playerPotion);
+        vbox.getChildren().add(keysBox);
     }
     private void initGoal(Goal goal) {
         if (goal instanceof ComplexGoal) {

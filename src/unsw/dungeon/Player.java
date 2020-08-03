@@ -32,6 +32,8 @@ public class Player extends Entity implements Moveable{
     private long remaining;
     private IntegerProperty swordCount;
     private IntegerProperty potionTick;
+    private IntegerProperty treasureCount;
+    private IntegerProperty keyCount;
     private class PotionTask extends TimerTask{
         @Override
         public void run(){
@@ -73,7 +75,18 @@ public class Player extends Entity implements Moveable{
         defeated = new SimpleBooleanProperty(false);
         swordCount = new SimpleIntegerProperty(0);
         potionTick = new SimpleIntegerProperty(0);
+        treasureCount = new SimpleIntegerProperty(0);
+        keyCount = new SimpleIntegerProperty(0);
 
+    }
+    public IntegerProperty getKeyCount(){
+        return keyCount;
+    }
+    public void pickTreasure(){
+        treasureCount.set(treasureCount.get() + 100);
+    }
+    public IntegerProperty getScore(){
+        return treasureCount;
     }
     public void equipSword(Weapon weapon){
         this.weapon = weapon;
@@ -108,6 +121,7 @@ public class Player extends Entity implements Moveable{
     }
     public void addKey(Key key){
         this.keys.add(key);
+        keyCount.set(keyCount.get() + 1);
     }
 
     public List<Key> getKeys(){
