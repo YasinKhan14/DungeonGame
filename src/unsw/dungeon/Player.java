@@ -34,6 +34,7 @@ public class Player extends Entity implements Moveable{
     private IntegerProperty potionTick;
     private IntegerProperty treasureCount;
     private IntegerProperty keyCount;
+    
     private class PotionTask extends TimerTask{
         @Override
         public void run(){
@@ -237,15 +238,15 @@ public class Player extends Entity implements Moveable{
             Enemy enemy = (Enemy) moveable;
             if (enemy.isDestroyed())
                 return true;
-            if (hasSword()){
+            if (hasPotion){
+                playerRemove(enemy);
+                enemy.setOffMap();;
+                return true;
+            }
+            else if (hasSword()){
                 weaponDecrement();
                 playerRemove(enemy);
                 enemy.setOffMap();
-                return true;
-            }
-            else if (hasPotion){
-                playerRemove(enemy);
-                enemy.setOffMap();;
                 return true;
             }
             else {

@@ -62,7 +62,7 @@ public class GoalTest {
     public void complexAndGoal(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 0, 0);
-        Enemy enemy = new Enemy(5, 0, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(5, 0, new GreedyEuclidean(), dungeon, 500);
         Treasure treasure1 = new Treasure(1, 0);
         Treasure treasure2 = new Treasure(2, 0);
         Treasure treasure3 = new Treasure(3, 0);
@@ -106,7 +106,7 @@ public class GoalTest {
     public void complexOrGoal(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 0, 0);
-        Enemy enemy = new Enemy(5, 0, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(5, 0, new GreedyEuclidean(), dungeon, 500);
         Treasure treasure1 = new Treasure(1, 0);
         Treasure treasure2 = new Treasure(2, 0);
         Treasure treasure3 = new Treasure(3, 0);
