@@ -29,8 +29,7 @@ public class Astar implements MoveStrategy {
         }
 
         List<Node> nodeList = new ArrayList<Node>();
-        List<Node> openList = new ArrayList<Node>();
-        List<Node> closedList = new ArrayList<Node>();
+        List<Node> priorityQueue = new ArrayList<Node>();
         boolean isReachable;
 
         for (int i = 0; i < dungeon.getHeight(); i++){
@@ -58,14 +57,16 @@ public class Astar implements MoveStrategy {
         startPoint.setG(0);
         startPoint.setF(0);
         startPoint.setPrev(null);
-        openList.add(startPoint);
+        priorityQueue.add(startPoint);
 
-        while (!openList.isEmpty()) {
-            openList.sort(Comparator.comparing(Node::getF));
+        while (!priorityQueue.isEmpty()) {
+            priorityQueue.sort(Comparator.comparing(Node::getF));
 
-            Node curr = openList.remove(0);
+            Node curr = priorityQueue.remove(0);
 
             if (curr.getX() == endPoint.getX() && curr.getY() == endPoint.getY()) {
+                if (curr.getPrev() == null)
+                    return;
                 while (curr.getPrev().getPrev() != null) {
                     curr = curr.getPrev();
                 }
@@ -91,7 +92,7 @@ public class Astar implements MoveStrategy {
                 if (node.getG() == -1 || g < node.getG()) {
                     node.setG(g);
                     node.setF(g + node.getH());
-                    openList.add(node);
+                    priorityQueue.add(node);
                     node.setPrev(curr);
                 } 
             } 
