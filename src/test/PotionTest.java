@@ -10,7 +10,7 @@ public class PotionTest {
     public void playerGetPotion() {
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 5, 5);
-        Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon, 500);
         Potion potion = new Potion(5, 6);
         dungeon.setPlayer(player);
         enemy.setPlayer(player, null);
@@ -34,7 +34,7 @@ public class PotionTest {
     @Test
     public void otherGetPotion(){
         Dungeon dungeon = new Dungeon(10, 10);
-        Enemy enemy = new Enemy(5, 5, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(5, 5, new GreedyEuclidean(), dungeon, 500);
         Boulder boulder = new Boulder(6, 6, dungeon);
         Potion potion = new Potion(5, 6);
         dungeon.addEntity(enemy);
@@ -50,7 +50,7 @@ public class PotionTest {
     public void appendPotion(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 5, 5);
-        Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon, 500);
         Potion potion = new Potion(5, 6);
         Potion potion2 = new Potion (5, 7);
         dungeon.setPlayer(player);

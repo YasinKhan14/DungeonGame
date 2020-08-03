@@ -11,7 +11,7 @@ public class EnemyTest {
     public void easyWalk() {
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 5, 5);
-        Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon, 500);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);
         dungeon.addEntity(enemy);
@@ -31,7 +31,7 @@ public class EnemyTest {
     public void bigWall(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 0, 0);
-        Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon, 500);
         dungeon.setPlayer(player);
         enemy.setPlayer(player, null);
         dungeon.addEntity(player);
@@ -54,7 +54,7 @@ public class EnemyTest {
     public void killedByPotion(){
         Dungeon dungeon = new Dungeon(3, 3);
         Player player = new Player(dungeon, 0, 0);
-        Enemy enemy = new Enemy(1, 0, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(1, 0, new GreedyEuclidean(), dungeon, 500);
         Potion potion = new Potion(0, 1);
         dungeon.setPlayer(player);
         enemy.setPlayer(player, null);
@@ -79,7 +79,7 @@ public class EnemyTest {
     public void enemySuicidebySword(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 5, 5);
-        Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(7, 7, new GreedyEuclidean(), dungeon, 500);
         Weapon sword = new Weapon(5, 6);
         dungeon.addEntity(sword);
         dungeon.setPlayer(player);
@@ -103,7 +103,7 @@ public class EnemyTest {
     public void playerSuicide(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 5, 5);
-        Enemy enemy = new Enemy(5, 6, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(5, 6, new GreedyEuclidean(), dungeon, 500);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);
         enemy.setPlayer(player, null);
@@ -117,7 +117,7 @@ public class EnemyTest {
     @Test
     public void enemyMovements(){
         Dungeon dungeon = new Dungeon(1, 1);
-        Enemy enemy = new Enemy(0, 0, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(0, 0, new GreedyEuclidean(), dungeon, 500);
         enemy.moveDown();
         assertEquals(0, enemy.getX());
         assertEquals(0, enemy.getY());

@@ -34,6 +34,7 @@ public class Player extends Entity implements Moveable{
     private IntegerProperty potionTick;
     private IntegerProperty treasureCount;
     private IntegerProperty keyCount;
+    
     private class PotionTask extends TimerTask{
         @Override
         public void run(){

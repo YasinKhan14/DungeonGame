@@ -26,7 +26,7 @@ public class TreasureTest {
     @Test
     public void enemyTreasure(){
         Dungeon dungeon = new Dungeon(10, 10);
-        Enemy enemy = new Enemy(0, 0, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(0, 0, new GreedyEuclidean(), dungeon, 500);
         Treasure treasure = new Treasure(1,0);
         dungeon.addEntity(treasure);
         dungeon.addEntity(enemy);

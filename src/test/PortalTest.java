@@ -23,7 +23,7 @@ public class PortalTest {
     @Test
     public void enemyTeleport(){
         Dungeon dungeon = new Dungeon(10, 10);
-        Enemy enemy = new Enemy(5, 5, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(5, 5, new GreedyEuclidean(), dungeon, 500);
         Portal portal1 = new Portal(5, 6, dungeon, 1);
         Portal portal2 = new Portal(3, 3, dungeon, 1);
         dungeon.addEntity(enemy);

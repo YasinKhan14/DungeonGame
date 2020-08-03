@@ -26,7 +26,7 @@ public class WeaponTest {
     @Test
     public void enemySwordPickup(){
         Dungeon dungeon = new Dungeon(10, 10);
-        Enemy enemy = new Enemy(0, 0, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(0, 0, new GreedyEuclidean(), dungeon, 500);
         Weapon weapon = new Weapon(1,0);
         dungeon.addEntity(enemy);
         dungeon.addEntity(weapon);
@@ -85,7 +85,7 @@ public class WeaponTest {
     public void destroyEnemyTriggerCharge(){
         Dungeon dungeon = new Dungeon(10, 10);
         Player player = new Player(dungeon, 0, 0);
-        Enemy enemy = new Enemy(1, 1, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(1, 1, new GreedyEuclidean(), dungeon, 500);
         Weapon weapon = new Weapon(1,0);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);

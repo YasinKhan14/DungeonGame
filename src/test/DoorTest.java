@@ -107,7 +107,7 @@ public class DoorTest {
     @Test
     public void enemyDoor(){
         Dungeon dungeon = new Dungeon(10, 10);
-        Enemy enemy = new Enemy(1, 0, new GreedyEuclidean(), dungeon);
+        Enemy enemy = new Enemy(1, 0, new GreedyEuclidean(), dungeon, 500);
         Door door = new Door(2,0,0);
         dungeon.addEntity(enemy);
         dungeon.addEntity(door);
