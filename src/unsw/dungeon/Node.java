@@ -5,6 +5,7 @@ public class Node {
     private int x;
     private int y;
     private double h;
+    //private int level;
 
     public Node(int x, int y) {
         this.x = x;
@@ -26,6 +27,14 @@ public class Node {
     public double getH() {
         return h;
     }
+
+    /*public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }*/
 
 
 }
