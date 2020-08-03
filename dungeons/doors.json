@@ -456,7 +456,7 @@
     {
       "x": 8,
       "y": 7,
-      "type": "henemy"
+      "type": "hound"
     },
     {
       "x": 34,
@@ -611,7 +611,7 @@
     {
       "x": 1,
       "y": 11,
-      "type": "genemy"
+      "type": "ghost"
     },
     {
       "x": 25,
@@ -622,7 +622,7 @@
     {
       "x": 30,
       "y": 11,
-      "type": "henemy"
+      "type": "hound"
     },
     {
       "x": 33,
@@ -812,30 +812,6 @@
     }
   ],
   "goal-condition": {
-    "goal": "OR",
-    "subgoals" : [
-      {
-        "goal" : "AND",
-        "subgoals" : [
-          {
-            "goal" : "exit"
-          },
-          {
-            "goal" : "treasure"
-          }
-        ]
-      },
-      {
-        "goal" : "OR",
-        "subgoals" : [
-          {
-            "goal" : "boulders"
-          },
-          {
-            "goal" : "enemies"
-          }
-        ]
-      }
-    ]
+    "goal": "exit"
   }
 }

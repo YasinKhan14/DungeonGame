@@ -145,12 +145,12 @@ public abstract class DungeonLoader {
             enemies.add(enemy);
             entity = enemy;
             break;
-        case "ghostEnemy":
+        case "ghost":
             GhostEnemy genemy = new GhostEnemy(x, y, new GreedyEuclidean(), dungeon, 700);
             genemies.add(genemy);
             entity = genemy;
             break;
-        case "houndEnemy":
+        case "hound":
             Enemy henemy = new Enemy(x, y, new Astar(dungeon), dungeon, 250);
             henemies.add(henemy);
             entity = henemy;
