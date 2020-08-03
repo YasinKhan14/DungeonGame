@@ -146,7 +146,7 @@ public abstract class DungeonLoader {
             entity = enemy;
             break;
         case "ghostEnemy":
-            GhostEnemy genemy = new GhostEnemy(x, y, new GreedyEuclidean(), dungeon, 500);
+            GhostEnemy genemy = new GhostEnemy(x, y, new GreedyEuclidean(), dungeon, 700);
             genemies.add(genemy);
             entity = genemy;
             break;
