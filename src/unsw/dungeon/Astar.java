@@ -1,46 +1,85 @@
 package unsw.dungeon;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.lang.Math;
 
 public class Astar implements MoveStrategy {
 
-    private List<Node> nodeList;
-    private List<Node> closedList;
-    private List<Node> openList;
     private List<Entity>[][] map;
     private Dungeon dungeon;
 
     public Astar(Dungeon dungeon) {
         this.map = dungeon.getMap();
         this.dungeon = dungeon;
-        this.nodeList = new ArrayList<Node>();
-        this.openList = new ArrayList<Node>();
-        this.closedList = new ArrayList<Node>();
+
+        
+    }
+    //(map[i][j]).size() == 0
+
+    @Override
+    public void nextMove(Player player, Player player2, Enemy enemy) {
+
+        List<Node> nodeList = new ArrayList<Node>();
+        List<Node> openList = new ArrayList<Node>();
+        List<Node> closedList = new ArrayList<Node>();
 
         for (int i = 0; i < dungeon.getHeight(); i++){
             for (int j = 0; j < dungeon.getWidth(); j++) {
-                if ((map[i][j]).size() == 0) {
+                if (enemy.canMove(j, i)) {
                     nodeList.add(new Node(j, i));
                 }
             }
         }
-    }
-
-    @Override
-    public void nextMove(Player player, Player player2, Enemy enemy) {
 
         for (Node node : nodeList) {
             node.setH(euclideanDistance(player.getX(), player.getY(), enemy.getX(), enemy.getY()));
         }
 
         Node startPoint = new Node(enemy.getX(), enemy.getY());
-        Node destinationPoint = new Node(player.getX(), player.getY());
+        //Node destinationPoint = new Node(player.getX(), player.getY());
 
-        openList.add(currentPoint);
+        openList.add(startPoint);
 
-        for (Node node : openList) {
+        for (int i = 0; i < openList.size(); i++) {
+            
+            Node curr = openList.get(i);
+            //curr.setLevel(0);
+
+            if (curr.getX() == player.getX() && curr.getY() == player.getY()) {
+                Node firstMove = null;
+                for (int k = 0; k < closedList.size(); k++) {
+                    if (isNeighbour(closedList.get(k), startPoint)) {
+                        firstMove = closedList.get(k);
+                    }
+                }
+                if (firstMove != null) {
+                    if (firstMove.getX() == startPoint.getX()) {
+                        if (firstMove.getY() == startPoint.getY() + 1) 
+                            enemy.moveDown();
+                        else 
+                            enemy.moveUp();
+                    }
+                    else {
+                        if (firstMove.getX() == startPoint.getX() + 1) 
+                            enemy.moveRight();
+                        else
+                            enemy.moveLeft();
+                    }
+                }
                 
+            }
+                
+
+            List<Node> neighboursList = getNeighbours(openList.get(i), nodeList);
+            for (Node node : neighboursList) { //add all unvisited neighbours
+                if (!closedList.contains(node));
+                    //node.setLevel(i + 1);
+                    openList.add(node);
+            }
+            closedList.add(openList.remove(i)); //pop current node off queue
+            openList.sort(Comparator.comparing(Node::getH));
+            
         }
         
 
@@ -65,7 +104,7 @@ public class Astar implements MoveStrategy {
 		
     }
     
-    private List<Node> getNeighbours(Node node) {
+    private List<Node> getNeighbours(Node node, List<Node> nodeList) {
 
         List<Node> neighbourList = new ArrayList<Node>();
 
