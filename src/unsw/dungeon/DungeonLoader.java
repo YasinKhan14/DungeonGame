@@ -131,7 +131,7 @@ public abstract class DungeonLoader {
             entity = treasure;
             break;
         case "enemy":
-            Enemy enemy = new Enemy(x, y, new Astar(dungeon), dungeon);
+            Enemy enemy = new Enemy(x, y, new GreedyEuclidean(), dungeon);
             enemies.add(enemy);
             entity = enemy;
             break;
