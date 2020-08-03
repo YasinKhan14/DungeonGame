@@ -32,7 +32,7 @@ public class Exit extends Entity{
         return memory;//checkExitConjunction(goal);
     }
 
-    public boolean checkExitConjunction(Goal goal) {
+    private boolean checkExitConjunction(Goal goal) {
 
         if (goal instanceof ComplexGoal) {
             ComplexGoal complexGoal = ((ComplexGoal) goal);
