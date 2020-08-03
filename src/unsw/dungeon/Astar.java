@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.lang.Math;
 
+
 public class Astar implements MoveStrategy {
 
     private List<Entity>[][] map;
@@ -26,8 +27,11 @@ public class Astar implements MoveStrategy {
 
         for (int i = 0; i < dungeon.getHeight(); i++){
             for (int j = 0; j < dungeon.getWidth(); j++) {
-                if (enemy.canMove(j, i)) {
-                    nodeList.add(new Node(j, i));
+                List<Entity> entityList = map[i][j];
+                for (Entity entity : entityList) {
+                    if (!(entity instanceof Wall || entity instanceof Boulder || entity instanceof Door)) {
+                        nodeList.add(new Node(j, i));
+                    }
                 }
             }
         }
@@ -44,7 +48,6 @@ public class Astar implements MoveStrategy {
         for (int i = 0; i < openList.size(); i++) {
             
             Node curr = openList.get(i);
-            //curr.setLevel(0);
 
             if (curr.getX() == player.getX() && curr.getY() == player.getY()) {
                 Node firstMove = null;
@@ -55,16 +58,22 @@ public class Astar implements MoveStrategy {
                 }
                 if (firstMove != null) {
                     if (firstMove.getX() == startPoint.getX()) {
-                        if (firstMove.getY() == startPoint.getY() + 1) 
+                        if (firstMove.getY() == startPoint.getY() + 1)  {
                             enemy.moveDown();
-                        else 
+                            return;
+                        }
+                        else {
                             enemy.moveUp();
+                            return;
+                        }
                     }
                     else {
-                        if (firstMove.getX() == startPoint.getX() + 1) 
+                        if (firstMove.getX() == startPoint.getX() + 1) {
                             enemy.moveRight();
-                        else
+                        }
+                        else {
                             enemy.moveLeft();
+                        }
                     }
                 }
                 
@@ -74,7 +83,6 @@ public class Astar implements MoveStrategy {
             List<Node> neighboursList = getNeighbours(openList.get(i), nodeList);
             for (Node node : neighboursList) { //add all unvisited neighbours
                 if (!closedList.contains(node));
-                    //node.setLevel(i + 1);
                     openList.add(node);
             }
             closedList.add(openList.remove(i)); //pop current node off queue
@@ -85,18 +93,6 @@ public class Astar implements MoveStrategy {
 
     }
 
-    private boolean isMin(double comp, double x1, double x2, double x3) {
-        double costArray[] = {comp, x1, x2, x3};
-        if (comp == -1)
-            return false;
-		for (double d : costArray) {
-            if (d == -1)
-                continue;
-			if (comp > d)
-				return false;
-		}
-		return true;
-	}
 
 	private double euclideanDistance (int x1, int y1, int x2, int y2) {
 		double euclideanDistance = Math.sqrt((x2 - x1)*(x2 - x1) + (y2 - y1) * (y2 - y1));

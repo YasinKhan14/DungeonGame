@@ -24,7 +24,7 @@ public class DungeonScene {
         controller = dungeonLoader.loadController();
         controller.setStage(stage);
         controller.setMap(map);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Modded.fxml"));
         loader.setController(controller);
         Parent root = loader.load();
         scene = new Scene(root);
